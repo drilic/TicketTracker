@@ -9,5 +9,5 @@
         android:scaleType="center"
         android:layout_height="match_parent"
         android:src="@drawable/splash_img"
-        android:id="@+id/imageView"/>
+        android:id="@+id/splash_image"/>
 </LinearLayout>

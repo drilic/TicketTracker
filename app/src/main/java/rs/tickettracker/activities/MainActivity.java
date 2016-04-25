@@ -15,7 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import rs.tickettracker.R;
-import rs.tickettracker.fragments.LoseTicketsFragment;
+import rs.tickettracker.fragments.AboutFragment;
 import rs.tickettracker.fragments.MainFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -29,48 +29,50 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent addTicketScreen = new Intent(getApplicationContext(), AddTicketActivity.class);
-                startActivity(addTicketScreen);
-            }
-        });
-
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
-        mNavigationView = (NavigationView) findViewById(R.id.shitstuff);
-
-        mFragmentManager = getSupportFragmentManager();
-        mFragmentTransaction = mFragmentManager.beginTransaction();
-        mFragmentTransaction.replace(R.id.containerView, new MainFragment()).commit();
+        mNavigationView = (NavigationView) findViewById(R.id.nav_view);
 
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
                 mDrawerLayout.closeDrawers();
-
-                /* if (menuItem.getItemId() == R.id.nav_item_sent) {
-                     FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
-                     fragmentTransaction.replace(R.id.containerView,new LoseTicketsFragment()).commit();
-
-                 }
-
-                if (menuItem.getItemId() == R.id.nav_item_inbox) {
+                if (menuItem.getItemId() == R.id.drawer_home) {
                     FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
-                    xfragmentTransaction.replace(R.id.containerView,new LoseTicketsFragment()).commit();
-                }*/
+                    xfragmentTransaction.replace(R.id.containerView, new MainFragment()).commit();
+                }
+                if (menuItem.getItemId() == R.id.drawer_add_ticket) {
+                    Intent addTicketScreen = new Intent(getApplicationContext(), AddTicketActivity.class);
+                    startActivity(addTicketScreen);
+                }
+                if (menuItem.getItemId() == R.id.drawer_sync) {
+                    //TODO: Call sync method
+                    Log.i(MainActivity.class.getSimpleName(), "Call sync method");
+                }
+                if (menuItem.getItemId() == R.id.drawer_about) {
+                    FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
+                    xfragmentTransaction.replace(R.id.containerView, new AboutFragment()).commit();
+                }
+                if (menuItem.getItemId() == R.id.drawer_exit) {
+                    android.os.Process.killProcess(android.os.Process.myPid());
+                    System.exit(1);
+                }
 
                 return false;
             }
+
 
         });
 
         android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.app_name,
                 R.string.app_name);
+
+        mFragmentManager = getSupportFragmentManager();
+        mFragmentTransaction = mFragmentManager.beginTransaction();
+        mFragmentTransaction.replace(R.id.containerView, new MainFragment()).commit();
 
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
@@ -80,8 +82,19 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        Log.i(MainActivity.class.getSimpleName(), "************************");
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.sync_menu_item, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        if(item.getItemId() == R.id.action_sync){
+            //TODO: Call sync method
+            Log.i(MainActivity.class.getSimpleName(), "Call sync method");
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+
     }
 }
