@@ -1,0 +1,4 @@
+<resources>
+    <string name="sync_preferences">sync_preferences</string>
+    <string name="date_last_synchronized">date_last_synchronized</string>
+</resources>

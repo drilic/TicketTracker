@@ -1,0 +1,39 @@
+<resources>
+    <string name="app_name">TicketTracker</string>
+    <string name="tickets">Tickets</string>
+    <string name="ticket_tracker">Ticket Tracker</string>
+    <string name="add_new_ticket">Add new ticket</string>
+
+    <string name="action_settings">Settings</string>
+
+    <string name="all">ALL</string>
+    <string name="active">ACTIVE</string>
+    <string name="win">WIN</string>
+    <string name="lose">LOSE</string>
+
+    <!-- Drawer menu items -->
+    <string name="add_ticket">Add ticket</string>
+    <string name="add_ticket_long">Create new ticket</string>
+
+    <string name="live_score">Live score</string>
+    <string name="live_score_long">See live score for favorite leagues</string>
+
+    <string name="sync">Sync</string>
+    <string name="sync_long">Sync all football matches</string>
+
+    <string name="settings">Settings</string>
+    <string name="settings_long">Change your personal settings</string>
+
+    <string name="about">About</string>
+    <string name="about_long">Get to know about us</string>
+
+    <string name="exit">Exit</string>
+    <string name="exit_long">Leave ticket tracker application</string>
+
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    <string name="title_activity_main2">Main2Activity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+</resources>

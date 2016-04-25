@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title=""/>
+    <item android:title="@string/tickets"
+        android:icon="@drawable/home"/>
+    <item android:title="@string/add_ticket"
+          android:icon="@drawable/plus_box"/>
+    <!--android:id="@+id/nav_item_inbox"-->
+
+    <item android:title="@string/live_score"
+          android:icon="@drawable/soccer"/>
+
+    <group android:id="@+id/group_settings_id">
+        <item android:title="@string/sync"
+            android:icon="@drawable/sync"/>
+        <item android:title="@string/settings"
+            android:icon="@drawable/settings"/>
+    </group>
+
+    <item android:title="Others">
+        <menu>
+            <item
+                android:title="@string/about"
+                android:icon="@drawable/information_outline"/>
+            <item
+                android:title="@string/exit"
+                android:icon="@drawable/exit_to_app"/>
+        </menu>
+    </item>
+</menu>
