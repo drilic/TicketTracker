@@ -1,33 +1,47 @@
-package rs.tickettracker.activities;
+package rs.tickettracker.fragments;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import rs.tickettracker.R;
 import rs.tickettracker.dialogs.AddMatchDialog;
 
-public class AddTicketActivity extends AppCompatActivity {
+/**
+ * Created by gisko on 27-Apr-16.
+ */
+public class AddTicketFragment extends Fragment {
+
+    public AddTicketFragment() {
+        // Required empty public constructor
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_ticket);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+    }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_add_ticket, container, false);
+    }
 
-
-        FloatingActionButton addMatchFab = (FloatingActionButton) findViewById(R.id.add_match_fab);
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        FloatingActionButton addMatchFab = (FloatingActionButton) view.findViewById(R.id.add_match_fab);
         addMatchFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AddMatchDialog amd = new AddMatchDialog();
                 // Show DialogFragment
-                amd.show(getFragmentManager(), "Dialog Fragment");
+                amd.show(getActivity().getFragmentManager(), "Dialog Fragment");
             }
         });
         addMatchFab.setOnLongClickListener(new View.OnLongClickListener() {
@@ -39,7 +53,7 @@ public class AddTicketActivity extends AppCompatActivity {
             }
         });
 
-        FloatingActionButton saveTicketFab = (FloatingActionButton) findViewById(R.id.save_ticket_fab);
+        FloatingActionButton saveTicketFab = (FloatingActionButton) view.findViewById(R.id.save_ticket_fab);
         saveTicketFab.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
@@ -50,6 +64,5 @@ public class AddTicketActivity extends AppCompatActivity {
         });
 
     }
-
 
 }

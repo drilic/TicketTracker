@@ -25,10 +25,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activities.AddTicketActivity"
-            android:label="@string/add_new_ticket"
-            android:theme="@style/MyMaterialTheme" />
         <activity android:name=".activities.TTPreferenceActivity"></activity>
     </application>
 

@@ -43,7 +43,7 @@
             android:title="@string/pref_notification_title" />
 
         <ListPreference
-            android:defaultValue="wifi"
+            android:defaultValue="all"
             android:dependency="@string/pref_notification"
             android:dialogTitle="@string/pref_notification_type"
             android:entries="@array/pref_notification_type_entries"

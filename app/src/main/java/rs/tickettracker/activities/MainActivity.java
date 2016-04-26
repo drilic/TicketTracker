@@ -14,6 +14,7 @@ import android.view.MenuItem;
 
 import rs.tickettracker.R;
 import rs.tickettracker.fragments.AboutFragment;
+import rs.tickettracker.fragments.AddTicketFragment;
 import rs.tickettracker.fragments.MainTabFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -41,8 +42,11 @@ public class MainActivity extends AppCompatActivity {
                     xfragmentTransaction.replace(R.id.containerView, new MainTabFragment()).commit();
                 }
                 if (menuItem.getItemId() == R.id.drawer_add_ticket) {
-                    Intent addTicketScreen = new Intent(getApplicationContext(), AddTicketActivity.class);
-                    startActivity(addTicketScreen);
+                    /*Intent addTicketScreen = new Intent(getApplicationContext(), AddTicketActivity.class);
+                    startActivity(addTicketScreen);*/
+                    FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
+//                    xfragmentTransaction.setCustomAnimations(R.anim.enter_anim, R.anim.exit_anim);
+                    xfragmentTransaction.replace(R.id.containerView, new AddTicketFragment()).commit();
                 }
                 if (menuItem.getItemId() == R.id.drawer_sync) {
                     //TODO: Call sync method
