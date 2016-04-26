@@ -26,7 +26,20 @@
 
     <!-- Personal details -->
     <string name="about_me_text">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vitae hendrerit quam, nec pretium magna. Sed non finibus felis. Vestibulum aliquet quam aliquam sapien sodales mollis. Duis purus libero, sollicitudin commodo venenatis ut, scelerisque ut est. Vivamus justo enim, vulputate ac turpis eu, aliquet consequat quam. Aenean in arcu viverra, vehicula neque vitae, mattis felis. Pellentesque auctor non sapien non varius. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vitae hendrerit quam, nec pretium magna. Sed non finibus felis. Vestibulum aliquet quam aliquam sapien sodales mollis. Duis purus libero, sollicitudin commodo venenatis ut, scelerisque ut est. Vivamus justo enim, vulputate ac turpis eu, aliquet consequat quam. Aenean in arcu viverra, vehicula neque vitae, mattis felis. Pellentesque auctor non sapien non varius.
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        Etiam vitae hendrerit quam, nec pretium magna. Sed non
+        finibus felis. Vestibulum aliquet quam aliquam sapien sodales mollis.
+        Duis purus libero, sollicitudin commodo venenatis ut, scelerisque ut est.
+        Vivamus justo enim, vulputate ac turpis eu, aliquet consequat quam.
+        Aenean in arcu viverra, vehicula neque vitae, mattis felis. Pellentesque
+        auctor non sapien non varius. Lorem ipsum dolor sit amet, consectetur
+        adipiscing elit. Etiam vitae hendrerit quam, nec pretium magna. Sed non
+        finibus felis. Vestibulum aliquet quam aliquam sapien sodales mollis.
+        Duis purus libero, sollicitudin commodo venenatis ut, scelerisque ut est.
+        Vivamus justo enim, vulputate ac turpis eu, aliquet consequat quam. Aenean
+        in arcu viverra, vehicula neque vitae, mattis felis. Pellentesque auctor non
+        sapien non varius.\n
+        \n
     </string>
     <string name="author_name">Dragoljub Ilic</string>
     <string name="author_birthday">20.06.1992.</string>
