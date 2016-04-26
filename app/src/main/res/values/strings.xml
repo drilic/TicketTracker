@@ -32,4 +32,10 @@
     <string name="author_birthday">20.06.1992.</string>
     <string name="author_index">R1 4/2015</string>
     <string name="author_college">FTN SIT</string>
+
+    <!--Add new ticket -->
+    <string name="ticket_name">Ticket name</string>
+    <string name="possible_gain">Possible gain</string>
+    <string name="matches">Matches:</string>
+
 </resources>

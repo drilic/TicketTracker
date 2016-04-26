@@ -59,7 +59,7 @@ public class MainTabFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        final FloatingActionButton fab = (FloatingActionButton)getView().findViewById(R.id.fab);
+        final FloatingActionButton fab = (FloatingActionButton)getView().findViewById(R.id.add_ticket_fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
