@@ -5,11 +5,10 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 
 import rs.tickettracker.R;
+import rs.tickettracker.dialogs.AddMatchDialog;
 
 public class AddTicketActivity extends AppCompatActivity {
 
@@ -26,7 +25,9 @@ public class AddTicketActivity extends AppCompatActivity {
         addMatchFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("CLICK", "Click test");
+                AddMatchDialog amd = new AddMatchDialog();
+                // Show DialogFragment
+                amd.show(getFragmentManager(), "Dialog Fragment");
             }
         });
         addMatchFab.setOnLongClickListener(new View.OnLongClickListener() {

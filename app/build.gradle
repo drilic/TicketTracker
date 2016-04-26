@@ -28,4 +28,5 @@ dependencies {
     compile files('libs/ActiveAndroid.jar')
     compile 'com.google.android.gms:play-services:8.4.0'
     compile 'me.biubiubiu.justifytext:library:1.1'
+    compile 'com.github.ganfra:material-spinner:1.1.1'
 }

@@ -1,6 +1,6 @@
 <resources>
 
-    <!--&lt;!&ndash; Base application theme. &ndash;&gt;-->
+    <!--Base application theme.-->
     <style name="MyMaterialTheme" parent="MyMaterialTheme.Base">
 
     </style>
@@ -16,4 +16,5 @@
     <style name="MyMaterialTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="MyMaterialTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
 </resources>

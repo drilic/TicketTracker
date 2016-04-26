@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     NavigationView mNavigationView;
     FragmentManager mFragmentManager;
     FragmentTransaction mFragmentTransaction;
+    CharSequence mTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         mNavigationView = (NavigationView) findViewById(R.id.nav_view);
 
+        mTitle = getTitle();
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
@@ -50,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
                 if (menuItem.getItemId() == R.id.drawer_about) {
                     FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
                     xfragmentTransaction.replace(R.id.containerView, new AboutFragment()).commit();
+                    getSupportActionBar().setTitle("About");
                 }
                 if (menuItem.getItemId() == R.id.drawer_exit) {
                     android.os.Process.killProcess(android.os.Process.myPid());

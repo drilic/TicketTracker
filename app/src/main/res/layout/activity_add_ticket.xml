@@ -21,7 +21,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_add_ticket" />
+    <include layout="@layout/activity_add_ticket_content" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/add_match_fab"

@@ -56,10 +56,11 @@ public class MainTabFragment extends Fragment {
 
         return x;
     }
+
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        final FloatingActionButton fab = (FloatingActionButton)getView().findViewById(R.id.add_ticket_fab);
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        final FloatingActionButton fab = (FloatingActionButton) getView().findViewById(R.id.add_ticket_fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,5 +68,7 @@ public class MainTabFragment extends Fragment {
                 startActivity(addTicketScreen);
             }
         });
+
     }
+
 }
