@@ -48,6 +48,10 @@ public class MainActivity extends AppCompatActivity {
                     //TODO: Call sync method
                     Log.i(MainActivity.class.getSimpleName(), "Call sync method");
                 }
+                if (menuItem.getItemId() == R.id.drawer_settings) {
+                    Intent preference = new Intent(getApplicationContext(), TTPreferenceActivity.class);
+                    startActivity(preference);
+                }
 
                 if (menuItem.getItemId() == R.id.drawer_about) {
                     FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();

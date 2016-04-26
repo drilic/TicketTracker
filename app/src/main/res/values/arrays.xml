@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="pref_sync_interval_entries">
+        <item>1 min</item>
+        <item>5 min</item>
+        <item>10 min</item>
+        <item>30 min</item>
+        <item>60 min</item>
+    </string-array>
+    <string-array name="pref_sync_interval_values">
+        <item>1</item>
+        <item>5</item>
+        <item>10</item>
+        <item>30</item>
+        <item>60</item>
+    </string-array>
+
+    <string-array name="pref_sync_type_entries">
+        <item>All</item>
+        <item>WiFi only</item>
+    </string-array>
+    <string-array name="pref_sync_type_values">
+        <item>all</item>
+        <item>wifi</item>
+    </string-array>
+
+    <string-array name="pref_notification_type_entries">
+        <item>All</item>
+        <item>Ticket only</item>
+        <item>Goals only</item>
+    </string-array>
+    <string-array name="pref_notification_type_values">
+        <item>all</item>
+        <item>ticket</item>
+        <item>goals</item>
+    </string-array>
+
+    <string-array name="pref_leagues_entries">
+        <item>Premier League</item>
+        <item>Primera Division</item>
+        <item>Seria A</item>
+        <item>Bundesliga</item>
+        <item>Ligue 1</item>
+    </string-array>
+    <string-array name="pref_leagues_values">
+        <item>premier_league</item>
+        <item>primera_division</item>
+        <item>seria_a</item>
+        <item>bundesliga</item>
+        <item>ligue_1</item>
+    </string-array>
+
+</resources>
