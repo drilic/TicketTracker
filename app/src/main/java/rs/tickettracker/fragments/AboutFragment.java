@@ -1,5 +1,6 @@
 package rs.tickettracker.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -7,12 +8,11 @@ import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.Button;
 
-import me.biubiubiu.justifytext.library.JustifyTextView;
 import rs.tickettracker.R;
-import rs.tickettracker.helpers.flow_text.FlowTextHelper;
+import rs.tickettracker.helpers.MailHelper;
+
 public class AboutFragment extends Fragment {
 
     public AboutFragment() {
@@ -34,6 +34,22 @@ public class AboutFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        Button sendMail = (Button)getView().findViewById(R.id.sendEmail);
+        sendMail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    startActivity(Intent.createChooser(MailHelper.sendEmail(), "Send mail..."));
+                    Log.i("Loggin MAIL", "Finished sending email...");
+                }
+                catch (android.content.ActivityNotFoundException ex) {
+//            Toast.makeText(MainActivity.this, "There is no email client installed.", Toast.LENGTH_SHORT).show();
+                }
+
+
+            }
+        });
     }
 
 }

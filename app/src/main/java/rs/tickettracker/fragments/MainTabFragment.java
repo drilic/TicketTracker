@@ -20,7 +20,7 @@ import rs.tickettracker.activities.AddTicketActivity;
 import rs.tickettracker.adapters.TabFragmentAdapter;
 
 
-public class MainFragment extends Fragment {
+public class MainTabFragment extends Fragment {
 
 
     public static TabLayout tabLayout;

@@ -31,10 +31,6 @@
     <item android:title="Others">
         <menu>
             <item
-                android:title="@string/contact"
-                android:icon="@drawable/contact_mail"
-                android:id="@+id/drawer_contact"/>
-            <item
                 android:title="@string/about"
                 android:icon="@drawable/information_outline"
                 android:id="@+id/drawer_about"/>

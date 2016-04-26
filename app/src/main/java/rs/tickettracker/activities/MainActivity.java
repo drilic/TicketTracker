@@ -2,7 +2,6 @@ package rs.tickettracker.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -12,11 +11,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import rs.tickettracker.R;
 import rs.tickettracker.fragments.AboutFragment;
-import rs.tickettracker.fragments.MainFragment;
+import rs.tickettracker.fragments.MainTabFragment;
 
 public class MainActivity extends AppCompatActivity {
     DrawerLayout mDrawerLayout;
@@ -38,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
                 mDrawerLayout.closeDrawers();
                 if (menuItem.getItemId() == R.id.drawer_home) {
                     FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
-                    xfragmentTransaction.replace(R.id.containerView, new MainFragment()).commit();
+                    xfragmentTransaction.replace(R.id.containerView, new MainTabFragment()).commit();
                 }
                 if (menuItem.getItemId() == R.id.drawer_add_ticket) {
                     Intent addTicketScreen = new Intent(getApplicationContext(), AddTicketActivity.class);
@@ -48,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
                     //TODO: Call sync method
                     Log.i(MainActivity.class.getSimpleName(), "Call sync method");
                 }
+
                 if (menuItem.getItemId() == R.id.drawer_about) {
                     FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
                     xfragmentTransaction.replace(R.id.containerView, new AboutFragment()).commit();
@@ -72,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
         mFragmentManager = getSupportFragmentManager();
         mFragmentTransaction = mFragmentManager.beginTransaction();
-        mFragmentTransaction.replace(R.id.containerView, new MainFragment()).commit();
+        mFragmentTransaction.replace(R.id.containerView, new MainTabFragment()).commit();
 
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
