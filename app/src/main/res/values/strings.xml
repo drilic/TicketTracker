@@ -73,13 +73,13 @@
     <string name="pref_notification_settings">Notifications</string>
     <string name="pref_notification_title">Allow notification</string>
     <string name="pref_notification_summ">Allow app to receive notifications</string>
-    <string name="pref_notification_list_type">pref_sync_list_type</string>
+    <string name="pref_notification_list_type">pref_notification_list_type</string>
     <string name="pref_notification_type">Notification type</string>
 
     <string name="leagues_settings">leagues_settings</string>
     <string name="pref_leagues">pref_leagues</string>
     <string name="pref_leagues_settings">Live score</string>
-    <string name="pref_leagues_summ">Select leagues that you wanna see in live score</string>
+    <string name="pref_leagues_summ">Select leagues that you want to see in live score</string>
     <string name="pref_leagues_list_type">pref_leagues_list_type</string>
     <string name="pref_leagues_type">Leagues</string>
 

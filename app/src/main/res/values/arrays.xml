@@ -17,11 +17,11 @@
     </string-array>
 
     <string-array name="pref_sync_type_entries">
-        <item>All</item>
+        <item>Both</item>
         <item>WiFi only</item>
     </string-array>
     <string-array name="pref_sync_type_values">
-        <item>all</item>
+        <item>both</item>
         <item>wifi</item>
     </string-array>
 
