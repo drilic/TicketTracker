@@ -8,12 +8,16 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.support.v7.app.ActionBar;
 
 import rs.tickettracker.R;
 import rs.tickettracker.adapters.TabFragmentAdapter;
+import rs.tickettracker.listeners.AddTicketListener;
 
 
 public class MainTabFragment extends Fragment {
@@ -46,13 +50,7 @@ public class MainTabFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         final FloatingActionButton fab = (FloatingActionButton) getView().findViewById(R.id.add_ticket_fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentTransaction xfragmentTransaction = fragmentManager.beginTransaction();
-                xfragmentTransaction.replace(R.id.containerView, new AddTicketFragment()).commit();
-            }
-        });
+        fab.setOnClickListener(new AddTicketListener(((AppCompatActivity)getActivity())));
 
     }
 

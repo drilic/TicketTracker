@@ -6,13 +6,13 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import rs.tickettracker.R;
 import rs.tickettracker.helpers.ComponentsHelper;
+import rs.tickettracker.listeners.AddMatchListener;
 
 /**
  * Created by gisko on 26-Apr-16.
@@ -32,13 +32,7 @@ public class AddMatchDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity())
-                .setPositiveButton("ADD",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int whichButton) {
-                                addMatchOnTicket();
-                            }
-                        }
-                )
+                .setPositiveButton("ADD", new AddMatchListener())
                 .setNegativeButton("Close",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
@@ -54,11 +48,6 @@ public class AddMatchDialog extends DialogFragment {
         Dialog dialog = dialogBuilder.create();
         dialog.setCanceledOnTouchOutside(false);
         return dialog;
-    }
-
-    private void addMatchOnTicket(){
-        //TODO: Add match on ticket method
-        Log.i(AddMatchDialog.class.getSimpleName(), "Add match on ticket");
     }
 
     public View onCreateDialogView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

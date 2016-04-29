@@ -18,6 +18,7 @@ import rs.tickettracker.fragments.AboutFragment;
 import rs.tickettracker.fragments.AddTicketFragment;
 import rs.tickettracker.fragments.MainTabFragment;
 import rs.tickettracker.helpers.SyncHelper;
+import rs.tickettracker.listeners.NavigationOnClickListener;
 
 public class MainActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
@@ -35,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         title = getTitle();
-        navigationView.setNavigationItemSelectedListener(new NavigationDrawerClickListener());
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.containerView, new MainTabFragment()).commit();
         drawerLayout.setDrawerListener(drawerToggle);
         drawerToggle.syncState();
+        navigationView.setNavigationItemSelectedListener(new NavigationOnClickListener(drawerLayout, this));
     }
 
     @Override
@@ -81,70 +82,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private class NavigationDrawerClickListener implements NavigationView.OnNavigationItemSelectedListener {
-        @Override
-        public boolean onNavigationItemSelected(MenuItem menuItem) {
-            drawerLayout.closeDrawers();
-            FragmentTransaction newFragmentTransaction = fragmentManager.beginTransaction();
-            switch (menuItem.getItemId()) {
-                case R.id.drawer_home:
-                    if (!isCurrentFragment(getResources().getString(R.string.tickets))) {
-                        newFragmentTransaction.addToBackStack(getResources().getString(R.string.tickets))
-                                .replace(R.id.containerView, new MainTabFragment()).commit();
-                        setActionBarTitle(getResources().getString(R.string.tickets));
-                    }
-                    break;
-                case R.id.drawer_add_ticket:
-                    if (!isCurrentFragment(getResources().getString(R.string.add_new_ticket))) {
-                        newFragmentTransaction.addToBackStack(getResources().getString(R.string.add_new_ticket))
-                                .replace(R.id.containerView, new AddTicketFragment()).commit();
-                        //                    newFragmentTransaction.setCustomAnimations(R.anim.enter_anim, R.anim.exit_anim);
-                        setActionBarTitle(getResources().getString(R.string.add_new_ticket));
-                    }
-                    break;
-                case R.id.drawer_sync:
-                    SyncHelper.syncLiveScore();
-                    break;
-                case R.id.drawer_settings:
-                    Intent preference = new Intent(getApplicationContext(), TTPreferenceActivity.class);
-                    startActivity(preference);
-                    break;
-                case R.id.drawer_about:
-                    if (!isCurrentFragment(getResources().getString(R.string.about))) {
-                        newFragmentTransaction.addToBackStack(getResources().getString(R.string.about))
-                                .replace(R.id.containerView, new AboutFragment()).commit();
-                        setActionBarTitle(getResources().getString(R.string.about));
-                    }
-                    break;
-                case R.id.drawer_exit:
-                    android.os.Process.killProcess(android.os.Process.myPid());
-                    System.exit(1);
-                    break;
-            }
-            return false;
-        }
-    }
-
     private void setActionBarTitle(String currentTitle) {
         if (actionBar != null) {
             actionBar.setTitle(currentTitle);
         }
-    }
-
-    private boolean isCurrentFragment(String current) {
-        int numOfEntry = fragmentManager.getBackStackEntryCount();
-        if (numOfEntry <= 0) {
-            if (current.equals(getResources().getString(R.string.tickets))) {
-                return true;
-            }
-            return false;
-        }
-        FragmentManager.BackStackEntry lastBackstackValue = fragmentManager.getBackStackEntryAt(numOfEntry - 1);
-        if (lastBackstackValue != null) {
-            if (current.equals(lastBackstackValue.getName())) {
-                return true;
-            }
-        }
-        return false;
     }
 }
