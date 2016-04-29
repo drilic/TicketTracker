@@ -11,7 +11,7 @@ import rs.tickettracker.R;
  * Created by gisko on 29-Apr-16.
  */
 public class ComponentsHelper {
-    public static MaterialSpinner createSpiner(String[] valueList, View view, int componentId, int selected){
+    public static MaterialSpinner createSpinner(String[] valueList, View view, int componentId, int selected){
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_spinner_item, valueList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         MaterialSpinner spiner = (MaterialSpinner) view.findViewById(componentId);

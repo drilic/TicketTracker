@@ -13,6 +13,7 @@ import rs.tickettracker.activities.TTPreferenceActivity;
 import rs.tickettracker.fragments.AboutFragment;
 import rs.tickettracker.fragments.AddTicketFragment;
 import rs.tickettracker.fragments.MainTabFragment;
+import rs.tickettracker.helpers.BackstackHelper;
 import rs.tickettracker.helpers.SyncHelper;
 
 /**
@@ -37,18 +38,21 @@ public class NavigationOnClickListener implements NavigationView.OnNavigationIte
         FragmentTransaction newFragmentTransaction = fragmentManager.beginTransaction();
         switch (menuItem.getItemId()) {
             case R.id.drawer_home:
-                if (!isCurrentFragment(activity.getResources().getString(R.string.tickets))) {
+                if (!BackstackHelper.isCurrentFragment(activity, activity.getResources().getString(R.string.tickets))) {
                     newFragmentTransaction.addToBackStack(activity.getResources().getString(R.string.tickets))
-                            .replace(R.id.containerView, new MainTabFragment()).commit();
-                    setActionBarTitle(activity.getResources().getString(R.string.tickets));
+                            .setCustomAnimations(R.anim.enter_anim, R.anim.exit_anim,R.anim.enter_anim, R.anim.exit_anim)
+                            .replace(R.id.containerView, new MainTabFragment())
+                            .commit();
+                    BackstackHelper.setActionBarTitle(activity, activity.getResources().getString(R.string.tickets));
                 }
                 break;
             case R.id.drawer_add_ticket:
-                if (!isCurrentFragment(activity.getResources().getString(R.string.add_new_ticket))) {
+                if (!BackstackHelper.isCurrentFragment(activity, activity.getResources().getString(R.string.add_new_ticket))) {
                     newFragmentTransaction.addToBackStack(activity.getResources().getString(R.string.add_new_ticket))
-                            .replace(R.id.containerView, new AddTicketFragment()).commit();
-                    //                    newFragmentTransaction.setCustomAnimations(R.anim.enter_anim, R.anim.exit_anim);
-                    setActionBarTitle(activity.getResources().getString(R.string.add_new_ticket));
+                            .setCustomAnimations(R.anim.enter_anim, R.anim.exit_anim,R.anim.enter_anim, R.anim.exit_anim)
+                            .replace(R.id.containerView, new AddTicketFragment())
+                            .commit();
+                    BackstackHelper.setActionBarTitle(activity, activity.getResources().getString(R.string.add_new_ticket));
                 }
                 break;
             case R.id.drawer_sync:
@@ -59,39 +63,18 @@ public class NavigationOnClickListener implements NavigationView.OnNavigationIte
                 activity.startActivity(preference);
                 break;
             case R.id.drawer_about:
-                if (!isCurrentFragment(activity.getResources().getString(R.string.about))) {
+                if (!BackstackHelper.isCurrentFragment(activity, activity.getResources().getString(R.string.about))) {
                     newFragmentTransaction.addToBackStack(activity.getResources().getString(R.string.about))
-                            .replace(R.id.containerView, new AboutFragment()).commit();
-                    setActionBarTitle(activity.getResources().getString(R.string.about));
+                            .setCustomAnimations(R.anim.enter_anim, R.anim.exit_anim,R.anim.enter_anim, R.anim.exit_anim)
+                            .replace(R.id.containerView, new AboutFragment())
+                            .commit();
+                    BackstackHelper.setActionBarTitle(activity, activity.getResources().getString(R.string.about));
                 }
                 break;
             case R.id.drawer_exit:
                 android.os.Process.killProcess(android.os.Process.myPid());
                 System.exit(1);
                 break;
-        }
-        return false;
-    }
-
-    private void setActionBarTitle(String currentTitle) {
-        if (activity.getSupportActionBar() != null) {
-            activity.getSupportActionBar().setTitle(currentTitle);
-        }
-    }
-
-    private boolean isCurrentFragment(String current) {
-        int numOfEntry = fragmentManager.getBackStackEntryCount();
-        if (numOfEntry <= 0) {
-            if (current.equals(activity.getResources().getString(R.string.tickets))) {
-                return true;
-            }
-            return false;
-        }
-        FragmentManager.BackStackEntry lastBackstackValue = fragmentManager.getBackStackEntryAt(numOfEntry - 1);
-        if (lastBackstackValue != null) {
-            if (current.equals(lastBackstackValue.getName())) {
-                return true;
-            }
         }
         return false;
     }

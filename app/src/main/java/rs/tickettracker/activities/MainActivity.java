@@ -17,6 +17,7 @@ import rs.tickettracker.R;
 import rs.tickettracker.fragments.AboutFragment;
 import rs.tickettracker.fragments.AddTicketFragment;
 import rs.tickettracker.fragments.MainTabFragment;
+import rs.tickettracker.helpers.BackstackHelper;
 import rs.tickettracker.helpers.SyncHelper;
 import rs.tickettracker.listeners.NavigationOnClickListener;
 
@@ -69,22 +70,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (fragmentManager.getBackStackEntryCount() > 0) {
-            if (fragmentManager.getBackStackEntryCount() == 1) {
-                setActionBarTitle(getResources().getString(R.string.tickets));
-            } else {
-                FragmentManager.BackStackEntry lastBackstackValue = fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount() - 2);
-                setActionBarTitle(lastBackstackValue.getName());
-            }
-            fragmentManager.popBackStack();
-        } else {
+        if(!BackstackHelper.isFragmentBackPressed(this)){
             super.onBackPressed();
-        }
-    }
-
-    private void setActionBarTitle(String currentTitle) {
-        if (actionBar != null) {
-            actionBar.setTitle(currentTitle);
         }
     }
 }

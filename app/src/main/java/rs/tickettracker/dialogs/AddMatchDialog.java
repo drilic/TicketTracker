@@ -58,16 +58,16 @@ public class AddMatchDialog extends DialogFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         String[] leagues = {"Premier", "La primera", "Seria A", "Bundes Liga"};
-        ComponentsHelper.createSpiner(leagues, view, R.id.league, 1);
+        ComponentsHelper.createSpinner(leagues, view, R.id.league, 1);
 
         String[] date = {"-3", "-2", "-1", "Today", "+1", "+2", "+3"};
-        ComponentsHelper.createSpiner(date, view, R.id.date, 4);
+        ComponentsHelper.createSpinner(date, view, R.id.date, 4);
 
         String[] matches = {"Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 6"};
-        ComponentsHelper.createSpiner(matches, view, R.id.match, 0);
+        ComponentsHelper.createSpinner(matches, view, R.id.match, 0);
 
         String[] bet = {"1", "X", "2"};
-        ComponentsHelper.createSpiner(bet, view, R.id.bet, 2);
+        ComponentsHelper.createSpinner(bet, view, R.id.bet, 2);
     }
 
 }

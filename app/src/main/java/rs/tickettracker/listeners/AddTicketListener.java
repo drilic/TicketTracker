@@ -18,9 +18,9 @@ public class AddTicketListener implements View.OnClickListener {
     ActionBar actionBar;
     AppCompatActivity activity;
 
-    public AddTicketListener(AppCompatActivity activity){
+    public AddTicketListener(AppCompatActivity activity) {
         this.fragmentManager = activity.getSupportFragmentManager();
-        this.actionBar =activity.getSupportActionBar();
+        this.actionBar = activity.getSupportActionBar();
         this.activity = activity;
     }
 
@@ -28,8 +28,9 @@ public class AddTicketListener implements View.OnClickListener {
     public void onClick(View v) {
         FragmentTransaction newFragmentTransaction = fragmentManager.beginTransaction();
         newFragmentTransaction.addToBackStack(activity.getResources().getString(R.string.add_new_ticket))
-                .replace(R.id.containerView, new AddTicketFragment()).commit();
-        //                    newFragmentTransaction.setCustomAnimations(R.anim.enter_anim, R.anim.exit_anim);
+                .setCustomAnimations(R.anim.enter_anim, R.anim.exit_anim, R.anim.enter_anim, R.anim.exit_anim)
+                .replace(R.id.containerView, new AddTicketFragment())
+                .commit();
         actionBar.setTitle(activity.getResources().getString(R.string.add_new_ticket));
     }
 }
