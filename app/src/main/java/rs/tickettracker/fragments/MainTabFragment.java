@@ -1,6 +1,5 @@
 package rs.tickettracker.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -22,12 +21,12 @@ public class MainTabFragment extends Fragment {
 
     public static TabLayout tabLayout;
     public static ViewPager viewPager;
-    private FragmentManager mFragmentManager;
+    private FragmentManager fragmentManager;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mFragmentManager = getActivity().getSupportFragmentManager();
+        fragmentManager = getActivity().getSupportFragmentManager();
         View view = inflater.inflate(R.layout.fragment_tab_main, null);
         tabLayout = (TabLayout) view.findViewById(R.id.tabs);
 
@@ -50,7 +49,7 @@ public class MainTabFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
+                FragmentTransaction xfragmentTransaction = fragmentManager.beginTransaction();
                 xfragmentTransaction.replace(R.id.containerView, new AddTicketFragment()).commit();
             }
         });

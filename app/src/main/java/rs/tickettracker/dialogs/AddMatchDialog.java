@@ -6,13 +6,13 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 
-import fr.ganfra.materialspinner.MaterialSpinner;
 import rs.tickettracker.R;
+import rs.tickettracker.helpers.ComponentsHelper;
 
 /**
  * Created by gisko on 26-Apr-16.
@@ -35,7 +35,7 @@ public class AddMatchDialog extends DialogFragment {
                 .setPositiveButton("ADD",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
-                                //TODO: Implement OK button
+                                addMatchOnTicket();
                             }
                         }
                 )
@@ -51,46 +51,34 @@ public class AddMatchDialog extends DialogFragment {
         onViewCreated(view, null);
         dialogBuilder.setView(view);
 
-        Dialog d = dialogBuilder.create();
-        d.setCanceledOnTouchOutside(false);
-        return d;
+        Dialog dialog = dialogBuilder.create();
+        dialog.setCanceledOnTouchOutside(false);
+        return dialog;
     }
 
+    private void addMatchOnTicket(){
+        //TODO: Add match on ticket method
+        Log.i(AddMatchDialog.class.getSimpleName(), "Add match on ticket");
+    }
 
     public View onCreateDialogView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.dialog_fragment_add_match, container); // inflate here
+        return inflater.inflate(R.layout.dialog_fragment_add_match, container);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         String[] leagues = {"Premier", "La primera", "Seria A", "Bundes Liga"};
-        ArrayAdapter<String> adapterLeague = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_spinner_item, leagues);
-        adapterLeague.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        MaterialSpinner spinerLeague = (MaterialSpinner) view.findViewById(R.id.league);
-        spinerLeague.setAdapter(adapterLeague);
-        spinerLeague.setSelection(1);
+        ComponentsHelper.createSpiner(leagues, view, R.id.league, 1);
 
         String[] date = {"-3", "-2", "-1", "Today", "+1", "+2", "+3"};
-        ArrayAdapter<String> adapterDate = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_spinner_item, date);
-        adapterDate.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        MaterialSpinner spinnerDate = (MaterialSpinner) view.findViewById(R.id.date);
-        spinnerDate.setAdapter(adapterDate);
-        spinnerDate.setSelection(4);
+        ComponentsHelper.createSpiner(leagues, view, R.id.date, 4);
 
         String[] matches = {"Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 6"};
-        ArrayAdapter<String> adapterMatches = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_spinner_item, matches);
-        adapterMatches.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        MaterialSpinner spinnerMatches = (MaterialSpinner) view.findViewById(R.id.match);
-        spinnerMatches.setAdapter(adapterMatches);
+        ComponentsHelper.createSpiner(leagues, view, R.id.match, 0);
 
         String[] bet = {"1", "X", "2"};
-        ArrayAdapter<String> adapterBet = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_spinner_item, bet);
-        adapterBet.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        MaterialSpinner spinnerBet = (MaterialSpinner) view.findViewById(R.id.bet);
-        spinnerBet.setAdapter(adapterBet);
-        spinnerBet.setSelection(2);
+        ComponentsHelper.createSpiner(leagues, view, R.id.bet, 2);
     }
 
 }

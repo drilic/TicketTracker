@@ -40,7 +40,6 @@ public class AddTicketFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 AddMatchDialog amd = new AddMatchDialog();
-                // Show DialogFragment
                 amd.show(getActivity().getFragmentManager(), "Dialog Fragment");
             }
         });

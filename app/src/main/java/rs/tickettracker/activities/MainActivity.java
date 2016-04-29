@@ -6,9 +6,10 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -16,78 +17,39 @@ import rs.tickettracker.R;
 import rs.tickettracker.fragments.AboutFragment;
 import rs.tickettracker.fragments.AddTicketFragment;
 import rs.tickettracker.fragments.MainTabFragment;
+import rs.tickettracker.helpers.SyncHelper;
 
 public class MainActivity extends AppCompatActivity {
-    DrawerLayout mDrawerLayout;
-    NavigationView mNavigationView;
-    FragmentManager mFragmentManager;
-    FragmentTransaction mFragmentTransaction;
-    CharSequence mTitle;
+    DrawerLayout drawerLayout;
+    NavigationView navigationView;
+    FragmentManager fragmentManager;
+    FragmentTransaction fragmentTransaction;
+    ActionBar actionBar;
+    CharSequence title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
-        mNavigationView = (NavigationView) findViewById(R.id.nav_view);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        title = getTitle();
+        navigationView.setNavigationItemSelectedListener(new NavigationDrawerClickListener());
 
-        mTitle = getTitle();
-        mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem) {
-                mDrawerLayout.closeDrawers();
-                if (menuItem.getItemId() == R.id.drawer_home) {
-                    FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
-                    xfragmentTransaction.replace(R.id.containerView, new MainTabFragment()).commit();
-                }
-                if (menuItem.getItemId() == R.id.drawer_add_ticket) {
-                    /*Intent addTicketScreen = new Intent(getApplicationContext(), AddTicketActivity.class);
-                    startActivity(addTicketScreen);*/
-                    FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
-//                    xfragmentTransaction.setCustomAnimations(R.anim.enter_anim, R.anim.exit_anim);
-                    xfragmentTransaction.replace(R.id.containerView, new AddTicketFragment()).commit();
-                }
-                if (menuItem.getItemId() == R.id.drawer_sync) {
-                    //TODO: Call sync method
-                    Log.i(MainActivity.class.getSimpleName(), "Call sync method");
-                }
-                if (menuItem.getItemId() == R.id.drawer_settings) {
-                    Intent preference = new Intent(getApplicationContext(), TTPreferenceActivity.class);
-                    startActivity(preference);
-                }
-
-                if (menuItem.getItemId() == R.id.drawer_about) {
-                    FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
-                    xfragmentTransaction.replace(R.id.containerView, new AboutFragment()).commit();
-                    getSupportActionBar().setTitle("About");
-                }
-                if (menuItem.getItemId() == R.id.drawer_exit) {
-                    android.os.Process.killProcess(android.os.Process.myPid());
-                    System.exit(1);
-                }
-
-                return false;
-            }
-
-
-        });
-
-        android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        actionBar = getSupportActionBar();
+        if (actionBar != null) actionBar.setDisplayShowHomeEnabled(true);
 
-        ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.app_name,
-                R.string.app_name);
+        ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
+                R.string.app_name, R.string.app_name);
 
-        mFragmentManager = getSupportFragmentManager();
-        mFragmentTransaction = mFragmentManager.beginTransaction();
-        mFragmentTransaction.replace(R.id.containerView, new MainTabFragment()).commit();
-
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
-
-        mDrawerToggle.syncState();
-
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.containerView, new MainTabFragment()).commit();
+        drawerLayout.setDrawerListener(drawerToggle);
+        drawerToggle.syncState();
     }
 
     @Override
@@ -98,13 +60,91 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
-        if(item.getItemId() == R.id.action_sync){
-            //TODO: Call sync method
-            Log.i(MainActivity.class.getSimpleName(), "Call sync method");
-            return true;
+        if (item.getItemId() == R.id.action_sync) {
+            return SyncHelper.syncLiveScore();
         }
         return super.onOptionsItemSelected(item);
+    }
 
+    @Override
+    public void onBackPressed() {
+        if (fragmentManager.getBackStackEntryCount() > 0) {
+            if (fragmentManager.getBackStackEntryCount() == 1) {
+                setActionBarTitle(getResources().getString(R.string.tickets));
+            } else {
+                FragmentManager.BackStackEntry lastBackstackValue = fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount() - 2);
+                setActionBarTitle(lastBackstackValue.getName());
+            }
+            fragmentManager.popBackStack();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    private class NavigationDrawerClickListener implements NavigationView.OnNavigationItemSelectedListener {
+        @Override
+        public boolean onNavigationItemSelected(MenuItem menuItem) {
+            drawerLayout.closeDrawers();
+            FragmentTransaction newFragmentTransaction = fragmentManager.beginTransaction();
+            switch (menuItem.getItemId()) {
+                case R.id.drawer_home:
+                    if (!isCurrentFragment(getResources().getString(R.string.tickets))) {
+                        newFragmentTransaction.addToBackStack(getResources().getString(R.string.tickets))
+                                .replace(R.id.containerView, new MainTabFragment()).commit();
+                        setActionBarTitle(getResources().getString(R.string.tickets));
+                    }
+                    break;
+                case R.id.drawer_add_ticket:
+                    if (!isCurrentFragment(getResources().getString(R.string.add_new_ticket))) {
+                        newFragmentTransaction.addToBackStack(getResources().getString(R.string.add_new_ticket))
+                                .replace(R.id.containerView, new AddTicketFragment()).commit();
+                        //                    newFragmentTransaction.setCustomAnimations(R.anim.enter_anim, R.anim.exit_anim);
+                        setActionBarTitle(getResources().getString(R.string.add_new_ticket));
+                    }
+                    break;
+                case R.id.drawer_sync:
+                    SyncHelper.syncLiveScore();
+                    break;
+                case R.id.drawer_settings:
+                    Intent preference = new Intent(getApplicationContext(), TTPreferenceActivity.class);
+                    startActivity(preference);
+                    break;
+                case R.id.drawer_about:
+                    if (!isCurrentFragment(getResources().getString(R.string.about))) {
+                        newFragmentTransaction.addToBackStack(getResources().getString(R.string.about))
+                                .replace(R.id.containerView, new AboutFragment()).commit();
+                        setActionBarTitle(getResources().getString(R.string.about));
+                    }
+                    break;
+                case R.id.drawer_exit:
+                    android.os.Process.killProcess(android.os.Process.myPid());
+                    System.exit(1);
+                    break;
+            }
+            return false;
+        }
+    }
+
+    private void setActionBarTitle(String currentTitle) {
+        if (actionBar != null) {
+            actionBar.setTitle(currentTitle);
+        }
+    }
+
+    private boolean isCurrentFragment(String current) {
+        int numOfEntry = fragmentManager.getBackStackEntryCount();
+        if (numOfEntry <= 0) {
+            if (current.equals(getResources().getString(R.string.tickets))) {
+                return true;
+            }
+            return false;
+        }
+        FragmentManager.BackStackEntry lastBackstackValue = fragmentManager.getBackStackEntryAt(numOfEntry - 1);
+        if (lastBackstackValue != null) {
+            if (current.equals(lastBackstackValue.getName())) {
+                return true;
+            }
+        }
+        return false;
     }
 }

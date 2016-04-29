@@ -57,6 +57,7 @@
         android:layout_below="@id/author_college"
         android:layout_toRightOf="@id/thumbnail_view"
         android:layout_height="wrap_content"
+        android:textColor="@color/windowBackground"
         android:text="@string/contact"/>
 
     <ScrollView

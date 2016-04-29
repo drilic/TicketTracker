@@ -20,10 +20,6 @@ public class TabFragmentAdapter extends FragmentPagerAdapter {
         super(fm);
     }
 
-    /**
-     * Return fragment with respect to Position .
-     */
-
     @Override
     public Fragment getItem(int position) {
         switch (position) {
@@ -44,10 +40,6 @@ public class TabFragmentAdapter extends FragmentPagerAdapter {
 
         return int_items;
     }
-
-    /**
-     * This method returns the title of the tab according to the position.
-     */
 
     @Override
     public CharSequence getPageTitle(int position) {
