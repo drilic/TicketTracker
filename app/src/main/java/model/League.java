@@ -1,28 +1,36 @@
 package model;
 
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
+
+import java.util.List;
+
 /**
  * Created by gisko on 29-Apr-16.
  */
-public class League {
-    private long id;
-    private String leagueName;
-    private long leagueServisId;
 
-    public League(){
+@Table(name = "League")
+public class League extends Model {
 
+    @Column(name = "leagueName", notNull = true)
+    public String leagueName;
+
+    @Column(name = "leagueServisId", notNull = true)
+    public long leagueServisId;
+
+    public List<Match> matches() {
+        return getMany(Match.class, "league");
     }
 
-    public League(String leagueName, long leagueServisId){
+    public League() {
+        super();
+    }
+
+    public League(String leagueName, long leagueServisId) {
+        super();
         this.leagueName = leagueName;
         this.leagueServisId = leagueServisId;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getLeagueName() {
@@ -37,6 +45,7 @@ public class League {
         return leagueServisId;
     }
 
+
     public void setLeagueServisId(long leagueServisId) {
         this.leagueServisId = leagueServisId;
     }
@@ -44,7 +53,6 @@ public class League {
     @Override
     public String toString() {
         return "League{" +
-                "id=" + id +
                 ", leagueName='" + leagueName + '\'' +
                 ", leagueServisId=" + leagueServisId +
                 '}';

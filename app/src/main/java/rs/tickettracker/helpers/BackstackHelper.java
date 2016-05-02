@@ -1,9 +1,12 @@
 package rs.tickettracker.helpers;
 
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.FragmentTransaction;
 
 import rs.tickettracker.R;
+import rs.tickettracker.fragments.AddTicketFragment;
 
 /**
  * Created by gisko on 29-Apr-16.
@@ -25,6 +28,13 @@ public class BackstackHelper {
             }
         }
         return false;
+    }
+
+    public static void FragmentTransaction(FragmentTransaction newTransaction, String name, Fragment nextFragment) {
+        newTransaction.addToBackStack(name)
+                .setCustomAnimations(R.anim.enter_anim, R.anim.exit_anim, R.anim.enter_anim, R.anim.exit_anim)
+                .replace(R.id.containerView, nextFragment)
+                .commit();
     }
 
     public static void setActionBarTitle(AppCompatActivity activity, String currentTitle) {

@@ -25,7 +25,7 @@ public class NavigationOnClickListener implements NavigationView.OnNavigationIte
     FragmentManager fragmentManager;
     AppCompatActivity activity;
 
-    public NavigationOnClickListener(DrawerLayout drawerLayout,AppCompatActivity activity){
+    public NavigationOnClickListener(DrawerLayout drawerLayout, AppCompatActivity activity) {
         this.drawerLayout = drawerLayout;
         this.activity = activity;
         this.fragmentManager = activity.getSupportFragmentManager();
@@ -39,19 +39,15 @@ public class NavigationOnClickListener implements NavigationView.OnNavigationIte
         switch (menuItem.getItemId()) {
             case R.id.drawer_home:
                 if (!BackstackHelper.isCurrentFragment(activity, activity.getResources().getString(R.string.tickets))) {
-                    newFragmentTransaction.addToBackStack(activity.getResources().getString(R.string.tickets))
-                            .setCustomAnimations(R.anim.enter_anim, R.anim.exit_anim,R.anim.enter_anim, R.anim.exit_anim)
-                            .replace(R.id.containerView, new MainTabFragment())
-                            .commit();
+                    BackstackHelper.FragmentTransaction(newFragmentTransaction,
+                            activity.getResources().getString(R.string.tickets), new MainTabFragment());
                     BackstackHelper.setActionBarTitle(activity, activity.getResources().getString(R.string.tickets));
                 }
                 break;
             case R.id.drawer_add_ticket:
                 if (!BackstackHelper.isCurrentFragment(activity, activity.getResources().getString(R.string.add_new_ticket))) {
-                    newFragmentTransaction.addToBackStack(activity.getResources().getString(R.string.add_new_ticket))
-                            .setCustomAnimations(R.anim.enter_anim, R.anim.exit_anim,R.anim.enter_anim, R.anim.exit_anim)
-                            .replace(R.id.containerView, new AddTicketFragment())
-                            .commit();
+                    BackstackHelper.FragmentTransaction(newFragmentTransaction,
+                            activity.getResources().getString(R.string.add_new_ticket), new AddTicketFragment());
                     BackstackHelper.setActionBarTitle(activity, activity.getResources().getString(R.string.add_new_ticket));
                 }
                 break;
@@ -64,10 +60,8 @@ public class NavigationOnClickListener implements NavigationView.OnNavigationIte
                 break;
             case R.id.drawer_about:
                 if (!BackstackHelper.isCurrentFragment(activity, activity.getResources().getString(R.string.about))) {
-                    newFragmentTransaction.addToBackStack(activity.getResources().getString(R.string.about))
-                            .setCustomAnimations(R.anim.enter_anim, R.anim.exit_anim,R.anim.enter_anim, R.anim.exit_anim)
-                            .replace(R.id.containerView, new AboutFragment())
-                            .commit();
+                    BackstackHelper.FragmentTransaction(newFragmentTransaction,
+                            activity.getResources().getString(R.string.about), new AboutFragment());
                     BackstackHelper.setActionBarTitle(activity, activity.getResources().getString(R.string.about));
                 }
                 break;

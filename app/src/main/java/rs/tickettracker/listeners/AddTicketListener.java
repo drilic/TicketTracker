@@ -8,6 +8,8 @@ import android.view.View;
 
 import rs.tickettracker.R;
 import rs.tickettracker.fragments.AddTicketFragment;
+import rs.tickettracker.fragments.MainTabFragment;
+import rs.tickettracker.helpers.BackstackHelper;
 
 /**
  * Created by gisko on 29-Apr-16.
@@ -26,11 +28,8 @@ public class AddTicketListener implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        FragmentTransaction newFragmentTransaction = fragmentManager.beginTransaction();
-        newFragmentTransaction.addToBackStack(activity.getResources().getString(R.string.add_new_ticket))
-                .setCustomAnimations(R.anim.enter_anim, R.anim.exit_anim, R.anim.enter_anim, R.anim.exit_anim)
-                .replace(R.id.containerView, new AddTicketFragment())
-                .commit();
+        BackstackHelper.FragmentTransaction(fragmentManager.beginTransaction(),
+                activity.getResources().getString(R.string.add_new_ticket), new AddTicketFragment());
         actionBar.setTitle(activity.getResources().getString(R.string.add_new_ticket));
     }
 }

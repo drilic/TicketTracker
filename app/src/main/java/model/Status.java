@@ -1,40 +1,41 @@
 package model;
 
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
+
+import java.util.List;
+
 /**
  * Created by gisko on 29-Apr-16.
  */
-public class Status {
-    private long id;
-    private String status;
 
-    public Status(){
+@Table(name = "Status")
+public class Status extends Model{
 
+    @Column(name = "status", notNull = true)
+    public String status;
+
+    public List<Match> matches() {
+        return getMany(Match.class, "status");
     }
 
-    public Status(String status){
-        this.status=status;
+    public List<Ticket> tickets() {
+        return getMany(Ticket.class, "status");
     }
 
-    public long getId() {
-        return id;
+    public Status() {
+        super();
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
+    public Status(String status) {
+        super();
         this.status = status;
     }
 
     @Override
     public String toString() {
         return "Status{" +
-                "id=" + id +
                 ", status='" + status + '\'' +
                 '}';
     }

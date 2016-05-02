@@ -1,60 +1,58 @@
 package model;
 
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Select;
+
+import java.util.List;
+
 /**
  * Created by gisko on 29-Apr-16.
  */
-public class Ticket {
-    private long id;
-    private String ticketName;
-    private Status status;
-    private double possibleGain;
 
-    public Ticket(){
+@Table(name = "Ticket")
+public class Ticket extends Model {
 
+    @Column(name = "ticketName", notNull = true)
+    public String ticketName;
+
+    @Column(name = "possibleGain")
+    public double possibleGain;
+
+    @Column(name = "status", notNull = true, onUpdate = Column.ForeignKeyAction.CASCADE, onDelete = Column.ForeignKeyAction.CASCADE)
+    public Status status;
+
+    public List<Match> matches() {
+        return getMany(Match.class, "ticket");
     }
 
-    public Ticket(String ticketName, Status status, double possibleGain){
-        this.ticketName=ticketName;
-        this.status=status;
+    public Ticket() {
+        super();
+    }
+
+    public Ticket(String ticketName, Status status, double possibleGain) {
+        super();
+        this.ticketName = ticketName;
+        this.status = status;
         this.possibleGain = possibleGain;
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getTicketName() {
-        return ticketName;
-    }
-
-    public void setTicketName(String ticketName) {
+    public Ticket(String ticketName, Status status) {
+        super();
         this.ticketName = ticketName;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
         this.status = status;
     }
 
-    public double getPossibleGain() {
-        return possibleGain;
-    }
-
-    public void setPossibleGain(double possibleGain) {
-        this.possibleGain = possibleGain;
+    public static List<Ticket> getAll() {
+        return new Select()
+                .from(Ticket.class)
+                .execute();
     }
 
     @Override
     public String toString() {
         return "Ticket{" +
-                "id=" + id +
                 ", ticketName='" + ticketName + '\'' +
                 ", status=" + status +
                 ", possibleGain=" + possibleGain +

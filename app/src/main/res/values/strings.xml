@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">TicketTracker</string>
     <string name="ticket_tracker">Ticket Tracker</string>
+    <string name="db_name">TicketTracker.db</string>
 
     <!--Tabs -->
     <string name="all">ALL</string>

@@ -3,38 +3,35 @@ package model;
 /**
  * Created by gisko on 29-Apr-16.
  */
-public class Bet {
-    private long id;
-    private String betName;
 
-    public Bet(){
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
 
+import java.util.List;
+
+@Table(name = "Bet")
+public class Bet extends Model {
+
+    @Column(name = "betName", notNull = true)
+    public String betName;
+
+    public List<Match> matches() {
+        return getMany(Match.class, "bet");
     }
 
-    public Bet(String betName){
-        this.betName = betName;
+    public Bet() {
+        super();
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getBetName() {
-        return betName;
-    }
-
-    public void setBetName(String betName) {
+    public Bet(String betName) {
+        super();
         this.betName = betName;
     }
 
     @Override
     public String toString() {
         return "Bet{" +
-                "id=" + id +
                 ", betName='" + betName + '\'' +
                 '}';
     }
