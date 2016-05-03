@@ -51,4 +51,10 @@
         <item>ligue_1</item>
     </string-array>
 
+    <string-array name="status_img">
+        <item>@drawable/checkbox_blank_circle</item>
+        <item>@drawable/checkbox_marked_circle</item>
+        <item>@drawable/close_circle</item>
+    </string-array>
+
 </resources>

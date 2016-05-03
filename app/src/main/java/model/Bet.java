@@ -10,7 +10,7 @@ import com.activeandroid.annotation.Table;
 
 import java.util.List;
 
-@Table(name = "Bet")
+@Table(name = "Bet", id="_id")
 public class Bet extends Model {
 
     @Column(name = "betName", notNull = true)

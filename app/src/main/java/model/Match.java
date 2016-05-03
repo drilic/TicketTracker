@@ -10,7 +10,7 @@ import java.util.Date;
  * Created by gisko on 29-Apr-16.
  */
 
-@Table(name = "Match")
+@Table(name = "Match", id="_id")
 public class Match extends Model {
 
     @Column(name = "homeTeam", notNull = true)

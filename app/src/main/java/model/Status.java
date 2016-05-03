@@ -10,7 +10,7 @@ import java.util.List;
  * Created by gisko on 29-Apr-16.
  */
 
-@Table(name = "Status")
+@Table(name = "Status", id="_id")
 public class Status extends Model{
 
     @Column(name = "status", notNull = true)

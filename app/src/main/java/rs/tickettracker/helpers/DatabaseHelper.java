@@ -53,8 +53,28 @@ public class DatabaseHelper {
         League l = new League("Test league", 12223);
         l.save();
 
-        List<Status> s = new Select().from(Status.class).where("status = ?", "Active").execute();
-        Ticket t = new Ticket("Singlirao Arsenal", s.get(0), 55.5);
+        List<Status> s = new Select().from(Status.class).where("status = ?", "Win").execute();
+        Ticket t = new Ticket("Dobio Arsenal", s.get(0), 55.52);
+        t.save();
+
+        s = new Select().from(Status.class).where("status = ?", "Active").execute();
+        t = new Ticket("Singlirao Arsenal", s.get(0), 55.5);
+        t.save();
+
+        s = new Select().from(Status.class).where("status = ?", "Lose").execute();
+        t = new Ticket("Pao Arsenal", s.get(0), 550);
+        t.save();
+
+        s = new Select().from(Status.class).where("status = ?", "Active").execute();
+        t = new Ticket("sing Arsenal", s.get(0), 550);
+        t.save();
+
+        s = new Select().from(Status.class).where("status = ?", "Win").execute();
+        t = new Ticket("Dobio2 Arsenal", s.get(0), 550);
+        t.save();
+
+        s = new Select().from(Status.class).where("status = ?", "Win").execute();
+        t = new Ticket("Dobio3 Arsenal", s.get(0), 550);
         t.save();
 
         List<League> leag = new Select().from(League.class).where("leagueName = ?", "Test league").execute();

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import rs.tickettracker.R;
 import rs.tickettracker.helpers.DatabaseHelper;
 
 public class SplashActivity extends AppCompatActivity {
@@ -11,13 +12,13 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setContentView(R.layout.activity_splash);
         DatabaseHelper.initializeDB(this);
         Thread myThread = new Thread() {
             @Override
             public void run() {
                 try {
-                    sleep(3000);
+                    sleep(2000);
                     Intent startMainScreen = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(startMainScreen);
                     finish();

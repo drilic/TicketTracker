@@ -11,7 +11,7 @@ import java.util.List;
  * Created by gisko on 29-Apr-16.
  */
 
-@Table(name = "Ticket")
+@Table(name = "Ticket", id="_id")
 public class Ticket extends Model {
 
     @Column(name = "ticketName", notNull = true)
@@ -50,11 +50,47 @@ public class Ticket extends Model {
                 .execute();
     }
 
+    public static List<Ticket> getAllActive() {
+        Status status = (Status) new Select()
+                .from(Status.class)
+                .where("status = ?", "Active")
+                .execute().get(0);
+
+        return new Select()
+                .from(Ticket.class)
+                .where("status= ?", status.getId())
+                .execute();
+    }
+
+    public static List<Ticket> getAllWin() {
+        Status status = (Status) new Select()
+                .from(Status.class)
+                .where("status = ?", "Win")
+                .execute().get(0);
+
+        return new Select()
+                .from(Ticket.class)
+                .where("status= ?", status.getId())
+                .execute();
+    }
+
+    public static List<Ticket> getAllLose() {
+        Status status = (Status) new Select()
+                .from(Status.class)
+                .where("status = ?", "Lose")
+                .execute().get(0);
+
+        return new Select()
+                .from(Ticket.class)
+                .where("status= ?", status.getId())
+                .execute();
+    }
+
     @Override
     public String toString() {
         return "Ticket{" +
                 ", ticketName='" + ticketName + '\'' +
-                ", status=" + status +
+                ", status=" + status.status +
                 ", possibleGain=" + possibleGain +
                 '}';
     }
