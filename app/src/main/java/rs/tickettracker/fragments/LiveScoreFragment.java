@@ -1,15 +1,21 @@
 package rs.tickettracker.fragments;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
+
+import java.util.Set;
 
 import model.Ticket;
 import rs.tickettracker.R;
@@ -19,6 +25,9 @@ import rs.tickettracker.helpers.ComponentsHelper;
 
 
 public class LiveScoreFragment extends Fragment {
+
+    private SharedPreferences sharedPreferences;
+    private View globalView;
 
     public LiveScoreFragment() {
         // Required empty public constructor
@@ -47,32 +56,66 @@ public class LiveScoreFragment extends Fragment {
         String[] date = {"-3", "-2", "-1", "Today", "+1", "+2", "+3"};
         ComponentsHelper.createSpinner(date, view, R.id.date, 4);
 
-        TicketListAdapter arrayAdapter = new TicketListAdapter(getActivity(), R.layout.list_ticket_view, Ticket.getAll());
-        ListView v1 = (ListView)view.findViewById(R.id.list1);
-        v1.setAdapter(arrayAdapter);
-        ListView v2 = (ListView)view.findViewById(R.id.list2);
-        v2.setAdapter(arrayAdapter);
-        setDynamicHeight(v1);
-        setDynamicHeight(v2);
-
+        globalView = view;
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        Set<String> selections = sharedPreferences.getStringSet(getResources().getString(R.string.pref_leagues_list_type), null);
+        for (String checkedLeague : selections) {
+            consultPreferencies(checkedLeague);
+        }
     }
 
-    public static void setDynamicHeight(ListView mListView) {
-        ListAdapter mListAdapter = mListView.getAdapter();
-        if (mListAdapter == null) {
-            // when adapter is null
-            return;
+    private void consultPreferencies(String leagueName) {
+        ListView listView = null;
+        TextView textView = null;
+        TicketListAdapter arrayAdapter = null;
+        switch (leagueName) {
+            case "premier_league":
+                listView = (ListView) globalView.findViewById(R.id.premierList);
+                textView = (TextView) globalView.findViewById(R.id.premierText);
+                arrayAdapter = new TicketListAdapter(getActivity(), R.layout.list_ticket_view, Ticket.getAll());
+                listView.setAdapter(arrayAdapter);
+                ComponentsHelper.setDynamicHeight(listView);
+                listView.setVisibility(View.VISIBLE);
+                textView.setVisibility(View.VISIBLE);
+                break;
+            case "ligue_1":
+                listView = (ListView) globalView.findViewById(R.id.ligue1List);
+                textView = (TextView) globalView.findViewById(R.id.ligue1Text);
+                arrayAdapter = new TicketListAdapter(getActivity(), R.layout.list_ticket_view, Ticket.getAll());
+                listView.setAdapter(arrayAdapter);
+                ComponentsHelper.setDynamicHeight(listView);
+                listView.setVisibility(View.VISIBLE);
+                textView.setVisibility(View.VISIBLE);
+                break;
+            case "primera_division":
+                listView = (ListView) globalView.findViewById(R.id.primeraList);
+                textView = (TextView) globalView.findViewById(R.id.primeraText);
+                arrayAdapter = new TicketListAdapter(getActivity(), R.layout.list_ticket_view, Ticket.getAll());
+                listView.setAdapter(arrayAdapter);
+                ComponentsHelper.setDynamicHeight(listView);
+                listView.setVisibility(View.VISIBLE);
+                textView.setVisibility(View.VISIBLE);
+                break;
+            case "seria_a":
+                listView = (ListView) globalView.findViewById(R.id.seriaAList);
+                textView = (TextView) globalView.findViewById(R.id.seriaAText);
+                arrayAdapter = new TicketListAdapter(getActivity(), R.layout.list_ticket_view, Ticket.getAll());
+                listView.setAdapter(arrayAdapter);
+                ComponentsHelper.setDynamicHeight(listView);
+                listView.setVisibility(View.VISIBLE);
+                textView.setVisibility(View.VISIBLE);
+                break;
+            case "bundesliga":
+                listView = (ListView) globalView.findViewById(R.id.bundesList);
+                textView = (TextView) globalView.findViewById(R.id.bundesText);
+                arrayAdapter = new TicketListAdapter(getActivity(), R.layout.list_ticket_view, Ticket.getAll());
+                listView.setAdapter(arrayAdapter);
+                ComponentsHelper.setDynamicHeight(listView);
+                listView.setVisibility(View.VISIBLE);
+                textView.setVisibility(View.VISIBLE);
+                break;
         }
-        int height = 0;
-        int desiredWidth = View.MeasureSpec.makeMeasureSpec(mListView.getWidth(), View.MeasureSpec.UNSPECIFIED);
-        for (int i = 0; i < mListAdapter.getCount(); i++) {
-            View listItem = mListAdapter.getView(i, null, mListView);
-            listItem.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
-            height += listItem.getMeasuredHeight();
-        }
-        ViewGroup.LayoutParams params = mListView.getLayoutParams();
-        params.height = height + (mListView.getDividerHeight() * (mListAdapter.getCount() - 1));
-        mListView.setLayoutParams(params);
-        mListView.requestLayout();
     }
+
+
 }

@@ -58,6 +58,12 @@
     <string name="match">Match</string>
     <string name="bet">Bet</string>
 
+    <string name="premier_league">Premier League</string>
+    <string name="primera_division">Primera Division</string>
+    <string name="seria_a">Seria A</string>
+    <string name="bundesliga">Bundesliga</string>
+    <string name="ligue_1">Ligue 1</string>
+
     <!-- Preferences -->
     <string name="sync_settings">sync_settings</string>
     <string name="pref_sync">pref_sync</string>
