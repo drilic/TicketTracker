@@ -1,6 +1,5 @@
 package rs.tickettracker.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -14,9 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import rs.tickettracker.R;
-import rs.tickettracker.fragments.AboutFragment;
-import rs.tickettracker.fragments.AddTicketFragment;
-import rs.tickettracker.fragments.MainTabFragment;
+import rs.tickettracker.fragments.tabs.MainTabFragment;
 import rs.tickettracker.helpers.BackstackHelper;
 import rs.tickettracker.helpers.SyncHelper;
 import rs.tickettracker.listeners.NavigationOnClickListener;

@@ -4,10 +4,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import rs.tickettracker.fragments.ActiveTicketsFragment;
-import rs.tickettracker.fragments.AllTicketsFragment;
-import rs.tickettracker.fragments.LoseTicketsFragment;
-import rs.tickettracker.fragments.WinTicketsFragment;
+import rs.tickettracker.fragments.tabs.ActiveTicketsFragment;
+import rs.tickettracker.fragments.tabs.AllTicketsFragment;
+import rs.tickettracker.fragments.tabs.LoseTicketsFragment;
+import rs.tickettracker.fragments.tabs.WinTicketsFragment;
 
 /**
  * Created by gisko on 25-Apr-16.

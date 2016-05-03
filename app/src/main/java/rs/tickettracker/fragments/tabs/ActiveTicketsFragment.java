@@ -1,4 +1,4 @@
-package rs.tickettracker.fragments;
+package rs.tickettracker.fragments.tabs;
 
 import android.content.Intent;
 import android.os.Bundle;

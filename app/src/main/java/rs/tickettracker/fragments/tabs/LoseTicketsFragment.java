@@ -1,24 +1,26 @@
-package rs.tickettracker.fragments;
+package rs.tickettracker.fragments.tabs;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
-import android.support.v4.widget.SimpleCursorAdapter;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Toast;
 
 import model.Ticket;
 import rs.tickettracker.R;
 import rs.tickettracker.activities.TicketDetailActivity;
 import rs.tickettracker.adapters.TicketListAdapter;
 
+public class LoseTicketsFragment extends ListFragment implements AdapterView.OnItemClickListener {
 
-public class AllTicketsFragment extends ListFragment implements OnItemClickListener {
-
-    public AllTicketsFragment() {
+    public LoseTicketsFragment() {
         // Required empty public constructor
     }
 
@@ -37,7 +39,7 @@ public class AllTicketsFragment extends ListFragment implements OnItemClickListe
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        TicketListAdapter arrayAdapter = new TicketListAdapter(getActivity(), R.layout.list_ticket_view, Ticket.getAll());
+        TicketListAdapter arrayAdapter = new TicketListAdapter(getActivity(), R.layout.list_ticket_view, Ticket.getAllLose());
         setListAdapter(arrayAdapter);
         getListView().setOnItemClickListener(this);
     }
@@ -48,5 +50,4 @@ public class AllTicketsFragment extends ListFragment implements OnItemClickListe
         intent.putExtra("id", id);
         startActivity(intent);
     }
-
 }

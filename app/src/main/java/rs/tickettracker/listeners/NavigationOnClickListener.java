@@ -12,7 +12,8 @@ import rs.tickettracker.R;
 import rs.tickettracker.activities.TTPreferenceActivity;
 import rs.tickettracker.fragments.AboutFragment;
 import rs.tickettracker.fragments.AddTicketFragment;
-import rs.tickettracker.fragments.MainTabFragment;
+import rs.tickettracker.fragments.LiveScoreFragment;
+import rs.tickettracker.fragments.tabs.MainTabFragment;
 import rs.tickettracker.helpers.BackstackHelper;
 import rs.tickettracker.helpers.SyncHelper;
 
@@ -49,6 +50,13 @@ public class NavigationOnClickListener implements NavigationView.OnNavigationIte
                     BackstackHelper.FragmentTransaction(newFragmentTransaction,
                             activity.getResources().getString(R.string.add_new_ticket), new AddTicketFragment());
                     BackstackHelper.setActionBarTitle(activity, activity.getResources().getString(R.string.add_new_ticket));
+                }
+                break;
+            case R.id.drawer_live_score:
+                if (!BackstackHelper.isCurrentFragment(activity, activity.getResources().getString(R.string.live_score))) {
+                    BackstackHelper.FragmentTransaction(newFragmentTransaction,
+                            activity.getResources().getString(R.string.live_score), new LiveScoreFragment());
+                    BackstackHelper.setActionBarTitle(activity, activity.getResources().getString(R.string.live_score));
                 }
                 break;
             case R.id.drawer_sync:

@@ -1,14 +1,12 @@
 package rs.tickettracker.listeners;
 
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import rs.tickettracker.R;
 import rs.tickettracker.fragments.AddTicketFragment;
-import rs.tickettracker.fragments.MainTabFragment;
 import rs.tickettracker.helpers.BackstackHelper;
 
 /**
