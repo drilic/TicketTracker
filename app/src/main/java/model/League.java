@@ -33,23 +33,6 @@ public class League extends Model {
         this.leagueServisId = leagueServisId;
     }
 
-    public String getLeagueName() {
-        return leagueName;
-    }
-
-    public void setLeagueName(String leagueName) {
-        this.leagueName = leagueName;
-    }
-
-    public long getLeagueServisId() {
-        return leagueServisId;
-    }
-
-
-    public void setLeagueServisId(long leagueServisId) {
-        this.leagueServisId = leagueServisId;
-    }
-
     @Override
     public String toString() {
         return "League{" +

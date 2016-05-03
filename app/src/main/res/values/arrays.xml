@@ -57,4 +57,11 @@
         <item>@drawable/close_circle</item>
     </string-array>
 
+    <string-array name="status_color">
+        <item>@color/colorAccent</item>
+        <item>@color/status_red</item>
+        <item>@color/status_green</item>
+    </string-array>
+
+
 </resources>

@@ -1,5 +1,6 @@
 package rs.tickettracker.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 
 import model.Ticket;
 import rs.tickettracker.R;
+import rs.tickettracker.activities.TicketDetailActivity;
 import rs.tickettracker.adapters.TicketListAdapter;
 
 
@@ -32,7 +34,7 @@ public class WinTicketsFragment extends ListFragment implements AdapterView.OnIt
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_win_tickets, container, false);
+        return inflater.inflate(R.layout.fragment_list_view, container, false);
     }
 
     @Override
@@ -45,7 +47,9 @@ public class WinTicketsFragment extends ListFragment implements AdapterView.OnIt
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Toast.makeText(getActivity(), "Item: " + position, Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getActivity(), TicketDetailActivity.class);
+        intent.putExtra("id", id);
+        startActivity(intent);
     }
 
 }

@@ -3,8 +3,10 @@ package model;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Select;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by gisko on 29-Apr-16.
@@ -59,6 +61,13 @@ public class Match extends Model {
         this.league = league;
         this.ticket = ticket;
         this.bet = bet;
+    }
+
+    public static List<Match> getAllMatchesFromTicket(Ticket t) {
+        return new Select()
+                .from(Match.class)
+                .where("ticket= ?", t.getId())
+                .execute();
     }
 
     @Override

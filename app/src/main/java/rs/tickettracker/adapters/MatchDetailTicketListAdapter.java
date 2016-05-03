@@ -2,7 +2,6 @@ package rs.tickettracker.adapters;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +11,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import model.Match;
 import model.Ticket;
 import rs.tickettracker.R;
 import rs.tickettracker.helpers.StatusHelper;
@@ -19,12 +19,12 @@ import rs.tickettracker.helpers.StatusHelper;
 /**
  * Created by gisko on 03-May-16.
  */
-public class TicketListAdapter extends ArrayAdapter<Ticket> {
+public class MatchDetailTicketListAdapter extends ArrayAdapter<Match> {
     Context context;
     int layoutResourceId;
-    List<Ticket> data = null;
+    List<Match> data = null;
 
-    public TicketListAdapter(Context context, int layoutResourceId, List<Ticket> objects) {
+    public MatchDetailTicketListAdapter(Context context, int layoutResourceId, List<Match> objects) {
         super(context, layoutResourceId, objects);
         this.layoutResourceId = layoutResourceId;
         this.context = context;
@@ -34,34 +34,37 @@ public class TicketListAdapter extends ArrayAdapter<Ticket> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View row = convertView;
-        TicketHolder holder = null;
+        MatchHolder holder = null;
 
         if (row == null) {
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
             row = inflater.inflate(layoutResourceId, parent, false);
 
-            holder = new TicketHolder();
+            holder = new MatchHolder();
             holder.imgIcon = (ImageView) row.findViewById(R.id.item_icon);
-            holder.txtTitle = (TextView) row.findViewById(R.id.name);
-            holder.txtGain = (TextView) row.findViewById(R.id.description);
+            holder.txtTitle = (TextView) row.findViewById(R.id.matchTeam);
+            holder.txtDescription = (TextView) row.findViewById(R.id.description);
+            holder.txtScores = (TextView) row.findViewById(R.id.scores);
 
             row.setTag(holder);
         } else {
-            holder = (TicketHolder) row.getTag();
+            holder = (MatchHolder) row.getTag();
         }
 
-        Ticket ticket = data.get(position);
-        holder.txtTitle.setText(ticket.ticketName);
-        holder.txtGain.setText("Possible gain: " + ticket.possibleGain);
-        holder.imgIcon.setImageResource(StatusHelper.getStatusIconType(ticket.status.status, context));
+        Match match = data.get(position);
+        holder.txtTitle.setText(match.homeTeam + " - "+match.awayTeam);
+        holder.txtDescription.setText(match.league.leagueName+", "+"Bet: "+ match.bet.betName);
+        holder.imgIcon.setImageResource(StatusHelper.getStatusIconType(match.status.status, context));
+        holder.txtScores.setText(match.homeScore+" : "+match.awayScore);
 
         return row;
     }
 
-    static class TicketHolder {
+    static class MatchHolder {
         ImageView imgIcon;
         TextView txtTitle;
-        TextView txtGain;
+        TextView txtDescription;
+        TextView txtScores;
     }
 
     @Override

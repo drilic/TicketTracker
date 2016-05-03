@@ -14,7 +14,7 @@
         android:layout_margin="5dp" />
 
     <TextView
-        android:id="@+id/name"
+        android:id="@+id/matchTeam"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18sp"
@@ -30,9 +30,18 @@
     <TextView android:id="@+id/description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/name"
+        android:layout_below="@+id/matchTeam"
         android:layout_toRightOf="@+id/item_icon"
         android:layout_toEndOf="@+id/item_icon"
         android:paddingLeft="5dp"/>
 
+
+    <TextView android:id="@+id/scores"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:textStyle="bold"
+        android:textSize="18dp"
+        android:layout_margin="15dp" />
 </RelativeLayout>
