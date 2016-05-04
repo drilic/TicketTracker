@@ -15,13 +15,17 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.List;
 import java.util.Set;
 
+import model.Match;
 import model.Ticket;
 import rs.tickettracker.R;
 import rs.tickettracker.activities.TicketDetailActivity;
+import rs.tickettracker.adapters.MatchLiveScoreListAdapter;
 import rs.tickettracker.adapters.TicketListAdapter;
 import rs.tickettracker.helpers.ComponentsHelper;
+import rs.tickettracker.helpers.SyncHelper;
 
 
 public class LiveScoreFragment extends Fragment {
@@ -67,12 +71,14 @@ public class LiveScoreFragment extends Fragment {
     private void consultPreferencies(String leagueName) {
         ListView listView = null;
         TextView textView = null;
-        TicketListAdapter arrayAdapter = null;
+        MatchLiveScoreListAdapter arrayAdapter = null;
+        List<Match> matches = null;
         switch (leagueName) {
             case "premier_league":
                 listView = (ListView) globalView.findViewById(R.id.premierList);
                 textView = (TextView) globalView.findViewById(R.id.premierText);
-                arrayAdapter = new TicketListAdapter(getActivity(), R.layout.list_ticket_view, Ticket.getAll());
+                matches = SyncHelper.findAllMatchesForLeague(9,398);
+                arrayAdapter = new MatchLiveScoreListAdapter(getActivity(), R.layout.list_match_live_score_view, matches);
                 listView.setAdapter(arrayAdapter);
                 ComponentsHelper.setDynamicHeight(listView);
                 listView.setVisibility(View.VISIBLE);
@@ -81,7 +87,8 @@ public class LiveScoreFragment extends Fragment {
             case "ligue_1":
                 listView = (ListView) globalView.findViewById(R.id.ligue1List);
                 textView = (TextView) globalView.findViewById(R.id.ligue1Text);
-                arrayAdapter = new TicketListAdapter(getActivity(), R.layout.list_ticket_view, Ticket.getAll());
+                matches = SyncHelper.findAllMatchesForLeague(9,396);
+                arrayAdapter = new MatchLiveScoreListAdapter(getActivity(), R.layout.list_match_live_score_view, matches);
                 listView.setAdapter(arrayAdapter);
                 ComponentsHelper.setDynamicHeight(listView);
                 listView.setVisibility(View.VISIBLE);
@@ -90,7 +97,8 @@ public class LiveScoreFragment extends Fragment {
             case "primera_division":
                 listView = (ListView) globalView.findViewById(R.id.primeraList);
                 textView = (TextView) globalView.findViewById(R.id.primeraText);
-                arrayAdapter = new TicketListAdapter(getActivity(), R.layout.list_ticket_view, Ticket.getAll());
+                matches = SyncHelper.findAllMatchesForLeague(9,399);
+                arrayAdapter = new MatchLiveScoreListAdapter(getActivity(), R.layout.list_match_live_score_view, matches);
                 listView.setAdapter(arrayAdapter);
                 ComponentsHelper.setDynamicHeight(listView);
                 listView.setVisibility(View.VISIBLE);
@@ -99,7 +107,8 @@ public class LiveScoreFragment extends Fragment {
             case "seria_a":
                 listView = (ListView) globalView.findViewById(R.id.seriaAList);
                 textView = (TextView) globalView.findViewById(R.id.seriaAText);
-                arrayAdapter = new TicketListAdapter(getActivity(), R.layout.list_ticket_view, Ticket.getAll());
+                matches = SyncHelper.findAllMatchesForLeague(9,401);
+                arrayAdapter = new MatchLiveScoreListAdapter(getActivity(), R.layout.list_match_live_score_view, matches);
                 listView.setAdapter(arrayAdapter);
                 ComponentsHelper.setDynamicHeight(listView);
                 listView.setVisibility(View.VISIBLE);
@@ -108,7 +117,8 @@ public class LiveScoreFragment extends Fragment {
             case "bundesliga":
                 listView = (ListView) globalView.findViewById(R.id.bundesList);
                 textView = (TextView) globalView.findViewById(R.id.bundesText);
-                arrayAdapter = new TicketListAdapter(getActivity(), R.layout.list_ticket_view, Ticket.getAll());
+                matches = SyncHelper.findAllMatchesForLeague(9,394);
+                arrayAdapter = new MatchLiveScoreListAdapter(getActivity(), R.layout.list_match_live_score_view, matches);
                 listView.setAdapter(arrayAdapter);
                 ComponentsHelper.setDynamicHeight(listView);
                 listView.setVisibility(View.VISIBLE);

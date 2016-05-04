@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/date"
             android:visibility="gone"
-            android:textSize="15dp"
+            android:textSize="16dp"
             android:textStyle="bold"
             android:gravity="center_vertical"
             android:text="@string/premier_league"
@@ -52,8 +52,8 @@
             android:layout_below="@id/premierList"
             android:gravity="center_vertical"
             android:visibility="gone"
-            android:layout_marginTop="15dp"
-            android:textSize="15dp"
+            android:layout_marginTop="20dp"
+            android:textSize="16dp"
             android:textStyle="bold"
             android:text="@string/primera_division" />
 
@@ -71,8 +71,8 @@
             android:layout_below="@id/primeraList"
             android:gravity="center_vertical"
             android:visibility="gone"
-            android:layout_marginTop="15dp"
-            android:textSize="15dp"
+            android:layout_marginTop="20dp"
+            android:textSize="16dp"
             android:textStyle="bold"
             android:text="@string/seria_a" />
 
@@ -90,8 +90,8 @@
             android:layout_below="@id/seriaAList"
             android:gravity="center_vertical"
             android:visibility="gone"
-            android:layout_marginTop="15dp"
-            android:textSize="15dp"
+            android:layout_marginTop="20dp"
+            android:textSize="16dp"
             android:textStyle="bold"
             android:text="@string/bundesliga"/>
 
@@ -109,8 +109,8 @@
             android:layout_below="@id/bundesList"
             android:gravity="center_vertical"
             android:visibility="gone"
-            android:layout_marginTop="15dp"
-            android:textSize="15dp"
+            android:layout_marginTop="20dp"
+            android:textSize="16dp"
             android:textStyle="bold"
             android:text="@string/ligue_1"/>
 

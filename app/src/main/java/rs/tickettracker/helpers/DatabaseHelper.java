@@ -50,6 +50,22 @@ public class DatabaseHelper {
         status = new Status("Lose");
         status.save();
 
+
+        League league = new League("Bundesliga",394);
+        league.save();
+
+        league = new League("Ligue 1",396);
+        league.save();
+
+        league = new League("Premier League",398);
+        league.save();
+
+        league = new League("Primera Division",399);
+        league.save();
+
+        league = new League("Seria A",401);
+        league.save();
+
         League l = new League("Test league", 12223);
         l.save();
 

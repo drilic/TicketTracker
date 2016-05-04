@@ -40,7 +40,7 @@ public class TicketDetailActivity extends AppCompatActivity {
     }
 
     private void fillData(long id) {
-        Ticket t = (Ticket) new Select().from(Ticket.class).where("_id= ?", id).execute().get(0);
+        Ticket t = new Select().from(Ticket.class).where("_id= ?", id).executeSingle();
         currentTicket=t;
         FrameLayout statusFrame = (FrameLayout) findViewById(R.id.statusPanel);
         statusFrame.setBackgroundColor(getResources().getColor(StatusHelper.getStatusColor(t.status.status,getApplicationContext())));

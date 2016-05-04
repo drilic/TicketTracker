@@ -51,10 +51,10 @@ public class Ticket extends Model {
     }
 
     public static List<Ticket> getAllActive() {
-        Status status = (Status) new Select()
+        Status status = new Select()
                 .from(Status.class)
                 .where("status = ?", "Active")
-                .execute().get(0);
+                .executeSingle();
 
         return new Select()
                 .from(Ticket.class)
@@ -63,10 +63,10 @@ public class Ticket extends Model {
     }
 
     public static List<Ticket> getAllWin() {
-        Status status = (Status) new Select()
+        Status status = new Select()
                 .from(Status.class)
                 .where("status = ?", "Win")
-                .execute().get(0);
+                .executeSingle();
 
         return new Select()
                 .from(Ticket.class)
@@ -75,10 +75,10 @@ public class Ticket extends Model {
     }
 
     public static List<Ticket> getAllLose() {
-        Status status = (Status) new Select()
+        Status status = new Select()
                 .from(Status.class)
                 .where("status = ?", "Lose")
-                .execute().get(0);
+                .executeSingle();
 
         return new Select()
                 .from(Ticket.class)

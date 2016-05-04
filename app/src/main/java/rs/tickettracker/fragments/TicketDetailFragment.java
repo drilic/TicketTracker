@@ -43,7 +43,7 @@ public class TicketDetailFragment extends ListFragment implements AdapterView.On
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Ticket t = (Ticket) new Select().from(Ticket.class).where("_id= ?", ticket_id).execute().get(0);
+        Ticket t = new Select().from(Ticket.class).where("_id= ?", ticket_id).executeSingle();
         MatchDetailTicketListAdapter arrayAdapter = new MatchDetailTicketListAdapter(getActivity(),
                 R.layout.list_match_for_ticket_view, Match.getAllMatchesFromTicket(t));
         setListAdapter(arrayAdapter);
