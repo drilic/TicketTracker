@@ -2,6 +2,7 @@ package rs.tickettracker.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,8 @@ import android.widget.TextView;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import model.Match;
 import rs.tickettracker.R;
@@ -52,7 +55,8 @@ public class MatchLiveScoreListAdapter extends ArrayAdapter<Match> {
         }
 
         Match match = data.get(position);
-        DateFormat df = new SimpleDateFormat("dd/MM HH:mm");
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM HH:mm");
+        df.setTimeZone(TimeZone.getTimeZone("GMT+4"));
         String gameStart = df.format(match.gameStart);
 
         holder.txtTitle.setText(fixTeamName(match.homeTeam) + " - " + fixTeamName(match.awayTeam));

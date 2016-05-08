@@ -13,12 +13,12 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        DatabaseHelper.initializeDB(this);
         Thread myThread = new Thread() {
             @Override
             public void run() {
                 try {
-                    sleep(2000);
+                    DatabaseHelper.initializeDB(SplashActivity.this);
+                    sleep(1000);
                     Intent startMainScreen = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(startMainScreen);
                     finish();

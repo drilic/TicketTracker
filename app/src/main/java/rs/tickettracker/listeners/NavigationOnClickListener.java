@@ -60,7 +60,7 @@ public class NavigationOnClickListener implements NavigationView.OnNavigationIte
                 }
                 break;
             case R.id.drawer_sync:
-                SyncHelper.syncLiveScore();
+//                SyncHelper.syncLiveScore();
                 break;
             case R.id.drawer_settings:
                 Intent preference = new Intent(activity.getApplicationContext(), TTPreferenceActivity.class);

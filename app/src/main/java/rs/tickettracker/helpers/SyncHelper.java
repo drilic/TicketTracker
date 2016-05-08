@@ -125,13 +125,11 @@ public class SyncHelper {
         if (day > 0) {
             timeFrame = "n" + day;
         } else if (day < 0) {
-            timeFrame = "p" + day;
+            timeFrame = "p" + Math.abs(day);
         }
 
         JSONObject serviceResult = requestWebService(baseUrl, timeFrame);
-
         League ligue = new Select().from(League.class).where("leagueServisId = ?", league).executeSingle();
-
         List<Match> foundMatches = new ArrayList<Match>();
 
         try {
