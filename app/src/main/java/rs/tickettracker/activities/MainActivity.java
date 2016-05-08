@@ -15,7 +15,6 @@ import android.view.MenuItem;
 import rs.tickettracker.R;
 import rs.tickettracker.fragments.tabs.MainTabFragment;
 import rs.tickettracker.helpers.BackstackHelper;
-import rs.tickettracker.helpers.SyncHelper;
 import rs.tickettracker.listeners.NavigationOnClickListener;
 
 public class MainActivity extends AppCompatActivity {
@@ -60,7 +59,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_sync) {
-            return SyncHelper.syncLiveScore();
+//            return LiveScoreAPIHelper.syncLiveScore();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

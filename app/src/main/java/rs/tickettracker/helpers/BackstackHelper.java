@@ -32,7 +32,7 @@ public class BackstackHelper {
 
     public static void FragmentTransaction(FragmentTransaction newTransaction, String name, Fragment nextFragment) {
         newTransaction.addToBackStack(name)
-                .setCustomAnimations(R.anim.enter_anim, R.anim.exit_anim, R.anim.enter_anim, R.anim.exit_anim)
+                .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_right, R.anim.slide_in_left, R.anim.slide_out_left)
                 .replace(R.id.containerView, nextFragment)
                 .commit();
     }

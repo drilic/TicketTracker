@@ -15,7 +15,6 @@ import rs.tickettracker.fragments.AddTicketFragment;
 import rs.tickettracker.fragments.LiveScoreFragment;
 import rs.tickettracker.fragments.tabs.MainTabFragment;
 import rs.tickettracker.helpers.BackstackHelper;
-import rs.tickettracker.helpers.SyncHelper;
 
 /**
  * Created by gisko on 29-Apr-16.
@@ -60,7 +59,7 @@ public class NavigationOnClickListener implements NavigationView.OnNavigationIte
                 }
                 break;
             case R.id.drawer_sync:
-//                SyncHelper.syncLiveScore();
+//                LiveScoreAPIHelper.syncLiveScore();
                 break;
             case R.id.drawer_settings:
                 Intent preference = new Intent(activity.getApplicationContext(), TTPreferenceActivity.class);

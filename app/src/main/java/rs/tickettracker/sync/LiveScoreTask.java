@@ -3,12 +3,10 @@ package rs.tickettracker.sync;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -17,7 +15,7 @@ import model.Match;
 import rs.tickettracker.R;
 import rs.tickettracker.adapters.MatchLiveScoreListAdapter;
 import rs.tickettracker.helpers.ComponentsHelper;
-import rs.tickettracker.helpers.SyncHelper;
+import rs.tickettracker.helpers.LiveScoreAPIHelper;
 
 /**
  * Created by gisko on 04-May-16.
@@ -64,19 +62,19 @@ public class LiveScoreTask extends AsyncTask<Object, Void, HashMap<String, List<
         List<Match> matches = null;
         switch (leagueName) {
             case "premier_league":
-                matches = SyncHelper.findAllMatchesForLeague(day, 398);
+                matches = LiveScoreAPIHelper.findAllMatchesForLeague(day, 398);
                 break;
             case "ligue_1":
-                matches = SyncHelper.findAllMatchesForLeague(day, 396);
+                matches = LiveScoreAPIHelper.findAllMatchesForLeague(day, 396);
                 break;
             case "primera_division":
-                matches = SyncHelper.findAllMatchesForLeague(day, 399);
+                matches = LiveScoreAPIHelper.findAllMatchesForLeague(day, 399);
                 break;
             case "seria_a":
-                matches = SyncHelper.findAllMatchesForLeague(day, 401);
+                matches = LiveScoreAPIHelper.findAllMatchesForLeague(day, 401);
                 break;
             case "bundesliga":
-                matches = SyncHelper.findAllMatchesForLeague(day, 394);
+                matches = LiveScoreAPIHelper.findAllMatchesForLeague(day, 394);
                 break;
         }
         return matches;

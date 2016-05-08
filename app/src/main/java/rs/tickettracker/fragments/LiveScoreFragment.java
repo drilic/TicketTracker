@@ -4,23 +4,16 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.TextView;
 
-import java.util.List;
 import java.util.Set;
 
 import fr.ganfra.materialspinner.MaterialSpinner;
-import model.Match;
 import rs.tickettracker.R;
-import rs.tickettracker.adapters.MatchLiveScoreListAdapter;
 import rs.tickettracker.helpers.ComponentsHelper;
-import rs.tickettracker.helpers.SyncHelper;
 import rs.tickettracker.sync.LiveScoreTask;
 
 
