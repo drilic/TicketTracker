@@ -63,5 +63,23 @@
         <item>@color/status_green</item>
     </string-array>
 
+    <string-array name="date_list">
+        <item>-3</item>
+        <item>-2</item>
+        <item>-1</item>
+        <item>Today</item>
+        <item>+1</item>
+        <item>+2</item>
+        <item>+3</item>
+    </string-array>
+    <string-array name="date_values_list">
+        <item>-3</item>
+        <item>-2</item>
+        <item>-1</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
 
 </resources>

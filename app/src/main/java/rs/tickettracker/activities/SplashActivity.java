@@ -19,6 +19,7 @@ public class SplashActivity extends AppCompatActivity {
                 try {
                     DatabaseHelper.initializeDB(SplashActivity.this);
                     sleep(1000);
+
                     Intent startMainScreen = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(startMainScreen);
                     finish();

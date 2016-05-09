@@ -47,6 +47,7 @@ public class Ticket extends Model {
     public static List<Ticket> getAll() {
         return new Select()
                 .from(Ticket.class)
+                .orderBy("_id DESC")
                 .execute();
     }
 
@@ -59,6 +60,7 @@ public class Ticket extends Model {
         return new Select()
                 .from(Ticket.class)
                 .where("status= ?", status.getId())
+                .orderBy("_id DESC")
                 .execute();
     }
 
@@ -71,6 +73,7 @@ public class Ticket extends Model {
         return new Select()
                 .from(Ticket.class)
                 .where("status= ?", status.getId())
+                .orderBy("_id DESC")
                 .execute();
     }
 
@@ -83,6 +86,7 @@ public class Ticket extends Model {
         return new Select()
                 .from(Ticket.class)
                 .where("status= ?", status.getId())
+                .orderBy("_id DESC")
                 .execute();
     }
 

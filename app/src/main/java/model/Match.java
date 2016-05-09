@@ -12,7 +12,7 @@ import java.util.List;
  * Created by gisko on 29-Apr-16.
  */
 
-@Table(name = "Match", id="_id")
+@Table(name = "Match", id = "_id")
 public class Match extends Model {
 
     @Column(name = "homeTeam", notNull = true)
@@ -29,6 +29,9 @@ public class Match extends Model {
 
     @Column(name = "awayScore")
     public int awayScore;
+
+    @Column(name = "isFinished")
+    public boolean isFinished;
 
     @Column(name = "matchServisId", notNull = true)
     public long matchServisId;
@@ -49,7 +52,7 @@ public class Match extends Model {
         super();
     }
 
-    public Match(String homeTeam, String awayTeam, Date gameStart, int homeScore, int awayScore, Status status, long matchServisId, League league, Ticket ticket, Bet bet) {
+    public Match(String homeTeam, String awayTeam, Date gameStart, int homeScore, int awayScore, Status status, long matchServisId, League league, Ticket ticket, Bet bet, Boolean isFinished) {
         super();
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
@@ -61,6 +64,7 @@ public class Match extends Model {
         this.league = league;
         this.ticket = ticket;
         this.bet = bet;
+        this.isFinished = isFinished;
     }
 
     public static List<Match> getAllMatchesFromTicket(Ticket t) {
@@ -72,6 +76,17 @@ public class Match extends Model {
 
     @Override
     public String toString() {
-        return homeTeam + " " + homeScore + ":" + awayScore + " " + awayTeam;
+        return fixTeamName(homeTeam) + "-" + fixTeamName(awayTeam);
+    }
+
+    private static String fixTeamName(String teamName) {
+        if (teamName.length() > 15) {
+            String trimmedTeamName = teamName.substring(0, 15);
+            while (trimmedTeamName.charAt(trimmedTeamName.length() - 1) == ' ') {
+                trimmedTeamName = trimmedTeamName.substring(0, trimmedTeamName.length() - 1);
+            }
+            return trimmedTeamName + "...";
+        }
+        return teamName;
     }
 }

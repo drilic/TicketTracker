@@ -10,7 +10,7 @@ import java.util.List;
  * Created by gisko on 29-Apr-16.
  */
 
-@Table(name = "League", id="_id")
+@Table(name = "League", id = "_id")
 public class League extends Model {
 
     @Column(name = "leagueName", notNull = true)
@@ -35,9 +35,6 @@ public class League extends Model {
 
     @Override
     public String toString() {
-        return "League{" +
-                ", leagueName='" + leagueName + '\'' +
-                ", leagueServisId=" + leagueServisId +
-                '}';
+        return leagueName;
     }
 }

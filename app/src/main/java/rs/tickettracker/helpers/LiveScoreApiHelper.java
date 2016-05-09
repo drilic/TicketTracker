@@ -32,6 +32,7 @@ import java.util.Scanner;
 
 import model.League;
 import model.Match;
+import model.Status;
 import rs.tickettracker.activities.MainActivity;
 
 /**
@@ -40,7 +41,7 @@ import rs.tickettracker.activities.MainActivity;
 public class LiveScoreAPIHelper {
 
     public static List<Match> findAllMatchesForLeague(int day, long league) {
-        String baseUrl = "http://api.football-data.org/v1/soccerseasons/"+league+"/fixtures";
+        String baseUrl = "http://api.football-data.org/v1/soccerseasons/" + league + "/fixtures";
         String timeFrame = "";
         if (day > 0) {
             timeFrame = "n" + day;
@@ -50,6 +51,7 @@ public class LiveScoreAPIHelper {
 
         JSONObject serviceResult = requestWebService(baseUrl, timeFrame);
         League ligue = new Select().from(League.class).where("leagueServisId = ?", league).executeSingle();
+        Status matchStatus = new Select().from(Status.class).where("status =?", "Active").executeSingle();
         List<Match> foundMatches = new ArrayList<Match>();
 
         try {
@@ -66,6 +68,14 @@ public class LiveScoreAPIHelper {
                 Date date = format.parse(dateStart);
                 m.gameStart = date;
                 m.league = ligue;
+                String status = match.getString("homeTeamName");
+                if (status.equals("FINISHED")) {
+                    m.isFinished = true;
+                } else {
+                    m.isFinished = false;
+                }
+                m.status = matchStatus;
+                m.matchServisId = match.getLong("id");
                 foundMatches.add(m);
             }
 

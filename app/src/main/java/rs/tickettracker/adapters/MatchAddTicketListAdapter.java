@@ -6,25 +6,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.TimeZone;
 
 import model.Match;
-import model.Ticket;
 import rs.tickettracker.R;
-import rs.tickettracker.helpers.StatusHelper;
 
 /**
  * Created by gisko on 03-May-16.
  */
-public class MatchDetailTicketListAdapter extends ArrayAdapter<Match> {
+public class MatchAddTicketListAdapter extends ArrayAdapter<Match> {
     Context context;
     int layoutResourceId;
     List<Match> data = null;
 
-    public MatchDetailTicketListAdapter(Context context, int layoutResourceId, List<Match> objects) {
+    public MatchAddTicketListAdapter(Context context, int layoutResourceId, List<Match> objects) {
         super(context, layoutResourceId, objects);
         this.layoutResourceId = layoutResourceId;
         this.context = context;
@@ -41,10 +40,9 @@ public class MatchDetailTicketListAdapter extends ArrayAdapter<Match> {
             row = inflater.inflate(layoutResourceId, parent, false);
 
             holder = new MatchHolder();
-            holder.imgIcon = (ImageView) row.findViewById(R.id.item_icon);
             holder.txtTitle = (TextView) row.findViewById(R.id.matchTeam);
             holder.txtDescription = (TextView) row.findViewById(R.id.description);
-            holder.txtScores = (TextView) row.findViewById(R.id.scores);
+            holder.txtBet = (TextView) row.findViewById(R.id.betName);
 
             row.setTag(holder);
         } else {
@@ -52,24 +50,26 @@ public class MatchDetailTicketListAdapter extends ArrayAdapter<Match> {
         }
 
         Match match = data.get(position);
-        holder.txtTitle.setText(fixTeamName(match.homeTeam) + " - "+fixTeamName(match.awayTeam));
-        holder.txtDescription.setText(match.league.leagueName + ", " + "Bet: " + match.bet.betName);
-        holder.imgIcon.setImageResource(StatusHelper.getStatusIconType(match.status.status, context));
-        if(match.homeScore==-1){
-            holder.txtScores.setText("N : N");
-        }else{
-            holder.txtScores.setText(match.homeScore+" : "+match.awayScore);
-        }
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM HH:mm");
+        df.setTimeZone(TimeZone.getTimeZone("GMT+4"));
+        String gameStart = df.format(match.gameStart);
 
+        holder.txtTitle.setText(fixTeamName(match.homeTeam) + " - " + fixTeamName(match.awayTeam));
+        holder.txtDescription.setText(match.league.leagueName + ", " + gameStart);
+        holder.txtBet.setText(match.bet.betName);
         return row;
     }
 
+    public List<Match> getAllMatches() {
+        return data;
+    }
+
     static class MatchHolder {
-        ImageView imgIcon;
         TextView txtTitle;
         TextView txtDescription;
-        TextView txtScores;
+        TextView txtBet;
     }
+
 
     private static String fixTeamName(String teamName) {
         if (teamName.length() > 15) {
@@ -80,10 +80,5 @@ public class MatchDetailTicketListAdapter extends ArrayAdapter<Match> {
             return trimmedTeamName + "...";
         }
         return teamName;
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return data.get(position).getId();
     }
 }

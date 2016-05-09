@@ -7,7 +7,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import java.util.List;
+
 import fr.ganfra.materialspinner.MaterialSpinner;
+import model.Match;
 import rs.tickettracker.R;
 
 /**
@@ -15,8 +18,17 @@ import rs.tickettracker.R;
  */
 public class ComponentsHelper {
 
-    public static MaterialSpinner createSpinner(String[] valueList, View view, int componentId, int selected){
+    public static MaterialSpinner createSpinner(String[] valueList, View view, int componentId, int selected) {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_spinner_item, valueList);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        MaterialSpinner spiner = (MaterialSpinner) view.findViewById(componentId);
+        spiner.setAdapter(adapter);
+        spiner.setSelection(selected);
+        return spiner;
+    }
+
+    public static MaterialSpinner createSpinner(List<?> valueList, View view, int componentId, int selected) {
+        ArrayAdapter<?> adapter = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_spinner_item, valueList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         MaterialSpinner spiner = (MaterialSpinner) view.findViewById(componentId);
         spiner.setAdapter(adapter);

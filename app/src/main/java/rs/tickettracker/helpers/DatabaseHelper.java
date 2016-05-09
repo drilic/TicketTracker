@@ -1,6 +1,7 @@
 package rs.tickettracker.helpers;
 
 import android.app.Activity;
+import android.preference.PreferenceManager;
 
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.Configuration;
@@ -29,6 +30,7 @@ public class DatabaseHelper {
             Configuration dbConfiguration = new Configuration.Builder(activity).setDatabaseName(db_name).create();
             ActiveAndroid.initialize(dbConfiguration);
         }else{
+            PreferenceManager.setDefaultValues(activity, R.xml.preferences, false);
             Configuration dbConfiguration = new Configuration.Builder(activity).setDatabaseName(db_name).create();
             ActiveAndroid.initialize(dbConfiguration);
             populateDB();
@@ -96,8 +98,11 @@ public class DatabaseHelper {
         List<League> leag = new Select().from(League.class).where("leagueName = ?", "Test league").execute();
         List<Bet> myBet = new Select().from(Bet.class).where("betName = ?", "1").execute();
         List<Ticket> myTick = new Select().from(Ticket.class).where("ticketName = ?", "Singlirao Arsenal").execute();
-        Match m = new Match("Arsenal", "Lester",new Date(),0,3,s.get(0),223323,leag.get(0),myTick.get(0),myBet.get(0));
+        Match m = new Match("Arsenal", "Lester",new Date(),0,3,s.get(0),223323,leag.get(0),myTick.get(0),myBet.get(0),false);
+        Match m1 = new Match("City", "Maglic",new Date(),0,3,s.get(0),223323,leag.get(0),myTick.get(0),myBet.get(0),false);
+        Match m2 = new Match("Petar", "Sima",new Date(),0,3,s.get(0),223323,leag.get(0),myTick.get(0),myBet.get(0),false);
         m.save();
-
+        m1.save();
+        m2.save();
     }
 }

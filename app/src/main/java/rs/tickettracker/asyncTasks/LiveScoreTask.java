@@ -1,4 +1,4 @@
-package rs.tickettracker.sync;
+package rs.tickettracker.asyncTasks;
 
 import android.app.Activity;
 import android.app.ProgressDialog;

@@ -4,21 +4,36 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.ListFragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 
+import com.activeandroid.query.Select;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import model.Match;
+import model.Ticket;
 import rs.tickettracker.R;
+import rs.tickettracker.adapters.MatchAddTicketListAdapter;
+import rs.tickettracker.adapters.TicketListAdapter;
 import rs.tickettracker.dialogs.AddMatchDialog;
 import rs.tickettracker.listeners.AddTicketListener;
 import rs.tickettracker.listeners.OpenModalListener;
 import rs.tickettracker.listeners.SaveTicketListener;
+import rs.tickettracker.listeners.interfaces.GetMatchFromDialogListener;
 
 /**
  * Created by gisko on 27-Apr-16.
  */
-public class AddTicketFragment extends Fragment {
+public class AddTicketFragment extends ListFragment implements AdapterView.OnItemClickListener, GetMatchFromDialogListener {
+
+    MatchAddTicketListAdapter arrayAdapter=null;
 
     public AddTicketFragment() {
         // Required empty public constructor
@@ -38,8 +53,13 @@ public class AddTicketFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+//        List<Match> myList = new Select().from(Match.class).execute();
+        arrayAdapter = new MatchAddTicketListAdapter(getActivity(), R.layout.list_match_add_ticket, new ArrayList<Match>());
+        setListAdapter(arrayAdapter);
+        getListView().setOnItemClickListener(this);
+
         FloatingActionButton addMatchFab = (FloatingActionButton) view.findViewById(R.id.add_match_fab);
-        addMatchFab.setOnClickListener(new OpenModalListener((AppCompatActivity)getActivity()));
+        addMatchFab.setOnClickListener(new OpenModalListener((AppCompatActivity) getActivity(), this));
         addMatchFab.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
@@ -50,7 +70,7 @@ public class AddTicketFragment extends Fragment {
         });
 
         FloatingActionButton saveTicketFab = (FloatingActionButton) view.findViewById(R.id.save_ticket_fab);
-        saveTicketFab.setOnClickListener(new SaveTicketListener((AppCompatActivity)getActivity()));
+        saveTicketFab.setOnClickListener(new SaveTicketListener((AppCompatActivity) getActivity(),arrayAdapter));
         saveTicketFab.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
@@ -62,4 +82,18 @@ public class AddTicketFragment extends Fragment {
 
     }
 
+    private void getMatch(Match m) {
+        Log.i("***", m.toString());
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        //TODO: EDIT/DELETE
+    }
+
+    @Override
+    public void getMatchFromDialog(Match match) {
+        Log.i("****", match.toString() + " Bet: " + match.bet.betName);
+        arrayAdapter.add(match);
+    }
 }

@@ -10,7 +10,7 @@ import com.activeandroid.annotation.Table;
 
 import java.util.List;
 
-@Table(name = "Bet", id="_id")
+@Table(name = "Bet", id = "_id")
 public class Bet extends Model {
 
     @Column(name = "betName", notNull = true)
@@ -31,8 +31,6 @@ public class Bet extends Model {
 
     @Override
     public String toString() {
-        return "Bet{" +
-                ", betName='" + betName + '\'' +
-                '}';
+        return betName;
     }
 }
