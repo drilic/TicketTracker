@@ -35,4 +35,29 @@
         android:layout_toEndOf="@+id/item_icon"
         android:paddingLeft="5dp"/>
 
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/deleteTicketButton"
+        android:focusable="false"
+        android:background="@drawable/delete_forever"
+        android:visibility="gone"
+        android:layout_alignTop="@+id/editTicketButton"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:visibility="gone"
+        android:id="@+id/editTicketButton"
+        android:focusable="false"
+        android:background="@drawable/pencil_box"
+        android:layout_alignBottom="@+id/item_icon"
+        android:layout_toLeftOf="@+id/deleteTicketButton"
+        android:layout_toStartOf="@+id/deleteTicketButton" />
+
+
 </RelativeLayout>

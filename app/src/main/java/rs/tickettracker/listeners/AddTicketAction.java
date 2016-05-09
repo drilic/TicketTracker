@@ -12,13 +12,13 @@ import rs.tickettracker.helpers.BackstackHelper;
 /**
  * Created by gisko on 29-Apr-16.
  */
-public class AddTicketListener implements View.OnClickListener {
+public class AddTicketAction implements View.OnClickListener {
 
     FragmentManager fragmentManager;
     ActionBar actionBar;
     AppCompatActivity activity;
 
-    public AddTicketListener(AppCompatActivity activity) {
+    public AddTicketAction(AppCompatActivity activity) {
         this.fragmentManager = activity.getSupportFragmentManager();
         this.actionBar = activity.getSupportActionBar();
         this.activity = activity;

@@ -101,7 +101,6 @@ public class AddMatchDialog extends DialogFragment {
 
                     @Override
                     public void onNothingSelected(AdapterView<?> parent) {
-
                     }
                 });
             }
@@ -132,7 +131,6 @@ public class AddMatchDialog extends DialogFragment {
 
                     @Override
                     public void onNothingSelected(AdapterView<?> parent) {
-
                     }
                 });
             }
@@ -162,7 +160,6 @@ public class AddMatchDialog extends DialogFragment {
 
                     @Override
                     public void onNothingSelected(AdapterView<?> parent) {
-
                     }
                 });
             }
@@ -185,7 +182,6 @@ public class AddMatchDialog extends DialogFragment {
 
                     @Override
                     public void onNothingSelected(AdapterView<?> parent) {
-
                     }
                 });
             }

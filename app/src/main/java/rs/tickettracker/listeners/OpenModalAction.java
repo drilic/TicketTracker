@@ -9,12 +9,12 @@ import rs.tickettracker.dialogs.AddMatchDialog;
 /**
  * Created by gisko on 29-Apr-16.
  */
-public class OpenModalListener implements View.OnClickListener {
+public class OpenModalAction implements View.OnClickListener {
 
     AppCompatActivity activity;
     Fragment fragment;
 
-    public OpenModalListener(AppCompatActivity activity, Fragment fragment){
+    public OpenModalAction(AppCompatActivity activity, Fragment fragment){
         this.activity= activity;
         this.fragment = fragment;
     }

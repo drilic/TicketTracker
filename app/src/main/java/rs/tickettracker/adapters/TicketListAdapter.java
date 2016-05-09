@@ -64,6 +64,15 @@ public class TicketListAdapter extends ArrayAdapter<Ticket> {
         TextView txtGain;
     }
 
+    public boolean contains(long id) {
+        for (Ticket t : data) {
+            if (t.getId() == id) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public long getItemId(int position) {
         return data.get(position).getId();

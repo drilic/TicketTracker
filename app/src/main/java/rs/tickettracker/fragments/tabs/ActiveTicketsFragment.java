@@ -11,13 +11,20 @@ import android.widget.AdapterView;
 import model.Ticket;
 import rs.tickettracker.R;
 import rs.tickettracker.activities.TicketDetailActivity;
+import rs.tickettracker.adapters.TabFragmentAdapter;
 import rs.tickettracker.adapters.TicketListAdapter;
+import rs.tickettracker.helpers.ListViewActionHelper;
 
 
-public class ActiveTicketsFragment extends ListFragment implements AdapterView.OnItemClickListener {
+public class ActiveTicketsFragment extends ListFragment implements AdapterView.OnItemClickListener,
+        AdapterView.OnItemLongClickListener {
 
-    public ActiveTicketsFragment() {
+    TicketListAdapter arrayAdapter;
+    TabFragmentAdapter tabMenager;
+
+    public ActiveTicketsFragment(TabFragmentAdapter test) {
         // Required empty public constructor
+        this.tabMenager = test;
     }
 
     @Override
@@ -35,9 +42,11 @@ public class ActiveTicketsFragment extends ListFragment implements AdapterView.O
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        TicketListAdapter arrayAdapter = new TicketListAdapter(getActivity(), R.layout.list_ticket_view, Ticket.getAllActive());
+        arrayAdapter = new TicketListAdapter(getActivity(), R.layout.list_ticket_view, Ticket.getAllActive());
         setListAdapter(arrayAdapter);
+        getListView().addFooterView(getLayoutInflater(savedInstanceState).inflate(R.layout.list_footer_view, null), null, false);
         getListView().setOnItemClickListener(this);
+        getListView().setOnItemLongClickListener(this);
     }
 
     @Override
@@ -45,5 +54,17 @@ public class ActiveTicketsFragment extends ListFragment implements AdapterView.O
         Intent intent = new Intent(getActivity(), TicketDetailActivity.class);
         intent.putExtra("id", id);
         startActivity(intent);
+    }
+
+    public void updateAdapter(Ticket t) {
+        if (arrayAdapter.contains(t.getId())) {
+            arrayAdapter.remove(t);
+        }
+    }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        ListViewActionHelper.longClickAction(getActivity(), view, id, arrayAdapter, tabMenager);
+        return true;
     }
 }

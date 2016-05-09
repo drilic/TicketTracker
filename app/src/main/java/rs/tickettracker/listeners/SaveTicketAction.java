@@ -20,12 +20,12 @@ import rs.tickettracker.helpers.BackstackHelper;
 /**
  * Created by gisko on 29-Apr-16.
  */
-public class SaveTicketListener implements View.OnClickListener {
+public class SaveTicketAction implements View.OnClickListener {
 
     AppCompatActivity activity;
     MatchAddTicketListAdapter array;
 
-    public SaveTicketListener(AppCompatActivity activity, MatchAddTicketListAdapter array){
+    public SaveTicketAction(AppCompatActivity activity, MatchAddTicketListAdapter array){
         this.activity= activity;
         this.array=array;
     }

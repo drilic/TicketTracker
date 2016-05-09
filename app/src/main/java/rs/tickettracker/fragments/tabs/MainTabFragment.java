@@ -6,18 +6,15 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.support.v7.app.ActionBar;
 
 import rs.tickettracker.R;
 import rs.tickettracker.adapters.TabFragmentAdapter;
-import rs.tickettracker.listeners.AddTicketListener;
+import rs.tickettracker.listeners.AddTicketAction;
 
 
 public class MainTabFragment extends Fragment {
@@ -42,7 +39,6 @@ public class MainTabFragment extends Fragment {
                 tabLayout.setupWithViewPager(viewPager);
             }
         });
-
         return view;
     }
 
@@ -50,7 +46,7 @@ public class MainTabFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         final FloatingActionButton fab = (FloatingActionButton) getView().findViewById(R.id.add_ticket_fab);
-        fab.setOnClickListener(new AddTicketListener(((AppCompatActivity)getActivity())));
+        fab.setOnClickListener(new AddTicketAction(((AppCompatActivity)getActivity())));
 
     }
 

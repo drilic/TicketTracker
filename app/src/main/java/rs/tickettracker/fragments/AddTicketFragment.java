@@ -3,7 +3,6 @@ package rs.tickettracker.fragments;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -12,20 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 
-import com.activeandroid.query.Select;
-
 import java.util.ArrayList;
-import java.util.List;
 
 import model.Match;
-import model.Ticket;
 import rs.tickettracker.R;
 import rs.tickettracker.adapters.MatchAddTicketListAdapter;
-import rs.tickettracker.adapters.TicketListAdapter;
-import rs.tickettracker.dialogs.AddMatchDialog;
-import rs.tickettracker.listeners.AddTicketListener;
-import rs.tickettracker.listeners.OpenModalListener;
-import rs.tickettracker.listeners.SaveTicketListener;
+import rs.tickettracker.listeners.OpenModalAction;
+import rs.tickettracker.listeners.SaveTicketAction;
 import rs.tickettracker.listeners.interfaces.GetMatchFromDialogListener;
 
 /**
@@ -59,7 +51,7 @@ public class AddTicketFragment extends ListFragment implements AdapterView.OnIte
         getListView().setOnItemClickListener(this);
 
         FloatingActionButton addMatchFab = (FloatingActionButton) view.findViewById(R.id.add_match_fab);
-        addMatchFab.setOnClickListener(new OpenModalListener((AppCompatActivity) getActivity(), this));
+        addMatchFab.setOnClickListener(new OpenModalAction((AppCompatActivity) getActivity(), this));
         addMatchFab.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
@@ -70,7 +62,7 @@ public class AddTicketFragment extends ListFragment implements AdapterView.OnIte
         });
 
         FloatingActionButton saveTicketFab = (FloatingActionButton) view.findViewById(R.id.save_ticket_fab);
-        saveTicketFab.setOnClickListener(new SaveTicketListener((AppCompatActivity) getActivity(),arrayAdapter));
+        saveTicketFab.setOnClickListener(new SaveTicketAction((AppCompatActivity) getActivity(),arrayAdapter));
         saveTicketFab.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {

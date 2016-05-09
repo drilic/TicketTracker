@@ -2,26 +2,28 @@ package rs.tickettracker.fragments.tabs;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Toast;
 
 import model.Ticket;
 import rs.tickettracker.R;
 import rs.tickettracker.activities.TicketDetailActivity;
+import rs.tickettracker.adapters.TabFragmentAdapter;
 import rs.tickettracker.adapters.TicketListAdapter;
+import rs.tickettracker.helpers.ListViewActionHelper;
 
-public class LoseTicketsFragment extends ListFragment implements AdapterView.OnItemClickListener {
+public class LoseTicketsFragment extends ListFragment implements AdapterView.OnItemClickListener,
+        AdapterView.OnItemLongClickListener {
 
-    public LoseTicketsFragment() {
+    TicketListAdapter arrayAdapter;
+    TabFragmentAdapter tabMenager;
+
+    public LoseTicketsFragment(TabFragmentAdapter test) {
         // Required empty public constructor
+        this.tabMenager = test;
     }
 
     @Override
@@ -39,9 +41,11 @@ public class LoseTicketsFragment extends ListFragment implements AdapterView.OnI
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        TicketListAdapter arrayAdapter = new TicketListAdapter(getActivity(), R.layout.list_ticket_view, Ticket.getAllLose());
+        arrayAdapter = new TicketListAdapter(getActivity(), R.layout.list_ticket_view, Ticket.getAllLose());
         setListAdapter(arrayAdapter);
+        getListView().addFooterView(getLayoutInflater(savedInstanceState).inflate(R.layout.list_footer_view, null), null, false);
         getListView().setOnItemClickListener(this);
+        getListView().setOnItemLongClickListener(this);
     }
 
     @Override
@@ -49,5 +53,17 @@ public class LoseTicketsFragment extends ListFragment implements AdapterView.OnI
         Intent intent = new Intent(getActivity(), TicketDetailActivity.class);
         intent.putExtra("id", id);
         startActivity(intent);
+    }
+
+    public void updateAdapter(Ticket t) {
+        if (arrayAdapter.contains(t.getId())) {
+            arrayAdapter.remove(t);
+        }
+    }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        ListViewActionHelper.longClickAction(getActivity(), view, id, arrayAdapter, tabMenager);
+        return true;
     }
 }
