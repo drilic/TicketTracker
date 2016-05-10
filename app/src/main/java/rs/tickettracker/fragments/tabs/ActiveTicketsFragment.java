@@ -23,8 +23,11 @@ public class ActiveTicketsFragment extends ListFragment implements AdapterView.O
     TicketListAdapter arrayAdapter;
     TabFragmentAdapter tabMenager;
 
-    public ActiveTicketsFragment(TabFragmentAdapter tabManager) {
+    public ActiveTicketsFragment(){
         // Required empty public constructor
+    }
+
+    public ActiveTicketsFragment(TabFragmentAdapter tabManager) {
         this.tabMenager = tabManager;
     }
 

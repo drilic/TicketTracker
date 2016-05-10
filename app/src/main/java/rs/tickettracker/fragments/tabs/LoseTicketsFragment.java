@@ -22,8 +22,11 @@ public class LoseTicketsFragment extends ListFragment implements AdapterView.OnI
     TicketListAdapter arrayAdapter;
     TabFragmentAdapter tabMenager;
 
-    public LoseTicketsFragment(TabFragmentAdapter tabManager) {
+    public LoseTicketsFragment(){
         // Required empty public constructor
+    }
+
+    public LoseTicketsFragment(TabFragmentAdapter tabManager) {
         this.tabMenager = tabManager;
     }
 

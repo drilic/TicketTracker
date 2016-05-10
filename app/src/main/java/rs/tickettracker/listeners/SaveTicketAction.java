@@ -17,6 +17,8 @@ import model.Match;
 import model.Status;
 import model.Ticket;
 import rs.tickettracker.R;
+import rs.tickettracker.activities.MainActivity;
+import rs.tickettracker.activities.TicketDetailActivity;
 import rs.tickettracker.adapters.MatchAddTicketListAdapter;
 import rs.tickettracker.dialogs.AddMatchDialog;
 import rs.tickettracker.helpers.BackstackHelper;
@@ -30,7 +32,6 @@ public class SaveTicketAction implements View.OnClickListener {
     AppCompatActivity activity;
     MatchAddTicketListAdapter array;
     Ticket currentTicket;
-    static int UPDATE = -1;
 
     public SaveTicketAction(AppCompatActivity activity, MatchAddTicketListAdapter array, Ticket currentTicket) {
         this.activity = activity;
@@ -46,10 +47,8 @@ public class SaveTicketAction implements View.OnClickListener {
 
         double gain = Double.parseDouble(ticketGain.getText().toString());
         if (currentTicket == null) {
-            UPDATE = -1;
             currentTicket = new Ticket(ticketName.getText().toString(), s, gain);
         } else {
-            UPDATE = 1;
             currentTicket.ticketName = ticketName.getText().toString();
             currentTicket.possibleGain = gain;
         }
@@ -74,15 +73,15 @@ public class SaveTicketAction implements View.OnClickListener {
         } finally {
             ActiveAndroid.endTransaction();
         }
-        if (UPDATE == -1) {
+        if (activity instanceof MainActivity) {
             BackstackHelper.isFragmentBackPressed(activity);
-        } else {
+        } else if (activity instanceof TicketDetailActivity) {
             activity.getSupportFragmentManager().popBackStack();
             activity.getSupportActionBar().setTitle(currentTicket.ticketName);
             FrameLayout statusFrame = (FrameLayout) activity.findViewById(R.id.statusPanel);
             TextView statusValue = (TextView) activity.findViewById(R.id.detailStatus);
             statusValue.setText(currentTicket.status.status);
-            statusFrame.setBackgroundColor(activity.getResources().getColor(StatusHelper.getStatusColor(t.status.status, activity.getApplicationContext())));
+            statusFrame.setBackgroundColor(activity.getResources().getColor(StatusHelper.getStatusColor(currentTicket.status.status, activity.getApplicationContext())));
             statusFrame.setVisibility(View.VISIBLE);
         }
 

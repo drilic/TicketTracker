@@ -23,8 +23,11 @@ public class WinTicketsFragment extends ListFragment implements AdapterView.OnIt
     TicketListAdapter arrayAdapter;
     TabFragmentAdapter tabMenager;
 
-    public WinTicketsFragment(TabFragmentAdapter tabManager) {
+    public WinTicketsFragment() {
         // Required empty public constructor
+    }
+
+    public WinTicketsFragment(TabFragmentAdapter tabManager) {
         this.tabMenager = tabManager;
     }
 

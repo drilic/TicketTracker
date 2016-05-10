@@ -43,7 +43,6 @@ public class AddTicketFragment extends ListFragment implements GetMatchFromDialo
     }
 
     public AddTicketFragment(long id) {
-        // Required empty public constructor
         this.ticketId = id;
     }
 

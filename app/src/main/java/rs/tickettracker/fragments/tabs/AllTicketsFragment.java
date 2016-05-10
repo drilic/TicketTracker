@@ -23,8 +23,11 @@ public class AllTicketsFragment extends ListFragment implements OnItemClickListe
     TicketListAdapter arrayAdapter;
     TabFragmentAdapter tabMenager;
 
-    public AllTicketsFragment(TabFragmentAdapter tabManager) {
+    public AllTicketsFragment(){
         // Required empty public constructor
+    }
+
+    public AllTicketsFragment(TabFragmentAdapter tabManager) {
         this.tabMenager = tabManager;
     }
 

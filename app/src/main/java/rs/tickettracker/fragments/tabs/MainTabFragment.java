@@ -27,6 +27,10 @@ public class MainTabFragment extends Fragment {
     private FragmentManager fragmentManager;
     TabFragmentAdapter tabMenager;
 
+    public MainTabFragment() {
+
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
