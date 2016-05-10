@@ -1,5 +1,6 @@
 package rs.tickettracker.fragments.tabs;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -8,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +25,7 @@ public class MainTabFragment extends Fragment {
     public static TabLayout tabLayout;
     public static ViewPager viewPager;
     private FragmentManager fragmentManager;
+    TabFragmentAdapter tabMenager;
 
     @Nullable
     @Override
@@ -32,7 +35,8 @@ public class MainTabFragment extends Fragment {
         tabLayout = (TabLayout) view.findViewById(R.id.tabs);
 
         viewPager = (ViewPager) view.findViewById(R.id.viewpager);
-        viewPager.setAdapter(new TabFragmentAdapter(getChildFragmentManager()));
+        tabMenager = new TabFragmentAdapter(getChildFragmentManager());
+        viewPager.setAdapter(tabMenager);
         tabLayout.post(new Runnable() {
             @Override
             public void run() {
@@ -46,8 +50,15 @@ public class MainTabFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         final FloatingActionButton fab = (FloatingActionButton) getView().findViewById(R.id.add_ticket_fab);
-        fab.setOnClickListener(new AddTicketAction(((AppCompatActivity)getActivity())));
-
+        fab.setOnClickListener(new AddTicketAction(((AppCompatActivity) getActivity())));
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        for (Fragment f : getChildFragmentManager().getFragments()) {
+            if (f != null)
+                f.onActivityResult(requestCode, resultCode, data);
+        }
+    }
 }

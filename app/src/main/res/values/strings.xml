@@ -11,6 +11,7 @@
 
     <!-- Activities -->
     <string name="add_new_ticket">Add new ticket</string>
+    <string name="edit_ticket">Edit ticket</string>
 
     <!-- Drawer menu items -->
     <string name="tickets">Tickets</string>

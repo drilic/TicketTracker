@@ -21,15 +21,13 @@ public class DeleteTicketAction implements View.OnClickListener {
 
     Activity activity;
     long ticketId;
-    TicketListAdapter arrayAdapter;
     TabFragmentAdapter tabMenager;
     Button editButton;
     Button deleteButton;
 
-    public DeleteTicketAction(Activity activity, long ticketId, TicketListAdapter arrayAdapter, TabFragmentAdapter tabMenager, Button editButton, Button deleteButton) {
+    public DeleteTicketAction(Activity activity, long ticketId, TabFragmentAdapter tabMenager, Button editButton, Button deleteButton) {
         this.activity = activity;
         this.ticketId = ticketId;
-        this.arrayAdapter = arrayAdapter;
         this.tabMenager = tabMenager;
         this.editButton = editButton;
         this.deleteButton = deleteButton;
@@ -37,7 +35,7 @@ public class DeleteTicketAction implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        DeleteTicketDialog dialog = new DeleteTicketDialog(ticketId, arrayAdapter, tabMenager, editButton, deleteButton);
+        DeleteTicketDialog dialog = new DeleteTicketDialog(ticketId, tabMenager, editButton, deleteButton);
         dialog.show(activity.getFragmentManager(), "Dialog Fragment");
     }
 }

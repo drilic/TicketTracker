@@ -8,5 +8,5 @@
         android:title="@string/sync"
         android:icon="@drawable/sync_white_32"
         android:orderInCategory="100"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
 </menu>

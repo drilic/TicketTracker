@@ -23,10 +23,20 @@ public class AllTicketsFragment extends ListFragment implements OnItemClickListe
     TicketListAdapter arrayAdapter;
     TabFragmentAdapter tabMenager;
 
-
-    public AllTicketsFragment(TabFragmentAdapter test) {
+    public AllTicketsFragment(TabFragmentAdapter tabManager) {
         // Required empty public constructor
-        this.tabMenager = test;
+        this.tabMenager = tabManager;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+//        arrayAdapter.notifyDataSetChanged();
+//        if (tabMenager != null) {
+//            if (((ActiveTicketsFragment) tabMenager.getFragmentByPosition(1)).arrayAdapter != null) {
+//                ((ActiveTicketsFragment) tabMenager.getFragmentByPosition(1)).arrayAdapter.notifyDataSetChanged();
+//            }
+//        }
     }
 
     @Override
@@ -56,12 +66,31 @@ public class AllTicketsFragment extends ListFragment implements OnItemClickListe
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(getActivity(), TicketDetailActivity.class);
         intent.putExtra("id", id);
-        startActivity(intent);
+        startActivityForResult(intent, 1000);
     }
 
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-        ListViewActionHelper.longClickAction(getActivity(), view, id, arrayAdapter, tabMenager);
+        ListViewActionHelper.longClickAction(getActivity(), view, id, tabMenager);
         return true;
+    }
+
+    public void updateAdapter(Ticket t) {
+        if (arrayAdapter.contains(t.getId())) {
+            arrayAdapter.remove(t);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == 1000) {
+            long id = data.getExtras().getLong("retId");
+            arrayAdapter.removeById(id);
+            arrayAdapter.notifyDataSetChanged();
+            Ticket myT = Ticket.load(Ticket.class, id);
+            if (myT != null)
+                myT.delete();
+        }
+        arrayAdapter.notifyDataSetChanged();
     }
 }

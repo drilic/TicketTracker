@@ -1,6 +1,7 @@
 package rs.tickettracker.helpers;
 
 import android.app.Activity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
@@ -15,10 +16,10 @@ import rs.tickettracker.listeners.EditTicketAction;
  */
 public class ListViewActionHelper {
 
-    public static void longClickAction(Activity activity, View view, long id, TicketListAdapter arrayAdapter, TabFragmentAdapter
-            tabMenager) {
-        final Button editButton = (Button) view.findViewById(R.id.editTicketButton);
-        final Button deleteButton = (Button) view.findViewById(R.id.deleteTicketButton);
+    public static void longClickAction(Activity activity, View view, long id, TabFragmentAdapter
+            tabManager) {
+        Button editButton = (Button) view.findViewById(R.id.editTicketButton);
+        Button deleteButton = (Button) view.findViewById(R.id.deleteTicketButton);
         if (editButton.getVisibility() == View.VISIBLE) {
             editButton.setVisibility(View.GONE);
             deleteButton.setVisibility(View.GONE);
@@ -27,8 +28,7 @@ public class ListViewActionHelper {
             editButton.setVisibility(View.VISIBLE);
             deleteButton.setVisibility(View.VISIBLE);
         }
-        final long ticketId = id;
-        editButton.setOnClickListener(new EditTicketAction());
-        deleteButton.setOnClickListener(new DeleteTicketAction(activity, id, arrayAdapter, tabMenager, editButton, deleteButton));
+        editButton.setOnClickListener(new EditTicketAction((AppCompatActivity) activity, id));
+        deleteButton.setOnClickListener(new DeleteTicketAction(activity, id, tabManager, editButton, deleteButton));
     }
 }

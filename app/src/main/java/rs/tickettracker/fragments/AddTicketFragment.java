@@ -10,12 +10,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
+
+import com.activeandroid.query.Select;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import model.Match;
+import model.Ticket;
 import rs.tickettracker.R;
 import rs.tickettracker.adapters.MatchAddTicketListAdapter;
+import rs.tickettracker.listeners.EditTicketAction;
 import rs.tickettracker.listeners.OpenModalAction;
 import rs.tickettracker.listeners.SaveTicketAction;
 import rs.tickettracker.listeners.interfaces.GetMatchFromDialogListener;
@@ -23,12 +30,21 @@ import rs.tickettracker.listeners.interfaces.GetMatchFromDialogListener;
 /**
  * Created by gisko on 27-Apr-16.
  */
-public class AddTicketFragment extends ListFragment implements AdapterView.OnItemClickListener, GetMatchFromDialogListener {
+public class AddTicketFragment extends ListFragment implements GetMatchFromDialogListener,
+        AdapterView.OnItemLongClickListener {
 
-    MatchAddTicketListAdapter arrayAdapter=null;
+    MatchAddTicketListAdapter arrayAdapter = null;
+    long ticketId;
+    Ticket myTicket;
 
     public AddTicketFragment() {
         // Required empty public constructor
+        this.ticketId = -1; //for EDIT
+    }
+
+    public AddTicketFragment(long id) {
+        // Required empty public constructor
+        this.ticketId = id;
     }
 
     @Override
@@ -45,10 +61,21 @@ public class AddTicketFragment extends ListFragment implements AdapterView.OnIte
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        List<Match> myList = new Select().from(Match.class).execute();
-        arrayAdapter = new MatchAddTicketListAdapter(getActivity(), R.layout.list_match_add_ticket, new ArrayList<Match>());
+        if (ticketId == -1) {
+            arrayAdapter = new MatchAddTicketListAdapter(getActivity(), R.layout.list_match_add_ticket, new ArrayList<Match>());
+        } else {
+            myTicket = Ticket.load(Ticket.class, ticketId);
+            List<Match> matches = new Select().from(Match.class).where("ticket = ?", myTicket.getId()).execute();
+            arrayAdapter = new MatchAddTicketListAdapter(getActivity(), R.layout.list_match_add_ticket, matches);
+            EditText ticketName = (EditText) view.findViewById(R.id.add_ticket_name);
+            EditText ticketGain = (EditText) view.findViewById(R.id.add_ticket_gain);
+            ticketName.setText(myTicket.ticketName);
+            ticketGain.setText(String.valueOf(myTicket.possibleGain));
+        }
+
         setListAdapter(arrayAdapter);
-        getListView().setOnItemClickListener(this);
+        getListView().addFooterView(getLayoutInflater(savedInstanceState).inflate(R.layout.list_footer_view, null), null, false);
+        getListView().setOnItemLongClickListener(this);
 
         FloatingActionButton addMatchFab = (FloatingActionButton) view.findViewById(R.id.add_match_fab);
         addMatchFab.setOnClickListener(new OpenModalAction((AppCompatActivity) getActivity(), this));
@@ -62,7 +89,7 @@ public class AddTicketFragment extends ListFragment implements AdapterView.OnIte
         });
 
         FloatingActionButton saveTicketFab = (FloatingActionButton) view.findViewById(R.id.save_ticket_fab);
-        saveTicketFab.setOnClickListener(new SaveTicketAction((AppCompatActivity) getActivity(),arrayAdapter));
+        saveTicketFab.setOnClickListener(new SaveTicketAction((AppCompatActivity) getActivity(), arrayAdapter, myTicket));
         saveTicketFab.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
@@ -74,18 +101,38 @@ public class AddTicketFragment extends ListFragment implements AdapterView.OnIte
 
     }
 
-    private void getMatch(Match m) {
-        Log.i("***", m.toString());
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        //TODO: EDIT/DELETE
-    }
-
     @Override
     public void getMatchFromDialog(Match match) {
-        Log.i("****", match.toString() + " Bet: " + match.bet.betName);
         arrayAdapter.add(match);
+    }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+        final Button deleteButton = (Button) view.findViewById(R.id.deleteMatchButton);
+        if (deleteButton.getVisibility() == View.VISIBLE) {
+            deleteButton.setVisibility(View.GONE);
+            return true;
+        } else {
+            deleteButton.setVisibility(View.VISIBLE);
+        }
+        Match tempMatch = null;
+        if (id != -1) {
+            tempMatch = Match.load(Match.class, id);
+        }
+        final Match m = tempMatch;
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (m == null) {
+                    arrayAdapter.removeByPosition(position);
+                } else {
+                    arrayAdapter.remove(m);
+                }
+                deleteButton.setVisibility(View.GONE);
+
+            }
+        });
+
+        return true;
     }
 }

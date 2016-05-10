@@ -1,5 +1,6 @@
 package rs.tickettracker.fragments.tabs;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -21,9 +22,9 @@ public class LoseTicketsFragment extends ListFragment implements AdapterView.OnI
     TicketListAdapter arrayAdapter;
     TabFragmentAdapter tabMenager;
 
-    public LoseTicketsFragment(TabFragmentAdapter test) {
+    public LoseTicketsFragment(TabFragmentAdapter tabManager) {
         // Required empty public constructor
-        this.tabMenager = test;
+        this.tabMenager = tabManager;
     }
 
     @Override
@@ -52,7 +53,13 @@ public class LoseTicketsFragment extends ListFragment implements AdapterView.OnI
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(getActivity(), TicketDetailActivity.class);
         intent.putExtra("id", id);
-        startActivity(intent);
+        startActivityForResult(intent, 1000);
+    }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        ListViewActionHelper.longClickAction(getActivity(), view, id, tabMenager);
+        return true;
     }
 
     public void updateAdapter(Ticket t) {
@@ -62,8 +69,16 @@ public class LoseTicketsFragment extends ListFragment implements AdapterView.OnI
     }
 
     @Override
-    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-        ListViewActionHelper.longClickAction(getActivity(), view, id, arrayAdapter, tabMenager);
-        return true;
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == 1000) {
+            long id = data.getExtras().getLong("retId");
+            arrayAdapter.removeById(id);
+            arrayAdapter.notifyDataSetChanged();
+            Ticket myT = Ticket.load(Ticket.class, id);
+            if (myT != null)
+                myT.delete();
+        }
+        arrayAdapter.notifyDataSetChanged();
     }
+
 }

@@ -1,5 +1,6 @@
 package rs.tickettracker.fragments.tabs;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -22,9 +23,9 @@ public class WinTicketsFragment extends ListFragment implements AdapterView.OnIt
     TicketListAdapter arrayAdapter;
     TabFragmentAdapter tabMenager;
 
-    public WinTicketsFragment(TabFragmentAdapter test) {
+    public WinTicketsFragment(TabFragmentAdapter tabManager) {
         // Required empty public constructor
-        this.tabMenager = test;
+        this.tabMenager = tabManager;
     }
 
     @Override
@@ -53,7 +54,13 @@ public class WinTicketsFragment extends ListFragment implements AdapterView.OnIt
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(getActivity(), TicketDetailActivity.class);
         intent.putExtra("id", id);
-        startActivity(intent);
+        startActivityForResult(intent, 1000);
+    }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        ListViewActionHelper.longClickAction(getActivity(), view, id, tabMenager);
+        return true;
     }
 
     public void updateAdapter(Ticket t) {
@@ -63,8 +70,16 @@ public class WinTicketsFragment extends ListFragment implements AdapterView.OnIt
     }
 
     @Override
-    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-        ListViewActionHelper.longClickAction(getActivity(), view, id, arrayAdapter, tabMenager);
-        return true;
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == 1000) {
+            long id = data.getExtras().getLong("retId");
+            arrayAdapter.removeById(id);
+            arrayAdapter.notifyDataSetChanged();
+            Ticket myT = Ticket.load(Ticket.class, id);
+            if (myT != null)
+                myT.delete();
+        }
+        arrayAdapter.notifyDataSetChanged();
     }
+
 }

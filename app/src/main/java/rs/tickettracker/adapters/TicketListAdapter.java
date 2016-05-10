@@ -10,6 +10,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import model.Ticket;
@@ -62,6 +64,15 @@ public class TicketListAdapter extends ArrayAdapter<Ticket> {
         ImageView imgIcon;
         TextView txtTitle;
         TextView txtGain;
+    }
+
+    public void removeById(long id) {
+        for (Ticket t : new ArrayList<Ticket>(data)) {
+            if (t.getId() == id) {
+                data.remove(t);
+                break;
+            }
+        }
     }
 
     public boolean contains(long id) {

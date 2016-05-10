@@ -60,8 +60,13 @@ public class MatchAddTicketListAdapter extends ArrayAdapter<Match> {
         return row;
     }
 
-    public List<Match> getAllMatches() {
-        return data;
+    @Override
+    public long getItemId(int position) {
+        try {
+            return data.get(position).getId();
+        } catch (NullPointerException e) {
+            return -1;
+        }
     }
 
     static class MatchHolder {
@@ -70,6 +75,14 @@ public class MatchAddTicketListAdapter extends ArrayAdapter<Match> {
         TextView txtBet;
     }
 
+    public void removeByPosition(int position) {
+        Match m = data.get(position);
+        remove(m);
+    }
+
+    public List<Match> getAllMatches() {
+        return data;
+    }
 
     private static String fixTeamName(String teamName) {
         if (teamName.length() > 15) {
