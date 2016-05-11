@@ -36,6 +36,7 @@ public class TicketDetailActivity extends AppCompatActivity {
 
     public Ticket currentTicket;
     TabFragmentAdapter tabMenager;
+    Menu myMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +61,7 @@ public class TicketDetailActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.detail_menu_items, menu);
+        myMenu = menu;
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -95,9 +97,12 @@ public class TicketDetailActivity extends AppCompatActivity {
             return true;
         } else if (item.getItemId() == R.id.edit_item) {
             BackstackHelper.FragmentTransaction(getSupportFragmentManager().beginTransaction(),
-                    this.getResources().getString(R.string.add_new_ticket), new AddTicketFragment(currentTicket.getId()));
+                    this.getResources().getString(R.string.add_new_ticket), new AddTicketFragment(currentTicket.getId(), myMenu));
             getSupportActionBar().setTitle(this.getResources().getString(R.string.edit_ticket));
             FrameLayout statusFrame = (FrameLayout) findViewById(R.id.statusPanel);
+            for (int i = 0; i < myMenu.size(); i++)
+                myMenu.getItem(i).setVisible(false);
+
             statusFrame.setVisibility(View.GONE);
             return true;
         }
@@ -109,6 +114,8 @@ public class TicketDetailActivity extends AppCompatActivity {
         if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
             fillData(currentTicket);
         }
+        for (int i = 0; i < myMenu.size(); i++)
+            myMenu.getItem(i).setVisible(true);
         super.onBackPressed();
     }
 

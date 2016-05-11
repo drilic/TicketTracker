@@ -3,6 +3,7 @@ package rs.tickettracker.listeners;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -32,11 +33,13 @@ public class SaveTicketAction implements View.OnClickListener {
     AppCompatActivity activity;
     MatchAddTicketListAdapter array;
     Ticket currentTicket;
+    Menu myMenu;
 
-    public SaveTicketAction(AppCompatActivity activity, MatchAddTicketListAdapter array, Ticket currentTicket) {
+    public SaveTicketAction(AppCompatActivity activity, MatchAddTicketListAdapter array, Ticket currentTicket, Menu myMenu) {
         this.activity = activity;
         this.array = array;
         this.currentTicket = currentTicket;
+        this.myMenu = myMenu;
     }
 
     @Override
@@ -83,6 +86,8 @@ public class SaveTicketAction implements View.OnClickListener {
             statusValue.setText(currentTicket.status.status);
             statusFrame.setBackgroundColor(activity.getResources().getColor(StatusHelper.getStatusColor(currentTicket.status.status, activity.getApplicationContext())));
             statusFrame.setVisibility(View.VISIBLE);
+            for (int i = 0; i < myMenu.size(); i++)
+                myMenu.getItem(i).setVisible(true);
         }
 
     }

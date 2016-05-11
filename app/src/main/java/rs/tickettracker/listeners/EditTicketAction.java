@@ -21,7 +21,7 @@ public class EditTicketAction implements View.OnClickListener {
     long id;
 
 
-    public EditTicketAction(AppCompatActivity activity, long id){
+    public EditTicketAction(AppCompatActivity activity, long id) {
         this.id = id;
         this.fragmentManager = activity.getSupportFragmentManager();
         this.actionBar = activity.getSupportActionBar();
@@ -31,7 +31,7 @@ public class EditTicketAction implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         BackstackHelper.FragmentTransaction(fragmentManager.beginTransaction(),
-                activity.getResources().getString(R.string.add_new_ticket), new AddTicketFragment(id));
+                activity.getResources().getString(R.string.add_new_ticket), new AddTicketFragment(id, null));
         actionBar.setTitle(activity.getResources().getString(R.string.edit_ticket));
     }
 }

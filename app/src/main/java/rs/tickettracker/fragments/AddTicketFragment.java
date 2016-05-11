@@ -7,6 +7,7 @@ import android.support.v4.app.ListFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -36,14 +37,16 @@ public class AddTicketFragment extends ListFragment implements GetMatchFromDialo
     MatchAddTicketListAdapter arrayAdapter = null;
     long ticketId;
     Ticket myTicket;
+    Menu myMenu;
 
     public AddTicketFragment() {
         // Required empty public constructor
         this.ticketId = -1; //for EDIT
     }
 
-    public AddTicketFragment(long id) {
+    public AddTicketFragment(long id, Menu myMenu) {
         this.ticketId = id;
+        this.myMenu = myMenu;
     }
 
     @Override
@@ -88,7 +91,7 @@ public class AddTicketFragment extends ListFragment implements GetMatchFromDialo
         });
 
         FloatingActionButton saveTicketFab = (FloatingActionButton) view.findViewById(R.id.save_ticket_fab);
-        saveTicketFab.setOnClickListener(new SaveTicketAction((AppCompatActivity) getActivity(), arrayAdapter, myTicket));
+        saveTicketFab.setOnClickListener(new SaveTicketAction((AppCompatActivity) getActivity(), arrayAdapter, myTicket, myMenu));
         saveTicketFab.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
