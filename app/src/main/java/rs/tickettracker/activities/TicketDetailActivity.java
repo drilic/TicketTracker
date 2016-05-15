@@ -22,10 +22,6 @@ import rs.tickettracker.R;
 import rs.tickettracker.adapters.TabFragmentAdapter;
 import rs.tickettracker.fragments.AddTicketFragment;
 import rs.tickettracker.fragments.TicketDetailFragment;
-import rs.tickettracker.fragments.tabs.ActiveTicketsFragment;
-import rs.tickettracker.fragments.tabs.AllTicketsFragment;
-import rs.tickettracker.fragments.tabs.LoseTicketsFragment;
-import rs.tickettracker.fragments.tabs.WinTicketsFragment;
 import rs.tickettracker.helpers.BackstackHelper;
 import rs.tickettracker.helpers.StatusHelper;
 
@@ -86,9 +82,6 @@ public class TicketDetailActivity extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
-                    Intent returnIntent = new Intent();
-                    setResult(1001, returnIntent);
-                    finish();
                 }
             });
 

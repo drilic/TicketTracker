@@ -40,6 +40,34 @@ import rs.tickettracker.activities.MainActivity;
  */
 public class LiveScoreAPIHelper {
 
+    public static Match getMatchUpdate(long matchServiceId, long matchId) {
+        String baseUrl = "http://api.football-data.org/v1/fixtures/" + matchServiceId;
+        JSONObject serviceResult = requestWebService(baseUrl, "n1");
+        Match m = Match.load(Match.class, matchId);
+        try {
+            JSONObject match = serviceResult.getJSONObject("fixture");
+            String status = match.getString("status");
+            if (status.equals("FINISHED")) {
+                m.isFinished = true;
+            } else {
+                m.isFinished = false;
+            }
+            int homeScore = match.getJSONObject("result").optInt("goalsHomeTeam", -1);
+            int awayScore = match.getJSONObject("result").optInt("goalsAwayTeam", -1);
+            if (m.homeScore != homeScore) {
+                m.homeScore = homeScore;
+                //trigeer notification
+            } else if (m.awayScore != awayScore) {
+                m.awayScore = awayScore;
+                //trigger notification
+            }
+            m.save();
+        } catch (JSONException e) {
+            Log.i("API", "Get your API key for free");
+        }
+        return m;
+    }
+
     public static List<Match> findAllMatchesForLeague(int day, long league) {
         String baseUrl = "http://api.football-data.org/v1/soccerseasons/" + league + "/fixtures";
         String timeFrame = "";
@@ -68,7 +96,7 @@ public class LiveScoreAPIHelper {
                 Date date = format.parse(dateStart);
                 m.gameStart = date;
                 m.league = ligue;
-                String status = match.getString("homeTeamName");
+                String status = match.getString("status");
                 if (status.equals("FINISHED")) {
                     m.isFinished = true;
                 } else {
@@ -80,7 +108,6 @@ public class LiveScoreAPIHelper {
             }
 
         } catch (JSONException e) {
-            //TODO: Hendlaj ako nemas net
             Log.i("API", "Get your API key for free");
         } catch (ParseException e) {
             e.printStackTrace();

@@ -40,7 +40,7 @@ public class DeleteTicketDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getActivity());
-        builder.setTitle("Confirm");
+        builder.setTitle("Delete");
         final Ticket t = Ticket.load(Ticket.class, ticketId);
         builder.setMessage("Are you sure that u want to delete " + t.ticketName + "?");
         builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {

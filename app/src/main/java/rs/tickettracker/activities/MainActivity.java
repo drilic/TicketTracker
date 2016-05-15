@@ -1,5 +1,6 @@
 package rs.tickettracker.activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -16,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import rs.tickettracker.R;
+import rs.tickettracker.asyncTasks.SyncTask;
 import rs.tickettracker.fragments.tabs.MainTabFragment;
 import rs.tickettracker.helpers.BackstackHelper;
 import rs.tickettracker.listeners.NavigationOnClickListener;
@@ -62,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_sync) {
-//            return LiveScoreAPIHelper.syncLiveScore();
+            new SyncTask(this).execute();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -71,7 +73,28 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if (!BackstackHelper.isFragmentBackPressed(this)) {
-            super.onBackPressed();
+            if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
+                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
+                builder.setTitle("Exit");
+                builder.setMessage("Are you sure that u want to exit?");
+                builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        android.os.Process.killProcess(android.os.Process.myPid());
+                        System.exit(1);
+                    }
+                });
+                builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                builder.create().show();
+            }
+            else{
+                super.onBackPressed();
+            }
         }
     }
 
