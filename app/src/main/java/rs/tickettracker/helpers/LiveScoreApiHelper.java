@@ -1,5 +1,7 @@
 package rs.tickettracker.helpers;
 
+import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.StrictMode;
@@ -40,7 +42,7 @@ import rs.tickettracker.activities.MainActivity;
  */
 public class LiveScoreAPIHelper {
 
-    public static Match getMatchUpdate(long matchServiceId, long matchId) {
+    public static Match getMatchUpdate(long matchServiceId, long matchId, boolean showGoalsNotification, Context context) {
         String baseUrl = "http://api.football-data.org/v1/fixtures/" + matchServiceId;
         JSONObject serviceResult = requestWebService(baseUrl, "n1");
         Match m = Match.load(Match.class, matchId);
@@ -57,11 +59,20 @@ public class LiveScoreAPIHelper {
             if (m.homeScore != homeScore) {
                 m.homeScore = homeScore;
                 m.awayScore = awayScore;
-                //trigeer notification
-            } else if (m.awayScore != awayScore) {
+                if (showGoalsNotification) {
+                    Intent ints = new Intent(MainActivity.SYNC_DATA);
+                    ints.putExtra("MESSAGE_TEXT", m.homeTeam + " scored. Current result is: " + m.homeScore + ":" + m.awayScore);
+                    context.sendBroadcast(ints);
+                }
+            }
+            if (m.awayScore != awayScore) {
                 m.homeScore = homeScore;
                 m.awayScore = awayScore;
-                //trigger notification
+                if (showGoalsNotification) {
+                    Intent ints = new Intent(MainActivity.SYNC_DATA);
+                    ints.putExtra("MESSAGE_TEXT", m.awayScore + " scored. Current result is: " + m.homeScore + ":" + m.awayScore);
+                    context.sendBroadcast(ints);
+                }
             }
             m.save();
         } catch (JSONException e) {

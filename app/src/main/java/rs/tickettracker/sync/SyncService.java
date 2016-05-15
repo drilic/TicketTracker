@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.widget.Toast;
 
+import rs.tickettracker.activities.MainActivity;
 import rs.tickettracker.helpers.SyncHelper;
 import rs.tickettracker.sync.tasks.SyncTask;
 
@@ -17,11 +19,9 @@ public class SyncService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        boolean status = SyncHelper.getConnectivityStatus(getApplicationContext());
-        if (status) {
+        if (SyncHelper.getConnectivityStatus(getApplicationContext())) {
             new SyncTask(null, true, getApplicationContext()).execute();
         }
-        Log.i("***", "Start service");
         return START_STICKY;
     }
 

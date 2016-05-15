@@ -8,14 +8,17 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import rs.tickettracker.R;
+import rs.tickettracker.activities.MainActivity;
 import rs.tickettracker.activities.TTPreferenceActivity;
 import rs.tickettracker.fragments.AboutFragment;
 import rs.tickettracker.fragments.AddTicketFragment;
 import rs.tickettracker.fragments.LiveScoreFragment;
 import rs.tickettracker.fragments.tabs.MainTabFragment;
 import rs.tickettracker.helpers.BackstackHelper;
+import rs.tickettracker.helpers.SyncHelper;
 import rs.tickettracker.sync.tasks.SyncTask;
 
 /**
@@ -61,7 +64,11 @@ public class NavigationOnClickListener implements NavigationView.OnNavigationIte
                 }
                 break;
             case R.id.drawer_sync:
-                new SyncTask(activity, false, activity.getApplicationContext()).execute();
+                if (SyncHelper.getConnectivityStatus(activity.getApplicationContext())) {
+                    new SyncTask(activity, false, activity.getApplicationContext()).execute();
+                } else {
+                    Toast.makeText(activity, "No internet connection.", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.drawer_settings:
                 Intent preference = new Intent(activity.getApplicationContext(), TTPreferenceActivity.class);

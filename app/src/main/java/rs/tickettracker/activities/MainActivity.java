@@ -6,7 +6,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.provider.SyncStateContract;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -18,6 +21,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import rs.tickettracker.R;
 import rs.tickettracker.helpers.SyncHelper;
@@ -36,6 +40,10 @@ public class MainActivity extends AppCompatActivity {
     FragmentTransaction fragmentTransaction;
     ActionBar actionBar;
     CharSequence title;
+    SharedPreferences sharedPreferences;
+    AlarmManager manager;
+    SyncReceiver sync;
+    PendingIntent pendingIntent;
     public static String SYNC_DATA = "SYNC_DATA";
 
     @Override
@@ -61,22 +69,34 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout.setDrawerListener(drawerToggle);
         drawerToggle.syncState();
         navigationView.setNavigationItemSelectedListener(new NavigationOnClickListener(drawerLayout, this));
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         setUpReceiver();
     }
 
     private void setUpReceiver() {
-        SyncReceiver sync = new SyncReceiver();
+        sync = new SyncReceiver();
 
         Intent alarmIntent = new Intent(this, SyncService.class);
-        PendingIntent pendingIntent = PendingIntent.getService(this, 0, alarmIntent, 0);
+        pendingIntent = PendingIntent.getService(this, 0, alarmIntent, 0);
+        manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
-        AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        int interval = SyncHelper.calculateTimeTillNextSync(1);
-        manager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), interval, pendingIntent);
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(SYNC_DATA);
+    }
 
-        registerReceiver(sync, filter);
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (manager == null || sync == null || pendingIntent == null) {
+            setUpReceiver();
+        }
+        if (SyncHelper.getConnectivityStatus(getApplicationContext())) {
+            int interval = SyncHelper.calculateTimeTillNextSync(sharedPreferences.getInt("pref_sync_list_interval", 5));
+            manager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), interval, pendingIntent);
+            IntentFilter filter = new IntentFilter();
+            filter.addAction(SYNC_DATA);
+            registerReceiver(sync, filter);
+        } else {
+            Toast.makeText(MainActivity.this, "No internet connection.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -88,7 +108,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_sync) {
-            new SyncTask(this, false, getApplicationContext()).execute();
+            if (SyncHelper.getConnectivityStatus(getApplicationContext())) {
+                new SyncTask(this, false, getApplicationContext()).execute();
+            } else {
+                Toast.makeText(MainActivity.this, "No internet connection.", Toast.LENGTH_SHORT).show();
+            }
             return true;
         }
         return super.onOptionsItemSelected(item);

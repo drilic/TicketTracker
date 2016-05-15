@@ -12,6 +12,6 @@ public class SyncReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.i("***", "Recive trigger");
+        //TODO: Create notification
     }
 }

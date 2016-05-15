@@ -28,12 +28,10 @@
     <string-array name="pref_notification_type_entries">
         <item>All</item>
         <item>Ticket only</item>
-        <item>Goals only</item>
     </string-array>
     <string-array name="pref_notification_type_values">
         <item>all</item>
         <item>ticket</item>
-        <item>goals</item>
     </string-array>
 
     <string-array name="pref_leagues_entries">

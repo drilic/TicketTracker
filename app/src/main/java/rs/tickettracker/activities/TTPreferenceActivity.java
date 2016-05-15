@@ -13,7 +13,6 @@ public class TTPreferenceActivity extends PreferenceActivity{
     @SuppressWarnings("deprecation")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
 
         getFragmentManager().beginTransaction().replace(android.R.id.content,
@@ -33,7 +32,6 @@ public class TTPreferenceActivity extends PreferenceActivity{
 
     @Override
     protected void onResume() {
-        // TODO Auto-generated method stub
         super.onResume();
     }
 

@@ -1,6 +1,7 @@
 package rs.tickettracker.helpers;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -13,18 +14,31 @@ import model.Match;
 import model.Status;
 import model.Ticket;
 import rs.tickettracker.R;
+import rs.tickettracker.activities.MainActivity;
 
 /**
  * Created by gisko on 08-May-16.
  */
 public class SyncHelper {
 
-    public static void updateTicket(Ticket t) {
+    public static void updateTicket(Ticket t, boolean showNotification, Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         Status lose = new Select().from(Status.class).where("status = ?", "Lose").executeSingle();
         Status win = new Select().from(Status.class).where("status = ?", "Win").executeSingle();
+        boolean showGoalsNotification = false;
+        boolean allowNotification = false;
+        if (showNotification) {
+            allowNotification = sharedPreferences.getBoolean(context.getResources().getString(R.string.pref_notification), false);
+            if (allowNotification) {
+                String notificationType = sharedPreferences.getString("pref_notification_list_type", "all");
+                if (notificationType.equals("all")) {
+                    showGoalsNotification = true;
+                }
+            }
+        }
         if (t.status.status.equals("Active")) {
             for (Match m : t.matches()) {
-                LiveScoreAPIHelper.getMatchUpdate(m.matchServisId, m.getId());
+                LiveScoreAPIHelper.getMatchUpdate(m.matchServisId, m.getId(), showGoalsNotification, context);
             }
             for (Match m : t.matches()) {
                 if (m.isFinished) {
@@ -44,9 +58,25 @@ public class SyncHelper {
             if (ticketStatus.lose) {
                 t.status = lose;
                 t.save();
+                if (showNotification) {
+                    allowNotification = sharedPreferences.getBoolean(context.getResources().getString(R.string.pref_notification), false);
+                    if (allowNotification) {
+                        Intent ints = new Intent(MainActivity.SYNC_DATA);
+                        ints.putExtra("MESSAGE_TEXT", "You lose ticket " + t.ticketName + ".");
+                        context.sendBroadcast(ints);
+                    }
+                }
             } else {
                 t.status = win;
                 t.save();
+                if (showNotification) {
+                    allowNotification = sharedPreferences.getBoolean(context.getResources().getString(R.string.pref_notification), false);
+                    if (allowNotification) {
+                        Intent ints = new Intent(MainActivity.SYNC_DATA);
+                        ints.putExtra("MESSAGE_TEXT", "You won " + t.possibleGain + " on ticket " + t.ticketName + "!!!");
+                        context.sendBroadcast(ints);
+                    }
+                }
             }
         }
     }
@@ -109,18 +139,28 @@ public class SyncHelper {
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         boolean allowSync = sharedPreferences.getBoolean(context.getResources().getString(R.string.pref_sync), false);
-        String syncConnectionType = sharedPreferences.getString("pref_sync_type", "Both");
+        String syncConnectionType = sharedPreferences.getString("pref_sync_list_type", "both");
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        /*if (activeNetwork != null) {
-            if (activeNetwork.getType() == ConnectivityManager.TYPE_WIFI)
-                return TYPE_WIFI;
-
-            if (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE)
-                return TYPE_MOBILE;
+        if (allowSync) {
+            switch (syncConnectionType) {
+                case "both":
+                    if (activeNetwork != null) {
+                        if (activeNetwork.getType() == ConnectivityManager.TYPE_WIFI || activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE)
+                            return true;
+                    }
+                    break;
+                case "wifi":
+                    if (activeNetwork != null) {
+                        if (activeNetwork.getType() == ConnectivityManager.TYPE_WIFI)
+                            return true;
+                    }
+                    break;
+            }
         }
-        return TYPE_NOT_CONNECTED;*/
+
         return false;
     }
+
 
     public static int calculateTimeTillNextSync(int minutes) {
         return 1000 * 60 * minutes;
