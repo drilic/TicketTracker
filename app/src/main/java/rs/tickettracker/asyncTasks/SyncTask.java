@@ -3,13 +3,15 @@ package rs.tickettracker.asyncTasks;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 
 import com.activeandroid.query.Select;
 
 import java.util.List;
 
-import model.Status;
 import model.Ticket;
+import rs.tickettracker.fragments.interfaces.FragmentUpdateInterface;
 import rs.tickettracker.helpers.SyncHelper;
 
 /**
@@ -18,9 +20,11 @@ import rs.tickettracker.helpers.SyncHelper;
 public class SyncTask extends AsyncTask<Object, Void, Void> {
 
     ProgressDialog dialog = null;
+    AppCompatActivity activity = null;
 
     public SyncTask(Activity activity) {
         this.dialog = new ProgressDialog(activity);
+        this.activity = (AppCompatActivity) activity;
     }
 
     @Override
@@ -35,6 +39,12 @@ public class SyncTask extends AsyncTask<Object, Void, Void> {
     protected void onPostExecute(Void aVoid) {
         if (dialog != null && dialog.isShowing()) {
             dialog.dismiss();
+        }
+        if (activity != null) {
+            for (Fragment f : activity.getSupportFragmentManager().getFragments()) {
+                if (f != null && f instanceof FragmentUpdateInterface)
+                    ((FragmentUpdateInterface) f).updateArrayAdapter();
+            }
         }
     }
 

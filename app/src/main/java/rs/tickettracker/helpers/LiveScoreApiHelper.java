@@ -56,8 +56,10 @@ public class LiveScoreAPIHelper {
             int awayScore = match.getJSONObject("result").optInt("goalsAwayTeam", -1);
             if (m.homeScore != homeScore) {
                 m.homeScore = homeScore;
+                m.awayScore = awayScore;
                 //trigeer notification
             } else if (m.awayScore != awayScore) {
+                m.homeScore = homeScore;
                 m.awayScore = awayScore;
                 //trigger notification
             }

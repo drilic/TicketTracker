@@ -14,11 +14,12 @@ import rs.tickettracker.R;
 import rs.tickettracker.activities.TicketDetailActivity;
 import rs.tickettracker.adapters.TabFragmentAdapter;
 import rs.tickettracker.adapters.TicketListAdapter;
+import rs.tickettracker.fragments.interfaces.FragmentUpdateInterface;
 import rs.tickettracker.helpers.ListViewActionHelper;
 
 
 public class WinTicketsFragment extends ListFragment implements AdapterView.OnItemClickListener,
-        AdapterView.OnItemLongClickListener {
+        AdapterView.OnItemLongClickListener, FragmentUpdateInterface {
 
     TicketListAdapter arrayAdapter;
     TabFragmentAdapter tabMenager;
@@ -85,4 +86,9 @@ public class WinTicketsFragment extends ListFragment implements AdapterView.OnIt
         arrayAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void updateArrayAdapter() {
+        arrayAdapter.clear();
+        arrayAdapter.addAll(Ticket.getAllWin());
+    }
 }

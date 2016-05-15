@@ -14,16 +14,17 @@ import rs.tickettracker.R;
 import rs.tickettracker.activities.TicketDetailActivity;
 import rs.tickettracker.adapters.TabFragmentAdapter;
 import rs.tickettracker.adapters.TicketListAdapter;
+import rs.tickettracker.fragments.interfaces.FragmentUpdateInterface;
 import rs.tickettracker.helpers.ListViewActionHelper;
 
 
 public class AllTicketsFragment extends ListFragment implements OnItemClickListener,
-        AdapterView.OnItemLongClickListener {
+        AdapterView.OnItemLongClickListener,FragmentUpdateInterface {
 
     TicketListAdapter arrayAdapter;
     TabFragmentAdapter tabMenager;
 
-    public AllTicketsFragment(){
+    public AllTicketsFragment() {
         // Required empty public constructor
     }
 
@@ -34,12 +35,9 @@ public class AllTicketsFragment extends ListFragment implements OnItemClickListe
     @Override
     public void onResume() {
         super.onResume();
-//        arrayAdapter.notifyDataSetChanged();
-//        if (tabMenager != null) {
-//            if (((ActiveTicketsFragment) tabMenager.getFragmentByPosition(1)).arrayAdapter != null) {
-//                ((ActiveTicketsFragment) tabMenager.getFragmentByPosition(1)).arrayAdapter.notifyDataSetChanged();
-//            }
-//        }
+        if (arrayAdapter != null) {
+            arrayAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -95,5 +93,11 @@ public class AllTicketsFragment extends ListFragment implements OnItemClickListe
                 myT.delete();
         }
         arrayAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void updateArrayAdapter() {
+        arrayAdapter.clear();
+        arrayAdapter.addAll(Ticket.getAll());
     }
 }

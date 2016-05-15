@@ -12,17 +12,18 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import rs.tickettracker.R;
 import rs.tickettracker.asyncTasks.SyncTask;
+import rs.tickettracker.fragments.interfaces.FragmentUpdateInterface;
 import rs.tickettracker.fragments.tabs.MainTabFragment;
 import rs.tickettracker.helpers.BackstackHelper;
 import rs.tickettracker.listeners.NavigationOnClickListener;
 
 public class MainActivity extends AppCompatActivity {
+
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     FragmentManager fragmentManager;
@@ -91,8 +92,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
                 builder.create().show();
-            }
-            else{
+            } else {
                 super.onBackPressed();
             }
         }

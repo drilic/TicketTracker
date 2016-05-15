@@ -14,16 +14,17 @@ import rs.tickettracker.R;
 import rs.tickettracker.activities.TicketDetailActivity;
 import rs.tickettracker.adapters.TabFragmentAdapter;
 import rs.tickettracker.adapters.TicketListAdapter;
+import rs.tickettracker.fragments.interfaces.FragmentUpdateInterface;
 import rs.tickettracker.helpers.ListViewActionHelper;
 
 
 public class ActiveTicketsFragment extends ListFragment implements AdapterView.OnItemClickListener,
-        AdapterView.OnItemLongClickListener {
+        AdapterView.OnItemLongClickListener, FragmentUpdateInterface {
 
     TicketListAdapter arrayAdapter;
     TabFragmentAdapter tabMenager;
 
-    public ActiveTicketsFragment(){
+    public ActiveTicketsFragment() {
         // Required empty public constructor
     }
 
@@ -83,5 +84,11 @@ public class ActiveTicketsFragment extends ListFragment implements AdapterView.O
                 myT.delete();
         }
         arrayAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void updateArrayAdapter() {
+        arrayAdapter.clear();
+        arrayAdapter.addAll(Ticket.getAllActive());
     }
 }

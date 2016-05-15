@@ -2,6 +2,7 @@ package rs.tickettracker.activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -58,6 +59,8 @@ public class TicketDetailActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.detail_menu_items, menu);
         myMenu = menu;
+        if (!currentTicket.status.status.equals("Active"))
+            myMenu.findItem(R.id.edit_item).setVisible(false);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -107,8 +110,12 @@ public class TicketDetailActivity extends AppCompatActivity {
         if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
             fillData(currentTicket);
         }
-        for (int i = 0; i < myMenu.size(); i++)
-            myMenu.getItem(i).setVisible(true);
+        if (!currentTicket.status.status.equals("Active"))
+            myMenu.findItem(R.id.edit_item).setVisible(false);
+        else
+            myMenu.findItem(R.id.edit_item).setVisible(true);
+        
+        myMenu.findItem(R.id.delete_item).setVisible(true);
         super.onBackPressed();
     }
 

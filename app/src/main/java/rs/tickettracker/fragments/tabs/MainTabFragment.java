@@ -16,10 +16,11 @@ import android.view.ViewGroup;
 
 import rs.tickettracker.R;
 import rs.tickettracker.adapters.TabFragmentAdapter;
+import rs.tickettracker.fragments.interfaces.FragmentUpdateInterface;
 import rs.tickettracker.listeners.AddTicketAction;
 
 
-public class MainTabFragment extends Fragment {
+public class MainTabFragment extends Fragment implements FragmentUpdateInterface {
 
 
     public static TabLayout tabLayout;
@@ -29,6 +30,11 @@ public class MainTabFragment extends Fragment {
 
     public MainTabFragment() {
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     @Nullable
@@ -63,6 +69,14 @@ public class MainTabFragment extends Fragment {
         for (Fragment f : getChildFragmentManager().getFragments()) {
             if (f != null)
                 f.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    @Override
+    public void updateArrayAdapter() {
+        for (Fragment f : getChildFragmentManager().getFragments()) {
+            if (f != null && f instanceof FragmentUpdateInterface)
+                ((FragmentUpdateInterface) f).updateArrayAdapter();
         }
     }
 }

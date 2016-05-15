@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+import model.Ticket;
 import rs.tickettracker.R;
 import rs.tickettracker.adapters.TabFragmentAdapter;
 import rs.tickettracker.adapters.TicketListAdapter;
@@ -20,12 +21,14 @@ public class ListViewActionHelper {
             tabManager) {
         Button editButton = (Button) view.findViewById(R.id.editTicketButton);
         Button deleteButton = (Button) view.findViewById(R.id.deleteTicketButton);
-        if (editButton.getVisibility() == View.VISIBLE) {
+        if (deleteButton.getVisibility() == View.VISIBLE) {
             editButton.setVisibility(View.GONE);
             deleteButton.setVisibility(View.GONE);
             return;
         } else {
-            editButton.setVisibility(View.VISIBLE);
+            Ticket t = Ticket.load(Ticket.class, id);
+            if (t.status.status.equals("Active"))
+                editButton.setVisibility(View.VISIBLE);
             deleteButton.setVisibility(View.VISIBLE);
         }
         editButton.setOnClickListener(new EditTicketAction((AppCompatActivity) activity, id));
