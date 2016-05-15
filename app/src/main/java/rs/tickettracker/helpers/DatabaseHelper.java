@@ -1,6 +1,7 @@
 package rs.tickettracker.helpers;
 
 import android.app.Activity;
+import android.content.Context;
 import android.preference.PreferenceManager;
 
 import com.activeandroid.ActiveAndroid;
@@ -23,15 +24,15 @@ import rs.tickettracker.R;
  */
 public class DatabaseHelper {
 
-    public static void initializeDB(Activity activity) {
-        String db_name = activity.getResources().getString(R.string.db_name);
-        File dbFile = activity.getDatabasePath(db_name);
+    public static void initializeDB(Context context) {
+        String db_name = context.getResources().getString(R.string.db_name);
+        File dbFile = context.getDatabasePath(db_name);
         if (dbFile.exists()) {
-            Configuration dbConfiguration = new Configuration.Builder(activity).setDatabaseName(db_name).create();
+            Configuration dbConfiguration = new Configuration.Builder(context).setDatabaseName(db_name).create();
             ActiveAndroid.initialize(dbConfiguration);
         } else {
-            PreferenceManager.setDefaultValues(activity, R.xml.preferences, false);
-            Configuration dbConfiguration = new Configuration.Builder(activity).setDatabaseName(db_name).create();
+            PreferenceManager.setDefaultValues(context, R.xml.preferences, false);
+            Configuration dbConfiguration = new Configuration.Builder(context).setDatabaseName(db_name).create();
             ActiveAndroid.initialize(dbConfiguration);
             populateDB();
         }

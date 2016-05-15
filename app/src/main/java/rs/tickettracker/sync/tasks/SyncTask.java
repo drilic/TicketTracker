@@ -3,7 +3,6 @@ package rs.tickettracker.sync.tasks;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
@@ -15,8 +14,6 @@ import com.activeandroid.query.Select;
 import java.util.List;
 
 import model.Ticket;
-import rs.tickettracker.R;
-import rs.tickettracker.activities.MainActivity;
 import rs.tickettracker.fragments.interfaces.FragmentUpdateInterface;
 import rs.tickettracker.helpers.SyncHelper;
 
@@ -32,8 +29,10 @@ public class SyncTask extends AsyncTask<Object, Void, Void> {
     SharedPreferences sharedPreferences;
 
     public SyncTask(Activity activity, boolean showNotification, Context context) {
-        this.dialog = new ProgressDialog(activity);
-        this.activity = (AppCompatActivity) activity;
+        if (activity != null) {
+            this.dialog = new ProgressDialog(activity);
+            this.activity = (AppCompatActivity) activity;
+        }
         this.showNotification = showNotification;
         this.context = context;
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
@@ -55,7 +54,7 @@ public class SyncTask extends AsyncTask<Object, Void, Void> {
         if (activity != null) {
             for (Fragment f : activity.getSupportFragmentManager().getFragments()) {
                 if (f != null && f instanceof FragmentUpdateInterface)
-                    ((FragmentUpdateInterface) f).updateArrayAdapter();
+                    ((FragmentUpdateInterface) f).reloadTicketAdapter();
             }
         }
     }

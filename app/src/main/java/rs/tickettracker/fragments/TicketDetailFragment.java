@@ -41,8 +41,8 @@ public class TicketDetailFragment extends ListFragment implements AdapterView.On
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         Ticket t = new Select().from(Ticket.class).where("_id= ?", ticket_id).executeSingle();
         MatchDetailTicketListAdapter arrayAdapter = new MatchDetailTicketListAdapter(getActivity(),
                 R.layout.list_match_for_ticket_view, Match.getAllMatchesFromTicket(t));
@@ -52,6 +52,6 @@ public class TicketDetailFragment extends ListFragment implements AdapterView.On
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        
+
     }
 }

@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.activeandroid.query.Select;
 
@@ -105,6 +106,12 @@ public class AddTicketFragment extends ListFragment implements GetMatchFromDialo
 
     @Override
     public void getMatchFromDialog(Match match) {
+        for (Match m : arrayAdapter.getAllMatches()) {
+            if (m.matchServisId == match.matchServisId) {
+                Toast.makeText(getActivity(), "Can't add one match more than once.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
         arrayAdapter.add(match);
     }
 

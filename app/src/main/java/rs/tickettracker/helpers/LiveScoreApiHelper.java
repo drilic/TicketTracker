@@ -42,7 +42,7 @@ import rs.tickettracker.activities.MainActivity;
  */
 public class LiveScoreAPIHelper {
 
-    public static Match getMatchUpdate(long matchServiceId, long matchId, boolean showGoalsNotification, Context context) {
+    public static Match getMatchUpdate(long ticketId, long matchServiceId, long matchId, boolean showGoalsNotification, Context context) {
         String baseUrl = "http://api.football-data.org/v1/fixtures/" + matchServiceId;
         JSONObject serviceResult = requestWebService(baseUrl, "n1");
         Match m = Match.load(Match.class, matchId);
@@ -61,6 +61,7 @@ public class LiveScoreAPIHelper {
                 m.awayScore = awayScore;
                 if (showGoalsNotification) {
                     Intent ints = new Intent(MainActivity.SYNC_DATA);
+                    ints.putExtra("ticketId", ticketId);
                     ints.putExtra("MESSAGE_TEXT", m.homeTeam + " scored. Current result is: " + m.homeScore + ":" + m.awayScore);
                     context.sendBroadcast(ints);
                 }
@@ -70,6 +71,7 @@ public class LiveScoreAPIHelper {
                 m.awayScore = awayScore;
                 if (showGoalsNotification) {
                     Intent ints = new Intent(MainActivity.SYNC_DATA);
+                    ints.putExtra("ticketId", ticketId);
                     ints.putExtra("MESSAGE_TEXT", m.awayScore + " scored. Current result is: " + m.homeScore + ":" + m.awayScore);
                     context.sendBroadcast(ints);
                 }

@@ -10,6 +10,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.activeandroid.query.Select;
+
+import model.Status;
 import rs.tickettracker.R;
 import rs.tickettracker.activities.MainActivity;
 import rs.tickettracker.activities.TTPreferenceActivity;
@@ -67,7 +70,7 @@ public class NavigationOnClickListener implements NavigationView.OnNavigationIte
                 if (SyncHelper.getConnectivityStatus(activity.getApplicationContext())) {
                     new SyncTask(activity, false, activity.getApplicationContext()).execute();
                 } else {
-                    Toast.makeText(activity, "No internet connection.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity, "Check settings or net connection.", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.drawer_settings:

@@ -54,7 +54,7 @@ public class MatchAddTicketListAdapter extends ArrayAdapter<Match> {
         df.setTimeZone(TimeZone.getTimeZone("GMT+4"));
         String gameStart = df.format(match.gameStart);
 
-        holder.txtTitle.setText(fixTeamName(match.homeTeam) + " - " + fixTeamName(match.awayTeam));
+        holder.txtTitle.setText(Match.fixTeamName(match.homeTeam) + " - " + Match.fixTeamName(match.awayTeam));
         holder.txtDescription.setText(match.league.leagueName + ", " + gameStart);
         holder.txtBet.setText(match.bet.betName);
         return row;
@@ -84,14 +84,4 @@ public class MatchAddTicketListAdapter extends ArrayAdapter<Match> {
         return data;
     }
 
-    private static String fixTeamName(String teamName) {
-        if (teamName.length() > 15) {
-            String trimmedTeamName = teamName.substring(0, 15);
-            while (trimmedTeamName.charAt(trimmedTeamName.length() - 1) == ' ') {
-                trimmedTeamName = trimmedTeamName.substring(0, trimmedTeamName.length() - 1);
-            }
-            return trimmedTeamName + "...";
-        }
-        return teamName;
-    }
 }

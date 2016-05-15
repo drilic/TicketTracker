@@ -79,9 +79,9 @@ public class Match extends Model {
         return fixTeamName(homeTeam) + "-" + fixTeamName(awayTeam);
     }
 
-    private static String fixTeamName(String teamName) {
-        if (teamName.length() > 15) {
-            String trimmedTeamName = teamName.substring(0, 15);
+    public static String fixTeamName(String teamName) {
+        if (teamName.length() > 11) {
+            String trimmedTeamName = teamName.substring(0, 11);
             while (trimmedTeamName.charAt(trimmedTeamName.length() - 1) == ' ') {
                 trimmedTeamName = trimmedTeamName.substring(0, trimmedTeamName.length() - 1);
             }

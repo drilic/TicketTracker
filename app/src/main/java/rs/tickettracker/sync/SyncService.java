@@ -8,7 +8,11 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.activeandroid.query.Select;
+
+import model.Status;
 import rs.tickettracker.activities.MainActivity;
+import rs.tickettracker.helpers.DatabaseHelper;
 import rs.tickettracker.helpers.SyncHelper;
 import rs.tickettracker.sync.tasks.SyncTask;
 
@@ -20,6 +24,8 @@ public class SyncService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (SyncHelper.getConnectivityStatus(getApplicationContext())) {
+            DatabaseHelper.initializeDB(getApplicationContext());
+            Log.i("***", "Service trigger");
             new SyncTask(null, true, getApplicationContext()).execute();
         }
         return START_STICKY;

@@ -9,6 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+
 import model.Ticket;
 import rs.tickettracker.R;
 import rs.tickettracker.activities.TicketDetailActivity;
@@ -16,14 +19,15 @@ import rs.tickettracker.adapters.TabFragmentAdapter;
 import rs.tickettracker.adapters.TicketListAdapter;
 import rs.tickettracker.fragments.interfaces.FragmentUpdateInterface;
 import rs.tickettracker.helpers.ListViewActionHelper;
+import rs.tickettracker.sync.tasks.GetTicketFromDBTask;
 
 public class LoseTicketsFragment extends ListFragment implements AdapterView.OnItemClickListener,
-        AdapterView.OnItemLongClickListener,FragmentUpdateInterface {
+        AdapterView.OnItemLongClickListener, FragmentUpdateInterface {
 
     TicketListAdapter arrayAdapter;
     TabFragmentAdapter tabMenager;
 
-    public LoseTicketsFragment(){
+    public LoseTicketsFragment() {
         // Required empty public constructor
     }
 
@@ -44,9 +48,17 @@ public class LoseTicketsFragment extends ListFragment implements AdapterView.OnI
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        arrayAdapter = new TicketListAdapter(getActivity(), R.layout.list_ticket_view, Ticket.getAllLose());
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        List<Ticket> tickets = null;
+        try {
+            tickets = new GetTicketFromDBTask(getActivity()).execute("lose").get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        arrayAdapter = new TicketListAdapter(getActivity(), R.layout.list_ticket_view, tickets);
         setListAdapter(arrayAdapter);
         getListView().addFooterView(getLayoutInflater(savedInstanceState).inflate(R.layout.list_footer_view, null), null, false);
         getListView().setOnItemClickListener(this);
@@ -86,8 +98,16 @@ public class LoseTicketsFragment extends ListFragment implements AdapterView.OnI
     }
 
     @Override
-    public void updateArrayAdapter() {
+    public void reloadTicketAdapter() {
         arrayAdapter.clear();
-        arrayAdapter.addAll(Ticket.getAllLose());
+        List<Ticket> tickets = null;
+        try {
+            tickets = new GetTicketFromDBTask(getActivity()).execute("lose").get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        arrayAdapter.addAll(tickets);
     }
 }

@@ -59,7 +59,7 @@ public class MatchLiveScoreListAdapter extends ArrayAdapter<Match> {
         df.setTimeZone(TimeZone.getTimeZone("GMT+4"));
         String gameStart = df.format(match.gameStart);
 
-        holder.txtTitle.setText(fixTeamName(match.homeTeam) + " - " + fixTeamName(match.awayTeam));
+        holder.txtTitle.setText(Match.fixTeamName(match.homeTeam) + " - " + Match.fixTeamName(match.awayTeam));
         holder.txtDescription.setText(match.league.leagueName + ", " + gameStart);
         if (match.homeScore == -1) {
             holder.txtScores.setText("N : N");
@@ -73,17 +73,5 @@ public class MatchLiveScoreListAdapter extends ArrayAdapter<Match> {
         TextView txtTitle;
         TextView txtDescription;
         TextView txtScores;
-    }
-
-
-    private static String fixTeamName(String teamName) {
-        if (teamName.length() > 15) {
-            String trimmedTeamName = teamName.substring(0, 15);
-            while (trimmedTeamName.charAt(trimmedTeamName.length() - 1) == ' ') {
-                trimmedTeamName = trimmedTeamName.substring(0, trimmedTeamName.length() - 1);
-            }
-            return trimmedTeamName + "...";
-        }
-        return teamName;
     }
 }

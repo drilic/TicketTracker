@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import rs.tickettracker.R;
 import rs.tickettracker.helpers.MailHelper;
@@ -43,7 +44,7 @@ public class AboutFragment extends Fragment {
                     startActivity(Intent.createChooser(MailHelper.sendEmail(), "Send mail..."));
                     Log.i("Loggin MAIL", "Finished sending email...");
                 } catch (android.content.ActivityNotFoundException ex) {
-//            Toast.makeText(MainActivity.this, "There is no email client installed.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "There is no email client installed.", Toast.LENGTH_SHORT).show();
                 }
 
 

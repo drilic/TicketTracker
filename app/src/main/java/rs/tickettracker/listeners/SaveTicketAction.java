@@ -1,5 +1,6 @@
 package rs.tickettracker.listeners;
 
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.query.Select;
@@ -22,6 +24,7 @@ import rs.tickettracker.activities.MainActivity;
 import rs.tickettracker.activities.TicketDetailActivity;
 import rs.tickettracker.adapters.MatchAddTicketListAdapter;
 import rs.tickettracker.dialogs.AddMatchDialog;
+import rs.tickettracker.fragments.interfaces.FragmentUpdateInterface;
 import rs.tickettracker.helpers.BackstackHelper;
 import rs.tickettracker.helpers.StatusHelper;
 
@@ -45,10 +48,28 @@ public class SaveTicketAction implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         EditText ticketName = (EditText) activity.findViewById(R.id.add_ticket_name);
+        if (ticketName.getText().toString().trim().equals("")) {
+            Toast.makeText(activity.getApplicationContext(), "Ticket name is required.", Toast.LENGTH_SHORT).show();
+            return;
+        }
         EditText ticketGain = (EditText) activity.findViewById(R.id.add_ticket_gain);
         Status s = new Select().from(Status.class).where("status = ?", "Active").executeSingle();
 
-        double gain = Double.parseDouble(ticketGain.getText().toString());
+        double gain = 0;
+        try {
+            gain = Double.parseDouble(ticketGain.getText().toString());
+        } catch (Exception e) {
+            Toast.makeText(activity.getApplicationContext(), "Possible gain must be double value.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (array.getAllMatches().size() == 0) {
+            Toast.makeText(activity.getApplicationContext(), "Can't save ticket without matches.", Toast.LENGTH_SHORT).show();
+            return;
+        } else if (array.getAllMatches().size() > 20) {
+            Toast.makeText(activity.getApplicationContext(), "Max matches per ticket is 20.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         if (currentTicket == null) {
             currentTicket = new Ticket(ticketName.getText().toString(), s, gain);
         } else {

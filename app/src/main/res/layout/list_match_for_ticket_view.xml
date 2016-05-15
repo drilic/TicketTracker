@@ -1,47 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/item_icon"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:contentDescription="@null"
-        android:src="@drawable/checkbox_marked_circle"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_margin="5dp" />
+        android:layout_margin="5dp"
+        android:contentDescription="@null"
+        android:src="@drawable/checkbox_marked_circle" />
 
     <TextView
         android:id="@+id/matchTeam"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:gravity="center_vertical"
-        android:textColor="@color/colorPrimaryDark"
-        android:textStyle="bold"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/item_icon"
         android:layout_toEndOf="@+id/item_icon"
+        android:layout_toRightOf="@+id/item_icon"
+        android:gravity="center_vertical"
         android:paddingLeft="5dp"
-        android:paddingTop="5dp"/>
+        android:paddingRight="10dp"
+        android:paddingTop="5dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
-    <TextView android:id="@+id/description"
+    <TextView
+        android:id="@+id/description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/matchTeam"
-        android:layout_toRightOf="@+id/item_icon"
         android:layout_toEndOf="@+id/item_icon"
-        android:paddingLeft="5dp"/>
+        android:layout_toRightOf="@+id/item_icon"
+        android:paddingLeft="5dp" />
 
 
-    <TextView android:id="@+id/scores"
+    <TextView
+        android:id="@+id/scores"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:textStyle="bold"
+        android:layout_alignParentRight="true"
+        android:layout_margin="15dp"
         android:textSize="18dp"
-        android:layout_margin="15dp" />
+        android:textStyle="bold" />
 </RelativeLayout>

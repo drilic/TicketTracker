@@ -38,7 +38,7 @@ public class SyncHelper {
         }
         if (t.status.status.equals("Active")) {
             for (Match m : t.matches()) {
-                LiveScoreAPIHelper.getMatchUpdate(m.matchServisId, m.getId(), showGoalsNotification, context);
+                LiveScoreAPIHelper.getMatchUpdate(t.getId(), m.matchServisId, m.getId(), showGoalsNotification, context);
             }
             for (Match m : t.matches()) {
                 if (m.isFinished) {
@@ -62,6 +62,7 @@ public class SyncHelper {
                     allowNotification = sharedPreferences.getBoolean(context.getResources().getString(R.string.pref_notification), false);
                     if (allowNotification) {
                         Intent ints = new Intent(MainActivity.SYNC_DATA);
+                        ints.putExtra("ticketId", t.getId());
                         ints.putExtra("MESSAGE_TEXT", "You lose ticket " + t.ticketName + ".");
                         context.sendBroadcast(ints);
                     }
@@ -73,6 +74,7 @@ public class SyncHelper {
                     allowNotification = sharedPreferences.getBoolean(context.getResources().getString(R.string.pref_notification), false);
                     if (allowNotification) {
                         Intent ints = new Intent(MainActivity.SYNC_DATA);
+                        ints.putExtra("ticketId", t.getId());
                         ints.putExtra("MESSAGE_TEXT", "You won " + t.possibleGain + " on ticket " + t.ticketName + "!!!");
                         context.sendBroadcast(ints);
                     }

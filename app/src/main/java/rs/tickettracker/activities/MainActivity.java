@@ -23,6 +23,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.activeandroid.query.Select;
+
+import model.Status;
 import rs.tickettracker.R;
 import rs.tickettracker.helpers.SyncHelper;
 import rs.tickettracker.sync.SyncReceiver;
@@ -89,13 +92,14 @@ public class MainActivity extends AppCompatActivity {
             setUpReceiver();
         }
         if (SyncHelper.getConnectivityStatus(getApplicationContext())) {
-            int interval = SyncHelper.calculateTimeTillNextSync(sharedPreferences.getInt("pref_sync_list_interval", 5));
+            int syncIntervalFromSettings = Integer.parseInt(sharedPreferences.getString("pref_sync_list_interval", "5"));
+            int interval = SyncHelper.calculateTimeTillNextSync(syncIntervalFromSettings);
             manager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), interval, pendingIntent);
             IntentFilter filter = new IntentFilter();
             filter.addAction(SYNC_DATA);
             registerReceiver(sync, filter);
         } else {
-            Toast.makeText(MainActivity.this, "No internet connection.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "Check settings or net connection.", Toast.LENGTH_SHORT).show();
         }
     }
 

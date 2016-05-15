@@ -9,6 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+
 import model.Ticket;
 import rs.tickettracker.R;
 import rs.tickettracker.activities.TicketDetailActivity;
@@ -16,6 +19,7 @@ import rs.tickettracker.adapters.TabFragmentAdapter;
 import rs.tickettracker.adapters.TicketListAdapter;
 import rs.tickettracker.fragments.interfaces.FragmentUpdateInterface;
 import rs.tickettracker.helpers.ListViewActionHelper;
+import rs.tickettracker.sync.tasks.GetTicketFromDBTask;
 
 
 public class ActiveTicketsFragment extends ListFragment implements AdapterView.OnItemClickListener,
@@ -45,9 +49,17 @@ public class ActiveTicketsFragment extends ListFragment implements AdapterView.O
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        arrayAdapter = new TicketListAdapter(getActivity(), R.layout.list_ticket_view, Ticket.getAllActive());
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        List<Ticket> tickets = null;
+        try {
+            tickets = new GetTicketFromDBTask(getActivity()).execute("active").get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        arrayAdapter = new TicketListAdapter(getActivity(), R.layout.list_ticket_view, tickets);
         setListAdapter(arrayAdapter);
         getListView().addFooterView(getLayoutInflater(savedInstanceState).inflate(R.layout.list_footer_view, null), null, false);
         getListView().setOnItemClickListener(this);
@@ -87,8 +99,22 @@ public class ActiveTicketsFragment extends ListFragment implements AdapterView.O
     }
 
     @Override
-    public void updateArrayAdapter() {
+    public void reloadTicketAdapter() {
         arrayAdapter.clear();
-        arrayAdapter.addAll(Ticket.getAllActive());
+        List<Ticket> tickets = null;
+        try {
+            tickets = new GetTicketFromDBTask(getActivity()).execute("active").get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        arrayAdapter.addAll(tickets);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedState) {
+        super.onSaveInstanceState(savedState);
+
     }
 }

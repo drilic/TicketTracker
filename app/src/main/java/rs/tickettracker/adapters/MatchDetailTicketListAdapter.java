@@ -52,13 +52,13 @@ public class MatchDetailTicketListAdapter extends ArrayAdapter<Match> {
         }
 
         Match match = data.get(position);
-        holder.txtTitle.setText(fixTeamName(match.homeTeam) + " - "+fixTeamName(match.awayTeam));
+        holder.txtTitle.setText(Match.fixTeamName(match.homeTeam) + " - " + Match.fixTeamName(match.awayTeam));
         holder.txtDescription.setText(match.league.leagueName + ", " + "Bet: " + match.bet.betName);
         holder.imgIcon.setImageResource(StatusHelper.getStatusIconType(match.status.status, context));
-        if(match.homeScore==-1){
+        if (match.homeScore == -1) {
             holder.txtScores.setText("N : N");
-        }else{
-            holder.txtScores.setText(match.homeScore+" : "+match.awayScore);
+        } else {
+            holder.txtScores.setText(match.homeScore + " : " + match.awayScore);
         }
 
         return row;
@@ -69,17 +69,6 @@ public class MatchDetailTicketListAdapter extends ArrayAdapter<Match> {
         TextView txtTitle;
         TextView txtDescription;
         TextView txtScores;
-    }
-
-    private static String fixTeamName(String teamName) {
-        if (teamName.length() > 15) {
-            String trimmedTeamName = teamName.substring(0, 15);
-            while (trimmedTeamName.charAt(trimmedTeamName.length() - 1) == ' ') {
-                trimmedTeamName = trimmedTeamName.substring(0, trimmedTeamName.length() - 1);
-            }
-            return trimmedTeamName + "...";
-        }
-        return teamName;
     }
 
     @Override

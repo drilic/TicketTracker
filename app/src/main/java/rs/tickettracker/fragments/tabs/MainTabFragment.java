@@ -9,7 +9,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,6 +60,7 @@ public class MainTabFragment extends Fragment implements FragmentUpdateInterface
         super.onViewCreated(view, savedInstanceState);
         final FloatingActionButton fab = (FloatingActionButton) getView().findViewById(R.id.add_ticket_fab);
         fab.setOnClickListener(new AddTicketAction(((AppCompatActivity) getActivity())));
+
     }
 
     @Override
@@ -73,10 +73,10 @@ public class MainTabFragment extends Fragment implements FragmentUpdateInterface
     }
 
     @Override
-    public void updateArrayAdapter() {
+    public void reloadTicketAdapter() {
         for (Fragment f : getChildFragmentManager().getFragments()) {
             if (f != null && f instanceof FragmentUpdateInterface)
-                ((FragmentUpdateInterface) f).updateArrayAdapter();
+                ((FragmentUpdateInterface) f).reloadTicketAdapter();
         }
     }
 }
