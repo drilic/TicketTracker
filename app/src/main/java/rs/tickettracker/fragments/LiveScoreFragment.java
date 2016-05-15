@@ -14,7 +14,7 @@ import java.util.Set;
 import fr.ganfra.materialspinner.MaterialSpinner;
 import rs.tickettracker.R;
 import rs.tickettracker.helpers.ComponentsHelper;
-import rs.tickettracker.asyncTasks.LiveScoreTask;
+import rs.tickettracker.sync.tasks.LiveScoreTask;
 
 
 public class LiveScoreFragment extends Fragment {

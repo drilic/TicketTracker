@@ -8,18 +8,15 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.view.View;
 
-import model.Ticket;
 import rs.tickettracker.R;
 import rs.tickettracker.activities.TTPreferenceActivity;
-import rs.tickettracker.asyncTasks.LiveScoreTask;
-import rs.tickettracker.asyncTasks.SyncTask;
 import rs.tickettracker.fragments.AboutFragment;
 import rs.tickettracker.fragments.AddTicketFragment;
 import rs.tickettracker.fragments.LiveScoreFragment;
 import rs.tickettracker.fragments.tabs.MainTabFragment;
 import rs.tickettracker.helpers.BackstackHelper;
+import rs.tickettracker.sync.tasks.SyncTask;
 
 /**
  * Created by gisko on 29-Apr-16.
@@ -64,7 +61,7 @@ public class NavigationOnClickListener implements NavigationView.OnNavigationIte
                 }
                 break;
             case R.id.drawer_sync:
-                new SyncTask(activity).execute();
+                new SyncTask(activity, false, activity.getApplicationContext()).execute();
                 break;
             case R.id.drawer_settings:
                 Intent preference = new Intent(activity.getApplicationContext(), TTPreferenceActivity.class);

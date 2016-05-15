@@ -14,14 +14,20 @@
         android:supportsRtl="true"
         android:theme="@style/MyMaterialTheme">
         <!--android:name="com.activeandroid.app.Application">-->
-        <meta-data android:name="AA_DB_NAME" android:value="TicketTracker.db" />
-        <meta-data android:name="AA_DB_VERSION" android:value="1" />
+        <meta-data
+            android:name="AA_DB_NAME"
+            android:value="TicketTracker.db" />
+        <meta-data
+            android:name="AA_DB_VERSION"
+            android:value="1" />
+
+        <receiver android:name="rs.tickettracker.sync.SyncReceiver"></receiver>
+        <service android:name="rs.tickettracker.sync.SyncService"></service>
 
         <activity
             android:name=".activities.MainActivity"
             android:label="@string/tickets" />
-        <activity
-            android:name=".activities.TicketDetailActivity" />
+        <activity android:name=".activities.TicketDetailActivity" />
         <activity
             android:name=".activities.SplashActivity"
             android:label="@string/ticket_tracker">

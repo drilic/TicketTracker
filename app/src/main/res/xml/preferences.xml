@@ -21,18 +21,19 @@
             android:title="@string/pref_sync_interval" />
 
         <ListPreference
+            android:defaultValue="wifi"
             android:dependency="@string/pref_sync"
             android:dialogTitle="@string/pref_sync_type"
             android:entries="@array/pref_sync_type_entries"
             android:entryValues="@array/pref_sync_type_values"
             android:key="@string/pref_sync_list_type"
             android:summary="%s"
-            android:title="@string/pref_sync_type"
-            android:defaultValue="wifi"/>
+            android:title="@string/pref_sync_type" />
 
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:dependency="@string/pref_sync"
         android:key="@string/notification_settings"
         android:title="@string/pref_notification_settings">
 
@@ -43,14 +44,14 @@
             android:title="@string/pref_notification_title" />
 
         <ListPreference
+            android:defaultValue="all"
             android:dependency="@string/pref_notification"
             android:dialogTitle="@string/pref_notification_type"
             android:entries="@array/pref_notification_type_entries"
             android:entryValues="@array/pref_notification_type_values"
             android:key="@string/pref_notification_list_type"
             android:summary="%s"
-            android:title="@string/pref_notification_type"
-            android:defaultValue="all"/>
+            android:title="@string/pref_notification_type" />
 
     </PreferenceCategory>
 

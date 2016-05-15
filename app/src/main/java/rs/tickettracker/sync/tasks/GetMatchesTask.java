@@ -1,23 +1,15 @@
-package rs.tickettracker.asyncTasks;
+package rs.tickettracker.sync.tasks;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 
 import fr.ganfra.materialspinner.MaterialSpinner;
 import model.Match;
-import rs.tickettracker.R;
-import rs.tickettracker.adapters.MatchLiveScoreListAdapter;
-import rs.tickettracker.helpers.ComponentsHelper;
 import rs.tickettracker.helpers.LiveScoreAPIHelper;
 
 /**

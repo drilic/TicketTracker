@@ -22,7 +22,7 @@ import model.Bet;
 import model.League;
 import model.Match;
 import rs.tickettracker.R;
-import rs.tickettracker.asyncTasks.GetMatchesTask;
+import rs.tickettracker.sync.tasks.GetMatchesTask;
 import rs.tickettracker.helpers.ComponentsHelper;
 import rs.tickettracker.listeners.interfaces.GetMatchFromDialogListener;
 

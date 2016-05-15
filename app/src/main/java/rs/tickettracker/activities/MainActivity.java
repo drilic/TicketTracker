@@ -1,7 +1,11 @@
 package rs.tickettracker.activities;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -16,11 +20,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import rs.tickettracker.R;
-import rs.tickettracker.asyncTasks.SyncTask;
-import rs.tickettracker.fragments.interfaces.FragmentUpdateInterface;
+import rs.tickettracker.helpers.SyncHelper;
+import rs.tickettracker.sync.SyncReceiver;
+import rs.tickettracker.sync.SyncService;
 import rs.tickettracker.fragments.tabs.MainTabFragment;
 import rs.tickettracker.helpers.BackstackHelper;
 import rs.tickettracker.listeners.NavigationOnClickListener;
+import rs.tickettracker.sync.tasks.SyncTask;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     FragmentTransaction fragmentTransaction;
     ActionBar actionBar;
     CharSequence title;
+    public static String SYNC_DATA = "SYNC_DATA";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +61,22 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout.setDrawerListener(drawerToggle);
         drawerToggle.syncState();
         navigationView.setNavigationItemSelectedListener(new NavigationOnClickListener(drawerLayout, this));
+        setUpReceiver();
+    }
+
+    private void setUpReceiver() {
+        SyncReceiver sync = new SyncReceiver();
+
+        Intent alarmIntent = new Intent(this, SyncService.class);
+        PendingIntent pendingIntent = PendingIntent.getService(this, 0, alarmIntent, 0);
+
+        AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        int interval = SyncHelper.calculateTimeTillNextSync(1);
+        manager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), interval, pendingIntent);
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(SYNC_DATA);
+
+        registerReceiver(sync, filter);
     }
 
     @Override
@@ -65,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_sync) {
-            new SyncTask(this).execute();
+            new SyncTask(this, false, getApplicationContext()).execute();
             return true;
         }
         return super.onOptionsItemSelected(item);
