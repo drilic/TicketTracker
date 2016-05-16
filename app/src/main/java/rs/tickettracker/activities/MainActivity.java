@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     SyncReceiver sync;
     PendingIntent pendingIntent;
     public static String SYNC_DATA = "SYNC_DATA";
+    public static boolean NEED_SYNC = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

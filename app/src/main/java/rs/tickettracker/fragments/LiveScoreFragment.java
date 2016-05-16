@@ -38,6 +38,13 @@ public class LiveScoreFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        //TODO: Reload live sync-a na on resume
+        //TODO: IF size is 0 throw Toast
+    }
+
+    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
     }
@@ -55,7 +62,9 @@ public class LiveScoreFragment extends Fragment {
                 spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                        int day = Integer.parseInt(getResources().getStringArray(R.array.date_values_list)[position]);
+                        int day = 1;
+                        if (position != -1)
+                            day = Integer.parseInt(getResources().getStringArray(R.array.date_values_list)[position]);
                         new LiveScoreTask(getActivity()).execute(selectedList, day);
                     }
 

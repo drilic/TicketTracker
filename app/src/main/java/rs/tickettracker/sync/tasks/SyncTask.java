@@ -8,12 +8,15 @@ import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.activeandroid.query.Select;
 
 import java.util.List;
 
 import model.Ticket;
+import rs.tickettracker.activities.MainActivity;
 import rs.tickettracker.fragments.interfaces.FragmentUpdateInterface;
 import rs.tickettracker.helpers.SyncHelper;
 
@@ -63,6 +66,15 @@ public class SyncTask extends AsyncTask<Object, Void, Void> {
     protected Void doInBackground(Object... params) {
         model.Status active = new Select().from(model.Status.class).where("status = ?", "Active").executeSingle();
         List<Ticket> tickets = new Select().from(Ticket.class).where("status = ?", active.getId()).execute();
+        if (tickets.size() == 0 && activity != null) {
+            activity.runOnUiThread(new Runnable() {
+                public void run() {
+                    Toast.makeText(activity, "There is no active tickets.", Toast.LENGTH_SHORT).show();
+                }
+            });
+            return null;
+        }
+        MainActivity.NEED_SYNC = true;
         for (Ticket t : tickets) {
             SyncHelper.updateTicket(t, showNotification, context);
         }

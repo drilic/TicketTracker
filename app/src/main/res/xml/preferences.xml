@@ -67,5 +67,6 @@
             android:key="@string/pref_leagues_list_type"
             android:summary="@string/pref_leagues_summ"
             android:title="@string/pref_leagues_type" />
+
     </PreferenceCategory>
 </PreferenceScreen>

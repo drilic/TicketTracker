@@ -2,8 +2,12 @@ package rs.tickettracker.fragments.tabs;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +18,7 @@ import java.util.concurrent.ExecutionException;
 
 import model.Ticket;
 import rs.tickettracker.R;
+import rs.tickettracker.activities.MainActivity;
 import rs.tickettracker.activities.TicketDetailActivity;
 import rs.tickettracker.adapters.TabFragmentAdapter;
 import rs.tickettracker.adapters.TicketListAdapter;
@@ -41,7 +46,13 @@ public class ActiveTicketsFragment extends ListFragment implements AdapterView.O
         super.onResume();
         if (arrayAdapter != null) {
             arrayAdapter.notifyDataSetChanged();
-            reloadTicketAdapter();
+            if (MainActivity.NEED_SYNC) {
+                for (Fragment f : getParentFragment().getChildFragmentManager().getFragments()) {
+                    if (f != null && f instanceof FragmentUpdateInterface)
+                        ((FragmentUpdateInterface) f).reloadTicketAdapter();
+                }
+                MainActivity.NEED_SYNC = false;
+            }
         }
     }
 
@@ -109,16 +120,18 @@ public class ActiveTicketsFragment extends ListFragment implements AdapterView.O
 
     @Override
     public void reloadTicketAdapter() {
-        arrayAdapter.clear();
-        List<Ticket> tickets = null;
-        try {
-            tickets = new GetTicketFromDBTask(getActivity()).execute("active").get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
+        if (arrayAdapter != null) {
+            arrayAdapter.clear();
+            List<Ticket> tickets = null;
+            try {
+                tickets = new GetTicketFromDBTask(getActivity()).execute("active").get();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+            arrayAdapter.addAll(tickets);
         }
-        arrayAdapter.addAll(tickets);
     }
 
     @Override

@@ -33,6 +33,7 @@ public class MainTabFragment extends Fragment implements FragmentUpdateInterface
 
     @Override
     public void onResume() {
+
         super.onResume();
     }
 

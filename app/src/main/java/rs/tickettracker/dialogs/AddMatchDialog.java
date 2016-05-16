@@ -55,6 +55,8 @@ public class AddMatchDialog extends DialogFragment {
                             currentMatch.bet = currentBet;
                             GetMatchFromDialogListener getMatchFromDialogListener = (GetMatchFromDialogListener) fragment;
                             getMatchFromDialogListener.getMatchFromDialog(currentMatch);
+                        }else{
+                            //TODO: Toast
                         }
                     }
                 })
