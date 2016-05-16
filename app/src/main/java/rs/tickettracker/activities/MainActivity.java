@@ -101,9 +101,7 @@ public class MainActivity extends AppCompatActivity {
             filter = new IntentFilter();
             filter.addAction(SYNC_DATA);
             registerBroadcastReceiver();
-        } else {
-            Toast.makeText(MainActivity.this, "Check settings or net connection.", Toast.LENGTH_SHORT).show();
-        }
+        } 
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         boolean allowSync = sharedPreferences.getBoolean(getApplicationContext().getResources().getString(R.string.pref_sync), false);

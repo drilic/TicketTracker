@@ -18,6 +18,7 @@ import rs.tickettracker.R;
 import rs.tickettracker.adapters.MatchLiveScoreListAdapter;
 import rs.tickettracker.helpers.ComponentsHelper;
 import rs.tickettracker.helpers.LiveScoreAPIHelper;
+import rs.tickettracker.helpers.SyncHelper;
 
 /**
  * Created by gisko on 04-May-16.
@@ -36,9 +37,11 @@ public class LiveScoreTask extends AsyncTask<Object, Void, HashMap<String, List<
     protected void onPreExecute() {
         dialog.setMessage("Loading matches...");
         dialog.show();
-        String[] leagues = activity.getResources().getStringArray(R.array.pref_leagues_values);
-        for (String league : leagues) {
-            setLayoutParameters(league, new ArrayList<Match>());
+        if (SyncHelper.getConnectivityStatus(activity.getApplicationContext())) {
+            String[] leagues = activity.getResources().getStringArray(R.array.pref_leagues_values);
+            for (String league : leagues) {
+                setLayoutParameters(league, new ArrayList<Match>());
+            }
         }
     }
 
@@ -53,8 +56,12 @@ public class LiveScoreTask extends AsyncTask<Object, Void, HashMap<String, List<
         if (dialog.isShowing()) {
             dialog.dismiss();
         }
-        if (showMessage) {
-            Toast.makeText(activity, "There is not any match for leagues.", Toast.LENGTH_SHORT).show();
+        if (SyncHelper.getConnectivityStatus(activity.getApplicationContext())) {
+            if (showMessage) {
+                Toast.makeText(activity, "There is not any match for leagues.", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(activity, "Check settings or net connection.", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -63,8 +70,10 @@ public class LiveScoreTask extends AsyncTask<Object, Void, HashMap<String, List<
         Set<String> selectedLeagues = (Set<String>) params[0];
         int day = (int) params[1];
         HashMap<String, List<Match>> retVal = new HashMap<String, List<Match>>();
-        for (String s : selectedLeagues) {
-            retVal.put(s, getMatches(s, day));
+        if (SyncHelper.getConnectivityStatus(activity.getApplicationContext())) {
+            for (String s : selectedLeagues) {
+                retVal.put(s, getMatches(s, day));
+            }
         }
         return retVal;
     }

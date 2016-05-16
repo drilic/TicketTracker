@@ -62,7 +62,7 @@ public class LiveScoreAPIHelper {
                 if (showGoalsNotification) {
                     Intent ints = new Intent(MainActivity.SYNC_DATA);
                     ints.putExtra("ticketId", ticketId);
-                    ints.putExtra("MESSAGE_TEXT", m.homeTeam + " scored. Current result is: " + m.homeScore + ":" + m.awayScore);
+                    ints.putExtra("MESSAGE_TEXT", m.homeTeam + " scored. Current result is: [" + m.homeScore + "]:" + m.awayScore);
                     context.sendBroadcast(ints);
                 }
             }
@@ -72,7 +72,7 @@ public class LiveScoreAPIHelper {
                 if (showGoalsNotification) {
                     Intent ints = new Intent(MainActivity.SYNC_DATA);
                     ints.putExtra("ticketId", ticketId);
-                    ints.putExtra("MESSAGE_TEXT", m.awayScore + " scored. Current result is: " + m.homeScore + ":" + m.awayScore);
+                    ints.putExtra("MESSAGE_TEXT", m.awayScore + " scored. Current result is: " + m.homeScore + ":[" + m.awayScore + "]");
                     context.sendBroadcast(ints);
                 }
             }

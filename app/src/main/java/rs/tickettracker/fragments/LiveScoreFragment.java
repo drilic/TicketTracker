@@ -21,6 +21,7 @@ public class LiveScoreFragment extends Fragment {
 
     private SharedPreferences sharedPreferences;
     int day = 1;
+    Set<String> selections;
 
     public LiveScoreFragment() {
         // Required empty public constructor
@@ -42,7 +43,7 @@ public class LiveScoreFragment extends Fragment {
     public void onResume() {
         super.onResume();
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        Set<String> selections = sharedPreferences.getStringSet(getResources().getString(R.string.pref_leagues_list_type), null);
+        selections = sharedPreferences.getStringSet(getResources().getString(R.string.pref_leagues_list_type), null);
         new LiveScoreTask(getActivity()).execute(selections, day);
     }
 
@@ -57,16 +58,16 @@ public class LiveScoreFragment extends Fragment {
         String[] date = getResources().getStringArray(R.array.date_list);
         final MaterialSpinner spinner = ComponentsHelper.createSpinner(date, view, R.id.date, 4);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        Set<String> selections = sharedPreferences.getStringSet(getResources().getString(R.string.pref_leagues_list_type), null);
-        final Set<String> selectedList = selections;
+        selections = sharedPreferences.getStringSet(getResources().getString(R.string.pref_leagues_list_type), null);
         spinner.post(new Runnable() {
             public void run() {
                 spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                        if (position != -1)
-                            day = Integer.parseInt(getResources().getStringArray(R.array.date_values_list)[position]);
-                        new LiveScoreTask(getActivity()).execute(selectedList, day);
+                        if (position == -1)
+                            return;
+                        day = Integer.parseInt(getResources().getStringArray(R.array.date_values_list)[position]);
+                        new LiveScoreTask(getActivity()).execute(selections, day);
                     }
 
                     @Override
