@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.HashMap;
 import java.util.List;
@@ -38,11 +39,17 @@ public class LiveScoreTask extends AsyncTask<Object, Void, HashMap<String, List<
 
     @Override
     protected void onPostExecute(HashMap<String, List<Match>> matches) {
+        boolean showMessage = true;
         for (String s : matches.keySet()) {
-            setLayoutParameters(s, matches.get(s));
+            if (setLayoutParameters(s, matches.get(s))) {
+                showMessage = false;
+            }
         }
         if (dialog.isShowing()) {
             dialog.dismiss();
+        }
+        if (showMessage) {
+            Toast.makeText(activity, "There is not any match for leagues.", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -80,7 +87,7 @@ public class LiveScoreTask extends AsyncTask<Object, Void, HashMap<String, List<
         return matches;
     }
 
-    private void setLayoutParameters(String leagueName, List<Match> matches) {
+    private boolean setLayoutParameters(String leagueName, List<Match> matches) {
         ListView listView = null;
         TextView textView = null;
         switch (leagueName) {
@@ -109,11 +116,12 @@ public class LiveScoreTask extends AsyncTask<Object, Void, HashMap<String, List<
             displayResults(true, listView, textView);
         } else {
             displayResults(false, listView, textView);
-            return;
+            return false;
         }
         MatchLiveScoreListAdapter arrayAdapter = new MatchLiveScoreListAdapter(activity, R.layout.list_match_live_score_view, matches);
         listView.setAdapter(arrayAdapter);
         ComponentsHelper.setDynamicHeight(listView);
+        return true;
     }
 
     private void displayResults(Boolean show, ListView listView, TextView textView) {

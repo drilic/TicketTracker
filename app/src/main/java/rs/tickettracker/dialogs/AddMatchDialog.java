@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Toast;
 
 import com.activeandroid.query.Select;
 
@@ -55,8 +56,8 @@ public class AddMatchDialog extends DialogFragment {
                             currentMatch.bet = currentBet;
                             GetMatchFromDialogListener getMatchFromDialogListener = (GetMatchFromDialogListener) fragment;
                             getMatchFromDialogListener.getMatchFromDialog(currentMatch);
-                        }else{
-                            //TODO: Toast
+                        } else {
+                            Toast.makeText(getActivity(), "Invalid match parameters.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 })

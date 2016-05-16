@@ -20,6 +20,7 @@ public class SyncReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        Log.i("***", "Notification here");
         NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         if (intent.getAction().equals(MainActivity.SYNC_DATA)) {
             String notificationMessage = intent.getExtras().getString("MESSAGE_TEXT");

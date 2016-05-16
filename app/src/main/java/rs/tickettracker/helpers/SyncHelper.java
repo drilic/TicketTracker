@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.activeandroid.query.Select;
@@ -54,29 +55,38 @@ public class SyncHelper {
         }
 
         StatusHelper ticketStatus = checkTickets(t);
+        Log.i("****", "BEFORE status: " + t.status.status + " | changed L:" + ticketStatus.lose + " W: " + ticketStatus.win);
         if (!ticketStatus.notFinished) {
             if (ticketStatus.lose) {
                 t.status = lose;
                 t.save();
+                Ticket tekst = Ticket.load(Ticket.class, t.getId());
+                Log.i("**DB lose**", tekst.status.status);
                 if (showNotification) {
                     allowNotification = sharedPreferences.getBoolean(context.getResources().getString(R.string.pref_notification), false);
                     if (allowNotification) {
                         Intent ints = new Intent(MainActivity.SYNC_DATA);
                         ints.putExtra("ticketId", t.getId());
                         ints.putExtra("MESSAGE_TEXT", "You lose ticket " + t.ticketName + ".");
+                        Log.i("***", "Send lose");
                         context.sendBroadcast(ints);
+                        Log.i("***", "Done lose");
                     }
                 }
             } else {
                 t.status = win;
                 t.save();
+                Ticket tekst = Ticket.load(Ticket.class, t.getId());
+                Log.i("**DB win**", tekst.status.status);
                 if (showNotification) {
                     allowNotification = sharedPreferences.getBoolean(context.getResources().getString(R.string.pref_notification), false);
                     if (allowNotification) {
                         Intent ints = new Intent(MainActivity.SYNC_DATA);
                         ints.putExtra("ticketId", t.getId());
                         ints.putExtra("MESSAGE_TEXT", "You won " + t.possibleGain + " on ticket " + t.ticketName + "!!!");
+                        Log.i("***", "Send win");
                         context.sendBroadcast(ints);
+                        Log.i("***", "Done win");
                     }
                 }
             }
