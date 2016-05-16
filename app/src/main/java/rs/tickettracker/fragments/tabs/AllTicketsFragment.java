@@ -41,6 +41,7 @@ public class AllTicketsFragment extends ListFragment implements OnItemClickListe
         super.onResume();
         if (arrayAdapter != null) {
             arrayAdapter.notifyDataSetChanged();
+            reloadTicketAdapter();
         }
     }
 

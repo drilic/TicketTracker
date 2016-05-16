@@ -54,7 +54,10 @@ public class TabFragmentAdapter extends FragmentPagerAdapter {
     }
 
     public Fragment getFragmentByPosition(int position) {
-        return tabFragments.get(position);
+        if (tabFragments.size() > position)
+            return tabFragments.get(position);
+        else
+            return null;
     }
 
     @Override

@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
             if (SyncHelper.getConnectivityStatus(getApplicationContext())) {
                 new SyncTask(this, false, getApplicationContext()).execute();
             } else {
-                Toast.makeText(MainActivity.this, "No internet connection.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Check settings or net connection.", Toast.LENGTH_SHORT).show();
             }
             return true;
         }

@@ -31,6 +31,15 @@ public class LoseTicketsFragment extends ListFragment implements AdapterView.OnI
         // Required empty public constructor
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (arrayAdapter != null) {
+            arrayAdapter.notifyDataSetChanged();
+            reloadTicketAdapter();
+        }
+    }
+
     public LoseTicketsFragment(TabFragmentAdapter tabManager) {
         this.tabMenager = tabManager;
     }

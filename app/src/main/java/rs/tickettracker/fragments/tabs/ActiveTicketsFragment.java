@@ -37,6 +37,15 @@ public class ActiveTicketsFragment extends ListFragment implements AdapterView.O
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        if (arrayAdapter != null) {
+            arrayAdapter.notifyDataSetChanged();
+            reloadTicketAdapter();
+        }
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
