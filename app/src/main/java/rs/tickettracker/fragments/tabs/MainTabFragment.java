@@ -1,6 +1,8 @@
 package rs.tickettracker.fragments.tabs;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -9,11 +11,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import rs.tickettracker.R;
+import rs.tickettracker.activities.MainActivity;
 import rs.tickettracker.adapters.TabFragmentAdapter;
 import rs.tickettracker.fragments.interfaces.FragmentUpdateInterface;
 import rs.tickettracker.listeners.AddTicketAction;
@@ -53,6 +57,26 @@ public class MainTabFragment extends Fragment implements FragmentUpdateInterface
                 tabLayout.setupWithViewPager(viewPager);
             }
         });
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                if (MainActivity.NEED_SYNC) {
+                    for (Fragment f : getChildFragmentManager().getFragments()) {
+                        if (f != null && f instanceof FragmentUpdateInterface)
+                            ((FragmentUpdateInterface) f).reloadTicketAdapter();
+                    }
+                    MainActivity.NEED_SYNC = false;
+                }
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
         return view;
     }
 
@@ -61,7 +85,6 @@ public class MainTabFragment extends Fragment implements FragmentUpdateInterface
         super.onViewCreated(view, savedInstanceState);
         final FloatingActionButton fab = (FloatingActionButton) getView().findViewById(R.id.add_ticket_fab);
         fab.setOnClickListener(new AddTicketAction(((AppCompatActivity) getActivity())));
-
     }
 
     @Override

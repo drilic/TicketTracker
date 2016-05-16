@@ -20,6 +20,7 @@ import rs.tickettracker.sync.tasks.LiveScoreTask;
 public class LiveScoreFragment extends Fragment {
 
     private SharedPreferences sharedPreferences;
+    int day = 1;
 
     public LiveScoreFragment() {
         // Required empty public constructor
@@ -40,8 +41,9 @@ public class LiveScoreFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        //TODO: Reload live sync-a na on resume
-        //TODO: IF size is 0 throw Toast
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        Set<String> selections = sharedPreferences.getStringSet(getResources().getString(R.string.pref_leagues_list_type), null);
+        new LiveScoreTask(getActivity()).execute(selections, day);
     }
 
     @Override
@@ -62,7 +64,6 @@ public class LiveScoreFragment extends Fragment {
                 spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                        int day = 1;
                         if (position != -1)
                             day = Integer.parseInt(getResources().getStringArray(R.array.date_values_list)[position]);
                         new LiveScoreTask(getActivity()).execute(selectedList, day);

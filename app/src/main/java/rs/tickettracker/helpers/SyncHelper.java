@@ -71,7 +71,6 @@ public class SyncHelper {
             } else {
                 t.status = win;
                 t.save();
-                Ticket tekst = Ticket.load(Ticket.class, t.getId());
                 if (showNotification) {
                     allowNotification = sharedPreferences.getBoolean(context.getResources().getString(R.string.pref_notification), false);
                     if (allowNotification) {

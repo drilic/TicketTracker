@@ -44,6 +44,9 @@ public class TicketDetailActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         long id = extras.getLong("id");
         Ticket t = new Select().from(Ticket.class).where("_id= ?", id).executeSingle();
+        if (t == null) {
+            super.onBackPressed();
+        }
         currentTicket = t;
         fillData(t);
 
@@ -114,7 +117,7 @@ public class TicketDetailActivity extends AppCompatActivity {
             myMenu.findItem(R.id.edit_item).setVisible(false);
         else
             myMenu.findItem(R.id.edit_item).setVisible(true);
-        
+
         myMenu.findItem(R.id.delete_item).setVisible(true);
         super.onBackPressed();
     }

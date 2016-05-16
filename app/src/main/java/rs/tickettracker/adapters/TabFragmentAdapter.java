@@ -60,6 +60,8 @@ public class TabFragmentAdapter extends FragmentPagerAdapter {
             return null;
     }
 
+
+
     @Override
     public CharSequence getPageTitle(int position) {
 

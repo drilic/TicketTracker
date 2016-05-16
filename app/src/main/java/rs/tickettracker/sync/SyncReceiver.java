@@ -41,7 +41,7 @@ public class SyncReceiver extends BroadcastReceiver {
                     .addAction(R.drawable.dots_horizontal, "Details", pIntent)
                     .build();
 
-            mNotificationManager.notify((int) System.currentTimeMillis(), notification);
+            mNotificationManager.notify((int) ticketId, notification);
         }
     }
 }

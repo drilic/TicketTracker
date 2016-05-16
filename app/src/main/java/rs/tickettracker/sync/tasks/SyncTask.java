@@ -66,12 +66,14 @@ public class SyncTask extends AsyncTask<Object, Void, Void> {
     protected Void doInBackground(Object... params) {
         model.Status active = new Select().from(model.Status.class).where("status = ?", "Active").executeSingle();
         List<Ticket> tickets = new Select().from(Ticket.class).where("status = ?", active.getId()).execute();
-        if (tickets.size() == 0 && activity != null) {
-            activity.runOnUiThread(new Runnable() {
-                public void run() {
-                    Toast.makeText(activity, "There is no active tickets.", Toast.LENGTH_SHORT).show();
-                }
-            });
+        if (tickets.size() == 0) {
+            if (activity != null) {
+                activity.runOnUiThread(new Runnable() {
+                    public void run() {
+                        Toast.makeText(activity, "There is no active tickets.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
             return null;
         }
         MainActivity.NEED_SYNC = true;

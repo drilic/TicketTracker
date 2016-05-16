@@ -8,6 +8,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -35,6 +36,10 @@ public class LiveScoreTask extends AsyncTask<Object, Void, HashMap<String, List<
     protected void onPreExecute() {
         dialog.setMessage("Loading matches...");
         dialog.show();
+        String[] leagues = activity.getResources().getStringArray(R.array.pref_leagues_values);
+        for (String league : leagues) {
+            setLayoutParameters(league, new ArrayList<Match>());
+        }
     }
 
     @Override
