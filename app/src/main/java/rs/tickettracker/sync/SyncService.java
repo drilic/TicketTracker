@@ -30,6 +30,8 @@ public class SyncService extends Service {
             Log.i("***", "Service trigger");
             new SyncTask(null, true, getApplicationContext()).execute();
         }
+        stopSelf();
+
         return START_STICKY;
     }
 

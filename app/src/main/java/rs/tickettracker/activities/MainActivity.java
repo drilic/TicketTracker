@@ -47,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
     AlarmManager manager;
     SyncReceiver sync;
     PendingIntent pendingIntent;
+    Intent alarmIntent;
+    IntentFilter filter;
     public static String SYNC_DATA = "SYNC_DATA";
     public static boolean NEED_SYNC = false;
 
@@ -74,35 +76,71 @@ public class MainActivity extends AppCompatActivity {
         drawerToggle.syncState();
         navigationView.setNavigationItemSelectedListener(new NavigationOnClickListener(drawerLayout, this));
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        setUpReceiver();
+        boolean allowSync = sharedPreferences.getBoolean(getApplicationContext().getResources().getString(R.string.pref_sync), false);
+        if (allowSync) {
+            setUpReceiver();
+        }
+
     }
 
     private void setUpReceiver() {
         sync = new SyncReceiver();
-
-        Intent alarmIntent = new Intent(this, SyncService.class);
+        alarmIntent = new Intent(this, SyncService.class);
         pendingIntent = PendingIntent.getService(this, 0, alarmIntent, 0);
         manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (manager == null || sync == null || pendingIntent == null) {
-            setUpReceiver();
-        }
         if (SyncHelper.getConnectivityStatus(getApplicationContext())) {
+            setUpReceiver();
             int syncIntervalFromSettings = Integer.parseInt(sharedPreferences.getString("pref_sync_list_interval", "5"));
             int interval = SyncHelper.calculateTimeTillNextSync(syncIntervalFromSettings);
             manager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), interval, pendingIntent);
-            IntentFilter filter = new IntentFilter();
+            filter = new IntentFilter();
             filter.addAction(SYNC_DATA);
-            registerReceiver(sync, filter);
+            registerBroadcastReceiver();
         } else {
             Toast.makeText(MainActivity.this, "Check settings or net connection.", Toast.LENGTH_SHORT).show();
         }
+
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        boolean allowSync = sharedPreferences.getBoolean(getApplicationContext().getResources().getString(R.string.pref_sync), false);
+        if (!allowSync) {
+            if (pendingIntent != null) {
+                manager.cancel(pendingIntent);
+                pendingIntent.cancel();
+                if (sync != null)
+                    unregisterBroadcastReceiver();
+            }
+        } else {
+            boolean allowNotification = sharedPreferences.getBoolean(getApplicationContext().getResources().getString(R.string.pref_notification), false);
+            if (!allowNotification) {
+                if (sync != null)
+                    unregisterBroadcastReceiver();
+            }
+        }
     }
+
+    private boolean registerBroadcastReceiver() {
+        try {
+            registerReceiver(sync, filter);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    private boolean unregisterBroadcastReceiver() {
+        try {
+            unregisterReceiver(sync);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
