@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import rs.tickettracker.R;
 import rs.tickettracker.helpers.MailHelper;
+import rs.tickettracker.helpers.SyncHelper;
 
 public class AboutFragment extends Fragment {
 
@@ -41,8 +42,11 @@ public class AboutFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 try {
-                    startActivity(Intent.createChooser(MailHelper.sendEmail(), "Send mail..."));
-                    Log.i("Loggin MAIL", "Finished sending email...");
+                    if (SyncHelper.getConnectivityStatus(getContext())) {
+                        startActivity(Intent.createChooser(MailHelper.sendEmail(), "Send mail..."));
+                    } else {
+                        Toast.makeText(getActivity(), "Check settings or net connection.", Toast.LENGTH_SHORT).show();
+                    }
                 } catch (android.content.ActivityNotFoundException ex) {
                     Toast.makeText(getActivity(), "There is no email client installed.", Toast.LENGTH_SHORT).show();
                 }

@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
             filter = new IntentFilter();
             filter.addAction(SYNC_DATA);
             registerBroadcastReceiver();
-        } 
+        }
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         boolean allowSync = sharedPreferences.getBoolean(getApplicationContext().getResources().getString(R.string.pref_sync), false);
