@@ -76,7 +76,6 @@ public class SyncTask extends AsyncTask<Object, Void, Void> {
         }
         MainActivity.NEED_SYNC = true;
         for (Ticket t : tickets) {
-            Log.i("***", t.ticketName+" Show: "+showNotification);
             SyncHelper.updateTicket(t, showNotification, context);
         }
         return null;
