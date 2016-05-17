@@ -2,25 +2,19 @@ package rs.tickettracker.activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.opengl.Visibility;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.activeandroid.query.Select;
-
 import model.Ticket;
 import rs.tickettracker.R;
-import rs.tickettracker.adapters.TabFragmentAdapter;
 import rs.tickettracker.fragments.AddTicketFragment;
 import rs.tickettracker.fragments.ErrorFragment;
 import rs.tickettracker.fragments.TicketDetailFragment;
@@ -34,6 +28,7 @@ public class TicketDetailActivity extends AppCompatActivity {
 
     public Ticket currentTicket;
     Menu myMenu;
+    public static boolean showMenu = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,12 +54,36 @@ public class TicketDetailActivity extends AppCompatActivity {
 
             Bundle bundle = new Bundle();
             bundle.putLong("ticket_id", id);
-            TicketDetailFragment ticketDetailFragment = new TicketDetailFragment();
-            ticketDetailFragment.setArguments(bundle);
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.containerView, ticketDetailFragment).commit();
+
+            if (savedInstanceState != null) {
+                Fragment lastFragment = BackstackHelper.getLastFragment(this);
+                if (fragmentTransaction != null) {
+                    if (lastFragment != null) {
+                        fragmentTransaction
+                                .replace(R.id.containerView, lastFragment, lastFragment.getTag())
+                                .commit();
+                        if (lastFragment.getTag().equals(this.getResources().getString(R.string.add_new_ticket))) {
+                            BackstackHelper.setActionBarTitle(this, getResources().getString(R.string.edit_ticket));
+                            showMenu = false;
+                        }
+                    }
+                }
+
+            } else {
+                TicketDetailFragment ticketDetailFragment = new TicketDetailFragment();
+                ticketDetailFragment.setArguments(bundle);
+                fragmentTransaction.replace(R.id.containerView, ticketDetailFragment, "ticketDetail").commit();
+            }
         }
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (BackstackHelper.getLastFragment(this) == null)
+            showMenu = true;
     }
 
     @Override
@@ -72,8 +91,14 @@ public class TicketDetailActivity extends AppCompatActivity {
         if (currentTicket != null) {
             getMenuInflater().inflate(R.menu.detail_menu_items, menu);
             myMenu = menu;
-            if (!currentTicket.status.status.equals("Active"))
-                myMenu.findItem(R.id.edit_item).setVisible(false);
+            if (showMenu) {
+                myMenu.findItem(R.id.delete_item).setVisible(true);
+                if (!currentTicket.status.status.equals("Active"))
+                    myMenu.findItem(R.id.edit_item).setVisible(false);
+            } else {
+                for (int i = 0; i < myMenu.size(); i++)
+                    myMenu.getItem(i).setVisible(false);
+            }
         }
         return super.onCreateOptionsMenu(menu);
     }
@@ -107,6 +132,7 @@ public class TicketDetailActivity extends AppCompatActivity {
                 alert.show();
                 return true;
             } else if (item.getItemId() == R.id.edit_item) {
+                showMenu = false;
                 BackstackHelper.FragmentTransaction(getSupportFragmentManager().beginTransaction(),
                         this.getResources().getString(R.string.add_new_ticket), new AddTicketFragment(currentTicket.getId(), myMenu));
                 getSupportActionBar().setTitle(this.getResources().getString(R.string.edit_ticket));
@@ -134,6 +160,7 @@ public class TicketDetailActivity extends AppCompatActivity {
 
             myMenu.findItem(R.id.delete_item).setVisible(true);
         }
+        showMenu = true;
         super.onBackPressed();
     }
 
@@ -145,5 +172,6 @@ public class TicketDetailActivity extends AppCompatActivity {
         TextView statusValue = (TextView) findViewById(R.id.detailStatus);
         statusValue.setText(t.status.status);
     }
+
 
 }

@@ -83,10 +83,12 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState != null) {
             Fragment lastFragment = BackstackHelper.getLastFragment(this);
             if (fragmentTransaction != null) {
-                if (lastFragment != null)
+                if (lastFragment != null) {
                     fragmentTransaction
                             .replace(R.id.containerView, lastFragment, lastFragment.getTag())
                             .commit();
+                    BackstackHelper.setActionBarTitle(this, lastFragment.getTag());
+                }
             }
 
         } else {

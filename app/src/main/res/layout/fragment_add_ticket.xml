@@ -6,78 +6,86 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context="rs.tickettracker.activities.AddTicketActivity"
-        tools:showIn="@layout/activity_add_ticket">
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true">
 
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/input_ticket_name"
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:context="rs.tickettracker.activities.AddTicketActivity"
+            tools:showIn="@layout/activity_add_ticket">
 
-            <EditText
-                android:id="@+id/add_ticket_name"
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/input_ticket_name"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/add_ticket_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:hint="@string/ticket_name">
+
+                    <requestFocus />
+                </EditText>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/input_posible_gain"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/input_ticket_name">
+
+                <EditText
+                    android:id="@+id/add_ticket_gain"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:hint="@string/possible_gain"
+                    android:inputType="numberDecimal" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <TextView
+                android:id="@+id/matches_static"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:hint="@string/ticket_name">
+                android:layout_below="@+id/input_posible_gain"
+                android:layout_gravity="left"
+                android:layout_marginTop="8dp"
+                android:text="@string/matches"
+                android:textSize="17sp"
+                android:textStyle="bold" />
 
-                <requestFocus />
-            </EditText>
-
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/input_posible_gain"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/input_ticket_name">
-
-            <EditText
-                android:id="@+id/add_ticket_gain"
+            <ListView
+                android:id="@android:id/list"
                 android:layout_width="match_parent"
-                android:inputType="numberDecimal"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:hint="@string/possible_gain" />
+                android:layout_below="@id/matches_static"
+                android:footerDividersEnabled="false" >
 
-        </android.support.design.widget.TextInputLayout>
+            </ListView>
 
-        <TextView
-            android:id="@+id/matches_static"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/input_posible_gain"
-            android:layout_gravity="left"
-            android:layout_marginTop="8dp"
-            android:text="@string/matches"
-            android:textSize="17sp"
-            android:textStyle="bold" />
-
-        <ListView
-            android:id="@android:id/list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/matches_static">
-
-        </ListView>
-
-    </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/add_match_fab"

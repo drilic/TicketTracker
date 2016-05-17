@@ -1,6 +1,7 @@
 package rs.tickettracker.fragments;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ListFragment;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.activeandroid.query.Select;
@@ -22,8 +24,11 @@ import java.util.List;
 
 import model.Match;
 import model.Ticket;
+import model.parcelable.MatchParcelable;
 import rs.tickettracker.R;
 import rs.tickettracker.adapters.MatchAddTicketListAdapter;
+import rs.tickettracker.helpers.ComponentsHelper;
+import rs.tickettracker.helpers.MapperHelper;
 import rs.tickettracker.listeners.EditTicketAction;
 import rs.tickettracker.listeners.OpenModalAction;
 import rs.tickettracker.listeners.SaveTicketAction;
@@ -39,6 +44,9 @@ public class AddTicketFragment extends ListFragment implements GetMatchFromDialo
     long ticketId;
     Ticket myTicket;
     Menu myMenu;
+    EditText ticketName;
+    EditText ticketGain;
+
 
     public AddTicketFragment() {
         // Required empty public constructor
@@ -70,8 +78,8 @@ public class AddTicketFragment extends ListFragment implements GetMatchFromDialo
             myTicket = Ticket.load(Ticket.class, ticketId);
             List<Match> matches = new Select().from(Match.class).where("ticket = ?", myTicket.getId()).execute();
             arrayAdapter = new MatchAddTicketListAdapter(getActivity(), R.layout.list_match_add_ticket, matches);
-            EditText ticketName = (EditText) view.findViewById(R.id.add_ticket_name);
-            EditText ticketGain = (EditText) view.findViewById(R.id.add_ticket_gain);
+            ticketName = (EditText) view.findViewById(R.id.add_ticket_name);
+            ticketGain = (EditText) view.findViewById(R.id.add_ticket_gain);
             ticketName.setText(myTicket.ticketName);
             ticketGain.setText(String.valueOf(myTicket.possibleGain));
         }
@@ -102,6 +110,17 @@ public class AddTicketFragment extends ListFragment implements GetMatchFromDialo
             }
         });
 
+        if (savedInstanceState != null) {
+            if (arrayAdapter != null) {
+                ArrayList<MatchParcelable> myMatches = savedInstanceState.getParcelableArrayList("arrayAdapter");
+                if (myMatches != null) {
+                    arrayAdapter.clear();
+                    arrayAdapter.addAll(MapperHelper.getListOfMappedMatchesReversed(myMatches));
+                }
+
+            }
+        }
+        ComponentsHelper.setDynamicHeight(getListView());
     }
 
 
@@ -114,6 +133,8 @@ public class AddTicketFragment extends ListFragment implements GetMatchFromDialo
             }
         }
         arrayAdapter.add(match);
+        arrayAdapter.notifyDataSetChanged();
+        ComponentsHelper.setDynamicHeight(getListView());
     }
 
     @Override
@@ -142,7 +163,17 @@ public class AddTicketFragment extends ListFragment implements GetMatchFromDialo
 
             }
         });
-
+        arrayAdapter.notifyDataSetChanged();
+        ComponentsHelper.setDynamicHeight(getListView());
         return true;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (arrayAdapter != null) {
+            ArrayList<MatchParcelable> copyArrayAdapter = MapperHelper.getListOfMappedMatches(arrayAdapter.getAllMatches());
+            outState.putParcelableArrayList("arrayAdapter", copyArrayAdapter);
+        }
     }
 }

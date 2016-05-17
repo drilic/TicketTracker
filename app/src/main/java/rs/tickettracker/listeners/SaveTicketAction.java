@@ -27,6 +27,7 @@ import rs.tickettracker.dialogs.AddMatchDialog;
 import rs.tickettracker.fragments.interfaces.FragmentUpdateInterface;
 import rs.tickettracker.helpers.BackstackHelper;
 import rs.tickettracker.helpers.StatusHelper;
+import rs.tickettracker.sync.tasks.SyncTask;
 
 /**
  * Created by gisko on 29-Apr-16.
@@ -111,5 +112,6 @@ public class SaveTicketAction implements View.OnClickListener {
                 myMenu.getItem(i).setVisible(true);
         }
 
+        //new SyncTask(activity, false, activity.getApplicationContext()).execute();
     }
 }
