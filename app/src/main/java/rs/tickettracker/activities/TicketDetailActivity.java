@@ -22,6 +22,7 @@ import model.Ticket;
 import rs.tickettracker.R;
 import rs.tickettracker.adapters.TabFragmentAdapter;
 import rs.tickettracker.fragments.AddTicketFragment;
+import rs.tickettracker.fragments.ErrorFragment;
 import rs.tickettracker.fragments.TicketDetailFragment;
 import rs.tickettracker.helpers.BackstackHelper;
 import rs.tickettracker.helpers.StatusHelper;
@@ -42,9 +43,16 @@ public class TicketDetailActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         Bundle extras = getIntent().getExtras();
         long id = extras.getLong("id");
-        Ticket t = new Select().from(Ticket.class).where("_id= ?", id).executeSingle();
+        Log.i("****", "ID: " + id);
+        Ticket t = null;
+        try {
+            t = Ticket.load(Ticket.class, id);
+        } catch (Exception e) {
+            t = null;
+        }
         if (t == null) {
-            finish();
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.containerView, new ErrorFragment()).commit();
         } else {
             currentTicket = t;
             fillData(t);
