@@ -104,6 +104,7 @@ public class AddTicketFragment extends ListFragment implements GetMatchFromDialo
 
     }
 
+
     @Override
     public void getMatchFromDialog(Match match) {
         for (Match m : arrayAdapter.getAllMatches()) {

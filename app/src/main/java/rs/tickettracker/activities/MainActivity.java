@@ -49,7 +49,9 @@ public class MainActivity extends AppCompatActivity {
     PendingIntent pendingIntent;
     Intent alarmIntent;
     IntentFilter filter;
-    public static String SYNC_DATA = "SYNC_DATA";
+    MenuItem syncMenu;
+    boolean allowSync = false;
+    public static String SYNC_DATA = "TicketTracker_SYNC_DATA";
     public static boolean NEED_SYNC = false;
 
     @Override
@@ -76,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         drawerToggle.syncState();
         navigationView.setNavigationItemSelectedListener(new NavigationOnClickListener(drawerLayout, this));
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean allowSync = sharedPreferences.getBoolean(getApplicationContext().getResources().getString(R.string.pref_sync), false);
+        allowSync = sharedPreferences.getBoolean(getApplicationContext().getResources().getString(R.string.pref_sync), false);
         if (allowSync) {
             setUpReceiver();
         }
@@ -104,8 +106,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        boolean allowSync = sharedPreferences.getBoolean(getApplicationContext().getResources().getString(R.string.pref_sync), false);
+        allowSync = sharedPreferences.getBoolean(getApplicationContext().getResources().getString(R.string.pref_sync), false);
         if (!allowSync) {
+            if (syncMenu != null) {
+                syncMenu.setIcon(R.drawable.sync_black);
+                syncMenu.setEnabled(false);
+            }
             if (pendingIntent != null) {
                 manager.cancel(pendingIntent);
                 pendingIntent.cancel();
@@ -113,6 +119,11 @@ public class MainActivity extends AppCompatActivity {
                     unregisterBroadcastReceiver();
             }
         } else {
+            if (syncMenu != null) {
+                syncMenu.setIcon(R.drawable.sync_white_32);
+                syncMenu.setEnabled(true);
+            }
+
             boolean allowNotification = sharedPreferences.getBoolean(getApplicationContext().getResources().getString(R.string.pref_notification), false);
             if (!allowNotification) {
                 if (sync != null)
@@ -143,6 +154,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.sync_menu_item, menu);
+        syncMenu = menu.findItem(R.id.action_sync);
+        if (syncMenu != null) {
+            if (!allowSync) {
+                syncMenu.setIcon(R.drawable.sync_black);
+                syncMenu.setEnabled(false);
+            } else {
+                syncMenu.setIcon(R.drawable.sync_white_32);
+                syncMenu.setEnabled(true);
+            }
+        }
         return super.onCreateOptionsMenu(menu);
     }
 

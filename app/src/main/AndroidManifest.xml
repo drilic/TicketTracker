@@ -24,7 +24,7 @@
 
         <receiver android:name="rs.tickettracker.sync.SyncReceiver">
             <intent-filter>
-                <action android:name="SYNC_DATA" />
+                <action android:name="TicketTracker_SYNC_DATA" />
             </intent-filter>
         </receiver>
         <service android:name="rs.tickettracker.sync.SyncService"></service>

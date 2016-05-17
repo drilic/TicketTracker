@@ -32,7 +32,6 @@ import rs.tickettracker.helpers.StatusHelper;
 public class TicketDetailActivity extends AppCompatActivity {
 
     public Ticket currentTicket;
-    TabFragmentAdapter tabMenager;
     Menu myMenu;
 
     @Override
@@ -45,80 +44,88 @@ public class TicketDetailActivity extends AppCompatActivity {
         long id = extras.getLong("id");
         Ticket t = new Select().from(Ticket.class).where("_id= ?", id).executeSingle();
         if (t == null) {
-            super.onBackPressed();
-        }
-        currentTicket = t;
-        fillData(t);
+            finish();
+        } else {
+            currentTicket = t;
+            fillData(t);
 
-        Bundle bundle = new Bundle();
-        bundle.putLong("ticket_id", id);
-        TicketDetailFragment ticketDetailFragment = new TicketDetailFragment();
-        ticketDetailFragment.setArguments(bundle);
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.containerView, ticketDetailFragment).commit();
+            Bundle bundle = new Bundle();
+            bundle.putLong("ticket_id", id);
+            TicketDetailFragment ticketDetailFragment = new TicketDetailFragment();
+            ticketDetailFragment.setArguments(bundle);
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.containerView, ticketDetailFragment).commit();
+        }
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.detail_menu_items, menu);
-        myMenu = menu;
-        if (!currentTicket.status.status.equals("Active"))
-            myMenu.findItem(R.id.edit_item).setVisible(false);
+        if (currentTicket != null) {
+            getMenuInflater().inflate(R.menu.detail_menu_items, menu);
+            myMenu = menu;
+            if (!currentTicket.status.status.equals("Active"))
+                myMenu.findItem(R.id.edit_item).setVisible(false);
+        }
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.delete_item) {
-            android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
-            builder.setTitle("Confirm");
-            final Ticket t = currentTicket;
-            builder.setMessage("Are you sure that u want to delete " + t.ticketName + "?");
-            builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                    Intent returnIntent = new Intent();
-                    returnIntent.putExtra("retId", t.getId());
-                    setResult(1000, returnIntent);
-                    finish();
-                }
+        if (currentTicket != null) {
+            if (item.getItemId() == R.id.delete_item) {
+                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
+                builder.setTitle("Confirm");
+                final Ticket t = currentTicket;
+                builder.setMessage("Are you sure that u want to delete " + t.ticketName + "?");
+                builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        Intent returnIntent = new Intent();
+                        returnIntent.putExtra("retId", t.getId());
+                        setResult(1000, returnIntent);
+                        finish();
+                    }
 
-            });
-            builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
+                });
+                builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
 
-            android.app.AlertDialog alert = builder.create();
-            alert.show();
-            return true;
-        } else if (item.getItemId() == R.id.edit_item) {
-            BackstackHelper.FragmentTransaction(getSupportFragmentManager().beginTransaction(),
-                    this.getResources().getString(R.string.add_new_ticket), new AddTicketFragment(currentTicket.getId(), myMenu));
-            getSupportActionBar().setTitle(this.getResources().getString(R.string.edit_ticket));
-            FrameLayout statusFrame = (FrameLayout) findViewById(R.id.statusPanel);
-            for (int i = 0; i < myMenu.size(); i++)
-                myMenu.getItem(i).setVisible(false);
+                android.app.AlertDialog alert = builder.create();
+                alert.show();
+                return true;
+            } else if (item.getItemId() == R.id.edit_item) {
+                BackstackHelper.FragmentTransaction(getSupportFragmentManager().beginTransaction(),
+                        this.getResources().getString(R.string.add_new_ticket), new AddTicketFragment(currentTicket.getId(), myMenu));
+                getSupportActionBar().setTitle(this.getResources().getString(R.string.edit_ticket));
+                FrameLayout statusFrame = (FrameLayout) findViewById(R.id.statusPanel);
+                for (int i = 0; i < myMenu.size(); i++)
+                    myMenu.getItem(i).setVisible(false);
 
-            statusFrame.setVisibility(View.GONE);
-            return true;
+                statusFrame.setVisibility(View.GONE);
+                return true;
+            }
         }
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onBackPressed() {
-        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-            fillData(currentTicket);
-        }
-        if (!currentTicket.status.status.equals("Active"))
-            myMenu.findItem(R.id.edit_item).setVisible(false);
-        else
-            myMenu.findItem(R.id.edit_item).setVisible(true);
+        if (currentTicket != null) {
+            if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+                fillData(currentTicket);
+            }
+            if (!currentTicket.status.status.equals("Active"))
+                myMenu.findItem(R.id.edit_item).setVisible(false);
+            else
+                myMenu.findItem(R.id.edit_item).setVisible(true);
 
-        myMenu.findItem(R.id.delete_item).setVisible(true);
+            myMenu.findItem(R.id.delete_item).setVisible(true);
+        }
         super.onBackPressed();
     }
 
