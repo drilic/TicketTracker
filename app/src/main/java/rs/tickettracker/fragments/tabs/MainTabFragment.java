@@ -43,7 +43,7 @@ public class MainTabFragment extends Fragment implements FragmentUpdateInterface
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
         fragmentManager = getActivity().getSupportFragmentManager();
         View view = inflater.inflate(R.layout.fragment_tab_main, null);
         tabLayout = (TabLayout) view.findViewById(R.id.tabs);
@@ -51,6 +51,7 @@ public class MainTabFragment extends Fragment implements FragmentUpdateInterface
         viewPager = (ViewPager) view.findViewById(R.id.viewpager);
         tabMenager = new TabFragmentAdapter(getChildFragmentManager());
         viewPager.setAdapter(tabMenager);
+
         tabLayout.post(new Runnable() {
             @Override
             public void run() {
@@ -77,11 +78,21 @@ public class MainTabFragment extends Fragment implements FragmentUpdateInterface
             public void onPageScrollStateChanged(int state) {
             }
         });
+
+        if (savedInstanceState != null) {
+            viewPager.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    int currentItem = savedInstanceState.getInt("currentIndex");
+                    viewPager.setCurrentItem(currentItem);
+                }
+            }, 1);
+        }
         return view;
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(View view, @Nullable final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         final FloatingActionButton fab = (FloatingActionButton) getView().findViewById(R.id.add_ticket_fab);
         fab.setOnClickListener(new AddTicketAction(((AppCompatActivity) getActivity())));
@@ -90,6 +101,10 @@ public class MainTabFragment extends Fragment implements FragmentUpdateInterface
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (getChildFragmentManager() == null)
+            return;
+        if(getChildFragmentManager().getFragments()==null)
+            return;
         for (Fragment f : getChildFragmentManager().getFragments()) {
             if (f != null)
                 f.onActivityResult(requestCode, resultCode, data);
@@ -101,6 +116,15 @@ public class MainTabFragment extends Fragment implements FragmentUpdateInterface
         for (Fragment f : getChildFragmentManager().getFragments()) {
             if (f != null && f instanceof FragmentUpdateInterface)
                 ((FragmentUpdateInterface) f).reloadTicketAdapter();
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (viewPager != null) {
+            int currentIndex = viewPager.getCurrentItem();
+            outState.putInt("currentIndex", currentIndex);
         }
     }
 }

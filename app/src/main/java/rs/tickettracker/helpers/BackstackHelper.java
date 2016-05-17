@@ -57,4 +57,14 @@ public class BackstackHelper {
             return false;
         }
     }
+
+    public static Fragment getLastFragment(AppCompatActivity activity) {
+        int backstackCount = activity.getSupportFragmentManager().getBackStackEntryCount();
+        if (backstackCount == 0)
+            return null;
+        FragmentManager.BackStackEntry lastBackstackValue = activity.getSupportFragmentManager().getBackStackEntryAt(backstackCount - 1);
+        String str = lastBackstackValue.getName();
+        Fragment fragment = activity.getSupportFragmentManager().findFragmentByTag(str);
+        return fragment;
+    }
 }

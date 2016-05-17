@@ -43,7 +43,6 @@ public class TicketDetailActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         Bundle extras = getIntent().getExtras();
         long id = extras.getLong("id");
-        Log.i("****", "ID: " + id);
         Ticket t = null;
         try {
             t = Ticket.load(Ticket.class, id);
@@ -51,6 +50,7 @@ public class TicketDetailActivity extends AppCompatActivity {
             t = null;
         }
         if (t == null) {
+            getSupportActionBar().setTitle("Error");
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.containerView, new ErrorFragment()).commit();
         } else {

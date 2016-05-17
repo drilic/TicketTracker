@@ -19,6 +19,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -53,6 +54,11 @@ public class MainActivity extends AppCompatActivity {
     boolean allowSync = false;
     public static String SYNC_DATA = "TicketTracker_SYNC_DATA";
     public static boolean NEED_SYNC = false;
+    private static boolean REGISTER_RECEIVER = true;
+
+    public MainActivity() {
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +79,20 @@ public class MainActivity extends AppCompatActivity {
 
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.containerView, new MainTabFragment(), "initTagName").commit();
+
+        if (savedInstanceState != null) {
+            Fragment lastFragment = BackstackHelper.getLastFragment(this);
+            if (fragmentTransaction != null) {
+                if (lastFragment != null)
+                    fragmentTransaction
+                            .replace(R.id.containerView, lastFragment, lastFragment.getTag())
+                            .commit();
+            }
+
+        } else {
+            fragmentTransaction.replace(R.id.containerView, new MainTabFragment(), "initTagName").commit();
+        }
+
         drawerLayout.setDrawerListener(drawerToggle);
         drawerToggle.syncState();
         navigationView.setNavigationItemSelectedListener(new NavigationOnClickListener(drawerLayout, this));
@@ -82,7 +101,6 @@ public class MainActivity extends AppCompatActivity {
         if (allowSync) {
             setUpReceiver();
         }
-
     }
 
     private void setUpReceiver() {
@@ -102,7 +120,9 @@ public class MainActivity extends AppCompatActivity {
             manager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), interval, pendingIntent);
             filter = new IntentFilter();
             filter.addAction(SYNC_DATA);
-            registerBroadcastReceiver();
+            if (!REGISTER_RECEIVER) {
+                registerBroadcastReceiver();
+            }
         }
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -135,8 +155,9 @@ public class MainActivity extends AppCompatActivity {
     private boolean registerBroadcastReceiver() {
         try {
             registerReceiver(sync, filter);
+            REGISTER_RECEIVER = true;
             return true;
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             return false;
         }
     }
@@ -144,8 +165,9 @@ public class MainActivity extends AppCompatActivity {
     private boolean unregisterBroadcastReceiver() {
         try {
             unregisterReceiver(sync);
+            REGISTER_RECEIVER = false;
             return true;
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             return false;
         }
     }
