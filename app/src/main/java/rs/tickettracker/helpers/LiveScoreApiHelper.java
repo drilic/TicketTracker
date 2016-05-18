@@ -102,6 +102,8 @@ public class LiveScoreAPIHelper {
         List<Match> foundMatches = new ArrayList<Match>();
 
         try {
+            if(serviceResult==null)
+                return foundMatches;
             if (serviceResult.has("fixtures")) {
                 JSONArray matches = serviceResult.getJSONArray("fixtures");
                 if (matches == null)

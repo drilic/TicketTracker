@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 
+import java.util.Iterator;
 import java.util.Set;
 
 import fr.ganfra.materialspinner.MaterialSpinner;
@@ -20,8 +21,9 @@ import rs.tickettracker.sync.tasks.LiveScoreTask;
 public class LiveScoreFragment extends Fragment {
 
     private SharedPreferences sharedPreferences;
-    int day = 1;
+    static int day = 1;
     Set<String> selections;
+    MaterialSpinner spinner;
 
     public LiveScoreFragment() {
         // Required empty public constructor
@@ -43,8 +45,21 @@ public class LiveScoreFragment extends Fragment {
     public void onResume() {
         super.onResume();
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        selections = sharedPreferences.getStringSet(getResources().getString(R.string.pref_leagues_list_type), null);
-        new LiveScoreTask(getActivity()).execute(selections, day);
+        Set<String> newSelections = sharedPreferences.getStringSet(getResources().getString(R.string.pref_leagues_list_type), null);
+        if (day != -100) { //dummy flag
+            if (selections.size() != newSelections.size()) {
+                selections = newSelections;
+                new LiveScoreTask(getActivity()).execute(selections, day);
+            } else {
+                for (String s : selections) {
+                    if (!newSelections.contains(s)) {
+                        selections = newSelections;
+                        new LiveScoreTask(getActivity()).execute(selections, day);
+                        break;
+                    }
+                }
+            }
+        }
     }
 
     @Override
@@ -56,7 +71,13 @@ public class LiveScoreFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         String[] date = getResources().getStringArray(R.array.date_list);
-        final MaterialSpinner spinner = ComponentsHelper.createSpinner(date, view, R.id.date, 5);
+        if (savedInstanceState != null) {
+            int selected = savedInstanceState.getInt("selected");
+            spinner = ComponentsHelper.createSpinner(date, view, R.id.date, selected);
+        } else {
+            spinner = ComponentsHelper.createSpinner(date, view, R.id.date, 5);
+        }
+
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         selections = sharedPreferences.getStringSet(getResources().getString(R.string.pref_leagues_list_type), null);
         spinner.post(new Runnable() {
@@ -64,8 +85,10 @@ public class LiveScoreFragment extends Fragment {
                 spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                        if (position == -1)
+                        if (position == -1) {
+                            day = -100;
                             return;
+                        }
                         day = Integer.parseInt(getResources().getStringArray(R.array.date_values_list)[position]);
                         new LiveScoreTask(getActivity()).execute(selections, day);
                     }
@@ -78,6 +101,15 @@ public class LiveScoreFragment extends Fragment {
                 });
             }
         });
+
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (spinner != null) {
+            int selected = spinner.getSelectedItemPosition();
+            outState.putInt("selected", selected);
+        }
+    }
 }

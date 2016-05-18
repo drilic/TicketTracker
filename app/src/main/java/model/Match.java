@@ -1,5 +1,7 @@
 package model;
 
+import android.content.res.Configuration;
+
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
@@ -76,7 +78,7 @@ public class Match extends Model {
 
     @Override
     public String toString() {
-        return fixTeamName(homeTeam) + "-" + fixTeamName(awayTeam);
+        return homeTeam + "-" + awayTeam;
     }
 
     public static String fixTeamName(String teamName) {

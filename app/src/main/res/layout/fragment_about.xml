@@ -54,23 +54,23 @@
     <Button
         android:id="@+id/sendEmail"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@id/author_college"
         android:layout_toRightOf="@id/thumbnail_view"
-        android:layout_height="wrap_content"
-        android:textColor="@color/windowBackground"
-        android:text="@string/contact"/>
+        android:text="@string/contact"
+        android:textColor="@color/windowBackground" />
 
     <ScrollView
         android:id="@+id/SCROLLER_ID"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/thumbnail_view"
-        android:scrollbars="vertical"
-        android:layout_marginTop="15dp">
+        android:layout_marginTop="15dp"
+        android:scrollbars="vertical">
 
-        <me.biubiubiu.justifytext.library.JustifyTextView
+        <TextView
             android:id="@+id/message_view"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/about_me_text"
             android:textSize="18sp" />

@@ -36,8 +36,11 @@ public class AddMatchDialog extends DialogFragment {
     Bet currentBet = null;
     Fragment fragment;
 
-    public AddMatchDialog(Fragment fragment) {
+    public AddMatchDialog(){
         // Required empty public constructor
+    }
+
+    public AddMatchDialog(Fragment fragment) {
         this.fragment = fragment;
     }
 

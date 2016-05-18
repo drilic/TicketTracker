@@ -2,6 +2,11 @@ package rs.tickettracker.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Configuration;
+import android.graphics.Point;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,8 +56,21 @@ public class MatchDetailTicketListAdapter extends ArrayAdapter<Match> {
             holder = (MatchHolder) row.getTag();
         }
 
+        DisplayMetrics dm = new DisplayMetrics();
+        ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(dm);
+        double x = Math.pow(dm.widthPixels / dm.xdpi, 2);
         Match match = data.get(position);
-        holder.txtTitle.setText(Match.fixTeamName(match.homeTeam) + " - " + Match.fixTeamName(match.awayTeam));
+        if ((context.getResources().getConfiguration().screenLayout &
+                Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE) {
+            holder.txtTitle.setText(match.homeTeam + " - " + match.awayTeam);
+        } else {
+            if (x > 30) {
+                holder.txtTitle.setText(match.homeTeam + " - " + match.awayTeam);
+            } else {
+                holder.txtTitle.setText(Match.fixTeamName(match.homeTeam) + " - " + Match.fixTeamName(match.awayTeam));
+            }
+        }
+
         holder.txtDescription.setText(match.league.leagueName + ", " + "Bet: " + match.bet.betName);
         holder.imgIcon.setImageResource(StatusHelper.getStatusIconType(match.status.status, context));
         if (match.homeScore == -1) {
