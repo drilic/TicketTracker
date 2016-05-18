@@ -41,6 +41,7 @@
         <item>Bundesliga</item>
         <item>Ligue 1</item>
         <item>Champions League</item>
+        <item>EURO 2016</item>
     </string-array>
     <string-array name="pref_leagues_values">
         <item>premier_league</item>
@@ -49,6 +50,7 @@
         <item>bundesliga</item>
         <item>ligue_1</item>
         <item>champions</item>
+        <item>euro_2016</item>
     </string-array>
 
     <string-array name="status_img">
@@ -64,6 +66,7 @@
     </string-array>
 
     <string-array name="date_list">
+        <item>-10</item>
         <item>-3</item>
         <item>-2</item>
         <item>-1</item>
@@ -71,8 +74,10 @@
         <item>+1</item>
         <item>+2</item>
         <item>+3</item>
+        <item>+10</item>
     </string-array>
     <string-array name="date_values_list">
+        <item>-10</item>
         <item>-3</item>
         <item>-2</item>
         <item>-1</item>
@@ -80,6 +85,6 @@
         <item>2</item>
         <item>3</item>
         <item>4</item>
+        <item>11</item>
     </string-array>
-
 </resources>

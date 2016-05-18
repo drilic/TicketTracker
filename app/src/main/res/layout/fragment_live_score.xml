@@ -137,5 +137,24 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/championsText"
             android:visibility="gone"></ListView>
+
+        <TextView
+            android:id="@+id/euroText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/championsList"
+            android:layout_marginTop="20dp"
+            android:gravity="center_vertical"
+            android:text="@string/euro_2016"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <ListView
+            android:id="@+id/euroList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/euroText"
+            android:visibility="gone"></ListView>
     </LinearLayout>
 </ScrollView>

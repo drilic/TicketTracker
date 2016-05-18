@@ -47,36 +47,40 @@ public class LiveScoreAPIHelper {
         JSONObject serviceResult = requestWebService(baseUrl, "n1");
         Match m = Match.load(Match.class, matchId);
         try {
-            JSONObject match = serviceResult.getJSONObject("fixture");
-            String status = match.getString("status");
-            if (status.equals("FINISHED")) {
-                m.isFinished = true;
-            } else {
-                m.isFinished = false;
-            }
-            int homeScore = match.getJSONObject("result").optInt("goalsHomeTeam", -1);
-            int awayScore = match.getJSONObject("result").optInt("goalsAwayTeam", -1);
-            if (m.homeScore != homeScore) {
-                m.homeScore = homeScore;
-                m.awayScore = awayScore;
-                if (showGoalsNotification) {
-                    Intent ints = new Intent(MainActivity.SYNC_DATA);
-                    ints.putExtra("ticketId", ticketId);
-                    ints.putExtra("MESSAGE_TEXT", m.homeTeam + " scored. Current result is: [" + m.homeScore + "]:" + m.awayScore);
-                    context.sendBroadcast(ints);
+            if (serviceResult.has("fixture")) {
+                JSONObject match = serviceResult.getJSONObject("fixture");
+                if (match == null)
+                    return m;
+                String status = match.getString("status");
+                if (status.equals("FINISHED")) {
+                    m.isFinished = true;
+                } else {
+                    m.isFinished = false;
                 }
-            }
-            if (m.awayScore != awayScore) {
-                m.homeScore = homeScore;
-                m.awayScore = awayScore;
-                if (showGoalsNotification) {
-                    Intent ints = new Intent(MainActivity.SYNC_DATA);
-                    ints.putExtra("ticketId", ticketId);
-                    ints.putExtra("MESSAGE_TEXT", m.awayScore + " scored. Current result is: " + m.homeScore + ":[" + m.awayScore + "]");
-                    context.sendBroadcast(ints);
+                int homeScore = match.getJSONObject("result").optInt("goalsHomeTeam", -1);
+                int awayScore = match.getJSONObject("result").optInt("goalsAwayTeam", -1);
+                if (m.homeScore != homeScore) {
+                    m.homeScore = homeScore;
+                    m.awayScore = awayScore;
+                    if (showGoalsNotification) {
+                        Intent ints = new Intent(MainActivity.SYNC_DATA);
+                        ints.putExtra("ticketId", ticketId);
+                        ints.putExtra("MESSAGE_TEXT", m.homeTeam + " scored. Current result is: [" + m.homeScore + "]:" + m.awayScore);
+                        context.sendBroadcast(ints);
+                    }
                 }
+                if (m.awayScore != awayScore) {
+                    m.homeScore = homeScore;
+                    m.awayScore = awayScore;
+                    if (showGoalsNotification) {
+                        Intent ints = new Intent(MainActivity.SYNC_DATA);
+                        ints.putExtra("ticketId", ticketId);
+                        ints.putExtra("MESSAGE_TEXT", m.awayScore + " scored. Current result is: " + m.homeScore + ":[" + m.awayScore + "]");
+                        context.sendBroadcast(ints);
+                    }
+                }
+                m.save();
             }
-            m.save();
         } catch (JSONException e) {
             Log.i("API", "Get your API key for free");
         }
@@ -98,30 +102,33 @@ public class LiveScoreAPIHelper {
         List<Match> foundMatches = new ArrayList<Match>();
 
         try {
-            JSONArray matches = serviceResult.getJSONArray("fixtures");
-            for (int i = 0; i < matches.length(); i++) {
-                JSONObject match = matches.getJSONObject(i);
-                Match m = new Match();
-                m.awayTeam = match.getString("awayTeamName");
-                m.homeTeam = match.getString("homeTeamName");
-                m.homeScore = match.getJSONObject("result").optInt("goalsHomeTeam", -1);
-                m.awayScore = match.getJSONObject("result").optInt("goalsAwayTeam", -1);
-                String dateStart = match.getString("date");
-                DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-                Date date = format.parse(dateStart);
-                m.gameStart = date;
-                m.league = ligue;
-                String status = match.getString("status");
-                if (status.equals("FINISHED")) {
-                    m.isFinished = true;
-                } else {
-                    m.isFinished = false;
+            if (serviceResult.has("fixtures")) {
+                JSONArray matches = serviceResult.getJSONArray("fixtures");
+                if (matches == null)
+                    return foundMatches;
+                for (int i = 0; i < matches.length(); i++) {
+                    JSONObject match = matches.getJSONObject(i);
+                    Match m = new Match();
+                    m.awayTeam = match.getString("awayTeamName");
+                    m.homeTeam = match.getString("homeTeamName");
+                    m.homeScore = match.getJSONObject("result").optInt("goalsHomeTeam", -1);
+                    m.awayScore = match.getJSONObject("result").optInt("goalsAwayTeam", -1);
+                    String dateStart = match.getString("date");
+                    DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                    Date date = format.parse(dateStart);
+                    m.gameStart = date;
+                    m.league = ligue;
+                    String status = match.getString("status");
+                    if (status.equals("FINISHED")) {
+                        m.isFinished = true;
+                    } else {
+                        m.isFinished = false;
+                    }
+                    m.status = matchStatus;
+                    m.matchServisId = match.getLong("id");
+                    foundMatches.add(m);
                 }
-                m.status = matchStatus;
-                m.matchServisId = match.getLong("id");
-                foundMatches.add(m);
             }
-
         } catch (JSONException e) {
             Log.i("API", "Get your API key for free");
         } catch (ParseException e) {
