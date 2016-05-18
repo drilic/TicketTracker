@@ -69,5 +69,7 @@ public class DatabaseHelper {
         league = new League("Seria A", 401);
         league.save();
 
+        league = new League("Champions League", 405);
+        league.save();
     }
 }

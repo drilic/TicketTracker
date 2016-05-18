@@ -8,9 +8,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp">
+        android:layout_marginRight="10dp"
+        android:orientation="vertical">
 
         <fr.ganfra.materialspinner.MaterialSpinner
             android:id="@+id/date"
@@ -30,95 +30,112 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/date"
-            android:visibility="gone"
-            android:textSize="16dp"
-            android:textStyle="bold"
             android:gravity="center_vertical"
             android:text="@string/premier_league"
-             />
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:visibility="gone" />
 
         <ListView
             android:id="@+id/premierList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:layout_below="@id/premierText">
-        </ListView>
+            android:layout_below="@id/premierText"
+            android:visibility="gone"></ListView>
 
         <TextView
             android:id="@+id/primeraText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/premierList"
-            android:gravity="center_vertical"
-            android:visibility="gone"
             android:layout_marginTop="20dp"
+            android:gravity="center_vertical"
+            android:text="@string/primera_division"
             android:textSize="16dp"
             android:textStyle="bold"
-            android:text="@string/primera_division" />
+            android:visibility="gone" />
 
         <ListView
             android:id="@+id/primeraList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:layout_below="@id/primeraText"></ListView>
+            android:layout_below="@id/primeraText"
+            android:visibility="gone"></ListView>
 
         <TextView
             android:id="@+id/seriaAText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/primeraList"
-            android:gravity="center_vertical"
-            android:visibility="gone"
             android:layout_marginTop="20dp"
+            android:gravity="center_vertical"
+            android:text="@string/seria_a"
             android:textSize="16dp"
             android:textStyle="bold"
-            android:text="@string/seria_a" />
+            android:visibility="gone" />
 
         <ListView
             android:id="@+id/seriaAList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:layout_below="@id/seriaAText"></ListView>
+            android:layout_below="@id/seriaAText"
+            android:visibility="gone"></ListView>
 
         <TextView
             android:id="@+id/bundesText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/seriaAList"
-            android:gravity="center_vertical"
-            android:visibility="gone"
             android:layout_marginTop="20dp"
+            android:gravity="center_vertical"
+            android:text="@string/bundesliga"
             android:textSize="16dp"
             android:textStyle="bold"
-            android:text="@string/bundesliga"/>
+            android:visibility="gone" />
 
         <ListView
             android:id="@+id/bundesList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:layout_below="@id/bundesText"></ListView>
+            android:layout_below="@id/bundesText"
+            android:visibility="gone"></ListView>
 
         <TextView
             android:id="@+id/ligue1Text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/bundesList"
-            android:gravity="center_vertical"
-            android:visibility="gone"
             android:layout_marginTop="20dp"
+            android:gravity="center_vertical"
+            android:text="@string/ligue_1"
             android:textSize="16dp"
             android:textStyle="bold"
-            android:text="@string/ligue_1"/>
+            android:visibility="gone" />
 
         <ListView
             android:id="@+id/ligue1List"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:layout_below="@id/ligue1Text"></ListView>
+            android:layout_below="@id/ligue1Text"
+            android:visibility="gone"></ListView>
+
+        <TextView
+            android:id="@+id/championsText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ligue1List"
+            android:layout_marginTop="20dp"
+            android:gravity="center_vertical"
+            android:text="@string/champions"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <ListView
+            android:id="@+id/championsList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/championsText"
+            android:visibility="gone"></ListView>
     </LinearLayout>
 </ScrollView>

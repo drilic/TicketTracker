@@ -97,6 +97,9 @@ public class LiveScoreTask extends AsyncTask<Object, Void, HashMap<String, List<
             case "bundesliga":
                 matches = LiveScoreAPIHelper.findAllMatchesForLeague(day, 394);
                 break;
+            case "champions":
+                matches = LiveScoreAPIHelper.findAllMatchesForLeague(day, 405);
+                break;
         }
         return matches;
     }
@@ -122,6 +125,10 @@ public class LiveScoreTask extends AsyncTask<Object, Void, HashMap<String, List<
                 textView = (TextView) activity.findViewById(R.id.seriaAText);
                 break;
             case "bundesliga":
+                listView = (ListView) activity.findViewById(R.id.bundesList);
+                textView = (TextView) activity.findViewById(R.id.bundesText);
+                break;
+            case "champions":
                 listView = (ListView) activity.findViewById(R.id.bundesList);
                 textView = (TextView) activity.findViewById(R.id.bundesText);
                 break;

@@ -64,6 +64,7 @@
     <string name="seria_a">Seria A</string>
     <string name="bundesliga">Bundesliga</string>
     <string name="ligue_1">Ligue 1</string>
+    <string name="champions">Champions League</string>
 
     <!-- Preferences -->
     <string name="sync_settings">sync_settings</string>
