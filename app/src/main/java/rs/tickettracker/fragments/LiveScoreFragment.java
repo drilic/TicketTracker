@@ -56,7 +56,7 @@ public class LiveScoreFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         String[] date = getResources().getStringArray(R.array.date_list);
-        final MaterialSpinner spinner = ComponentsHelper.createSpinner(date, view, R.id.date, 4);
+        final MaterialSpinner spinner = ComponentsHelper.createSpinner(date, view, R.id.date, 5);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         selections = sharedPreferences.getStringSet(getResources().getString(R.string.pref_leagues_list_type), null);
         spinner.post(new Runnable() {

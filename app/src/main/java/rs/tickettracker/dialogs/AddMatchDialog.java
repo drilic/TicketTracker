@@ -110,7 +110,7 @@ public class AddMatchDialog extends DialogFragment {
         });
 
         String[] date = getResources().getStringArray(R.array.date_list);
-        final MaterialSpinner dateSpinner = ComponentsHelper.createSpinner(date, view, R.id.date, 4);
+        final MaterialSpinner dateSpinner = ComponentsHelper.createSpinner(date, view, R.id.date, 5);
         final MaterialSpinner leagueSpinner = ComponentsHelper.createSpinner(leaguesList, view, R.id.league, 1);
 
         final int[] leagueFlag = {0};

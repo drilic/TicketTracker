@@ -107,15 +107,17 @@ public class WinTicketsFragment extends ListFragment implements AdapterView.OnIt
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == 1000) {
-            long id = data.getExtras().getLong("retId");
-            arrayAdapter.removeById(id);
+        if (arrayAdapter != null) {
+            if (resultCode == 1000) {
+                long id = data.getExtras().getLong("retId");
+                arrayAdapter.removeById(id);
+                arrayAdapter.notifyDataSetChanged();
+                Ticket myT = Ticket.load(Ticket.class, id);
+                if (myT != null)
+                    myT.delete();
+            }
             arrayAdapter.notifyDataSetChanged();
-            Ticket myT = Ticket.load(Ticket.class, id);
-            if (myT != null)
-                myT.delete();
         }
-        arrayAdapter.notifyDataSetChanged();
     }
 
     @Override
