@@ -73,9 +73,9 @@ public class LiveScoreFragment extends Fragment {
         String[] date = getResources().getStringArray(R.array.date_list);
         if (savedInstanceState != null) {
             int selected = savedInstanceState.getInt("selected");
-            spinner = ComponentsHelper.createSpinner(date, view, R.id.date, selected);
+            spinner = ComponentsHelper.createSpinner(date, view, R.id.date, selected, true);
         } else {
-            spinner = ComponentsHelper.createSpinner(date, view, R.id.date, 5);
+            spinner = ComponentsHelper.createSpinner(date, view, R.id.date, 5, true);
         }
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());

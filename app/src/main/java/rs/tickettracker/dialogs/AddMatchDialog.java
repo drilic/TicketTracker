@@ -35,8 +35,12 @@ public class AddMatchDialog extends DialogFragment {
     Match currentMatch = null;
     Bet currentBet = null;
     Fragment fragment;
+    MaterialSpinner dateSpinner;
+    MaterialSpinner matchSpinner;
+    MaterialSpinner leagueSpinner;
+    MaterialSpinner betSpinner;
 
-    public AddMatchDialog(){
+    public AddMatchDialog() {
         // Required empty public constructor
     }
 
@@ -89,8 +93,40 @@ public class AddMatchDialog extends DialogFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         final List<League> leaguesList = new Select().from(League.class).execute();
-        final MaterialSpinner matchSpinner = ComponentsHelper.createSpinner(new ArrayList<Match>(), view, R.id.match, 0);
-        new GetMatchesTask(getActivity(), view, matchSpinner, false).execute(leaguesList.get(0).leagueServisId, 1);
+        final List<Bet> betList = new Select().from(Bet.class).execute();
+        String[] date = getResources().getStringArray(R.array.date_list);
+        if (savedInstanceState != null) {
+            int selected = savedInstanceState.getInt("dateSpinner");
+            dateSpinner = ComponentsHelper.createSpinner(date, view, R.id.date, selected, true);
+            int dayPosition = dateSpinner.getSelectedItemPosition() - 1;
+            if (dayPosition == -1) dayPosition = 5;
+            int day = Integer.parseInt(getResources().getStringArray(R.array.date_values_list)[dayPosition]);
+
+            selected = savedInstanceState.getInt("leagueSpinner");
+            leagueSpinner = ComponentsHelper.createSpinner(leaguesList, view, R.id.league, selected, true);
+            int leaguePosition = leagueSpinner.getSelectedItemPosition() - 1;
+            long leagueServisId = -1;
+            if (leaguePosition != -1) {
+                leagueServisId = leaguesList.get(selected).leagueServisId;
+            }
+
+            selected = savedInstanceState.getInt("betSpinner");
+            betSpinner = ComponentsHelper.createSpinner(betList, view, R.id.bet, selected, true);
+
+            selected = savedInstanceState.getInt("matchSpinner");
+            matchSpinner = ComponentsHelper.createSpinner(new ArrayList<Match>(), view, R.id.match, 0, true);
+            if (leagueServisId != -1) {
+                new GetMatchesTask(getActivity(), view, matchSpinner, false).execute(leagueServisId, day);
+                matchSpinner.setSelection(selected, false);
+            }
+        } else {
+            matchSpinner = ComponentsHelper.createSpinner(new ArrayList<Match>(), view, R.id.match, 0, true);
+            dateSpinner = ComponentsHelper.createSpinner(date, view, R.id.date, 5, true);
+            leagueSpinner = ComponentsHelper.createSpinner(leaguesList, view, R.id.league, 1, true);
+            betSpinner = ComponentsHelper.createSpinner(betList, view, R.id.bet, 2, true);
+            new GetMatchesTask(getActivity(), view, matchSpinner, false).execute(leaguesList.get(0).leagueServisId, 1);
+        }
+
 
         matchSpinner.post(new Runnable() {
             public void run() {
@@ -112,10 +148,6 @@ public class AddMatchDialog extends DialogFragment {
             }
         });
 
-        String[] date = getResources().getStringArray(R.array.date_list);
-        final MaterialSpinner dateSpinner = ComponentsHelper.createSpinner(date, view, R.id.date, 5);
-        final MaterialSpinner leagueSpinner = ComponentsHelper.createSpinner(leaguesList, view, R.id.league, 1);
-
         final int[] leagueFlag = {0};
         leagueSpinner.post(new Runnable() {
             public void run() {
@@ -126,7 +158,7 @@ public class AddMatchDialog extends DialogFragment {
                         if (leagueFlag[0] > 1) {
                             if (position == -1) return;
                             int dayPosition = dateSpinner.getSelectedItemPosition() - 1;
-                            if (dayPosition == -1) dayPosition = 4;
+                            if (dayPosition == -1) dayPosition = 5;
                             int day = Integer.parseInt(getResources().getStringArray(R.array.date_values_list)[dayPosition]);
                             League currentLeague = (League) parent.getSelectedItem();
                             new GetMatchesTask(getActivity(), view, matchSpinner, true).execute(currentLeague.leagueServisId, day);
@@ -171,9 +203,7 @@ public class AddMatchDialog extends DialogFragment {
             }
         });
 
-        final List<Bet> betList = new Select().from(Bet.class).execute();
         currentBet = betList.get(0);
-        final MaterialSpinner betSpinner = ComponentsHelper.createSpinner(betList, view, R.id.bet, 2);
         betSpinner.post(new Runnable() {
             public void run() {
                 betSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -192,5 +222,26 @@ public class AddMatchDialog extends DialogFragment {
                 });
             }
         });
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (dateSpinner != null) {
+            int selected = dateSpinner.getSelectedItemPosition();
+            outState.putInt("dateSpinner", selected);
+        }
+        if (leagueSpinner != null) {
+            int selected = leagueSpinner.getSelectedItemPosition();
+            outState.putInt("leagueSpinner", selected);
+        }
+        if (matchSpinner != null) {
+            int selected = matchSpinner.getSelectedItemPosition();
+            outState.putInt("matchSpinner", selected);
+        }
+        if (betSpinner != null) {
+            int selected = betSpinner.getSelectedItemPosition();
+            outState.putInt("betSpinner", selected);
+        }
     }
 }
