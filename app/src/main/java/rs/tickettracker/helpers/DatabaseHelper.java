@@ -28,8 +28,7 @@ public class DatabaseHelper {
         String db_name = context.getResources().getString(R.string.db_name);
         File dbFile = context.getDatabasePath(db_name);
         if (dbFile.exists()) {
-            Configuration dbConfiguration = new Configuration.Builder(context).setDatabaseName(db_name).create();
-            ActiveAndroid.initialize(dbConfiguration);
+            ActiveAndroid.initialize(context);
         } else {
             PreferenceManager.setDefaultValues(context, R.xml.preferences, false);
             Configuration dbConfiguration = new Configuration.Builder(context).setDatabaseName(db_name).create();

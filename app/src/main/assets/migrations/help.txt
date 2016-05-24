@@ -1,0 +1,4 @@
+--Chnage DB_VERSION to 2
+--Write sql for update. Exmp: ALTER TABLE Bet ADD COLUMN Description TEXT; and save as 2.sql
+
+--Copy TicketTracker.db here. Then, activeandroid will copy that populated DB, if DB isn't exist.

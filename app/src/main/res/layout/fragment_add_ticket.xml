@@ -38,6 +38,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
+                    android:singleLine="true"
                     android:hint="@string/ticket_name">
 
                     <requestFocus />

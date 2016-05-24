@@ -33,6 +33,7 @@ import rs.tickettracker.listeners.EditTicketAction;
 import rs.tickettracker.listeners.OpenModalAction;
 import rs.tickettracker.listeners.SaveTicketAction;
 import rs.tickettracker.listeners.interfaces.GetMatchFromDialogListener;
+import rs.tickettracker.validation.Validator;
 
 /**
  * Created by gisko on 27-Apr-16.
@@ -72,14 +73,17 @@ public class AddTicketFragment extends ListFragment implements GetMatchFromDialo
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ticketName = (EditText) view.findViewById(R.id.add_ticket_name);
+        ticketName.addTextChangedListener(new Validator(view, ticketName));
+        ticketGain = (EditText) view.findViewById(R.id.add_ticket_gain);
+        ticketGain.addTextChangedListener(new Validator(view, ticketGain));
+
         if (ticketId == -1) {
             arrayAdapter = new MatchAddTicketListAdapter(getActivity(), R.layout.list_match_add_ticket, new ArrayList<Match>());
         } else {
             myTicket = Ticket.load(Ticket.class, ticketId);
             List<Match> matches = new Select().from(Match.class).where("ticket = ?", myTicket.getId()).execute();
             arrayAdapter = new MatchAddTicketListAdapter(getActivity(), R.layout.list_match_add_ticket, matches);
-            ticketName = (EditText) view.findViewById(R.id.add_ticket_name);
-            ticketGain = (EditText) view.findViewById(R.id.add_ticket_gain);
             ticketName.setText(myTicket.ticketName);
             ticketGain.setText(String.valueOf(myTicket.possibleGain));
         }

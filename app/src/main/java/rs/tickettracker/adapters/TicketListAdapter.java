@@ -57,7 +57,6 @@ public class TicketListAdapter extends ArrayAdapter<Ticket> {
         holder.txtTitle.setText(ticket.ticketName);
         holder.txtGain.setText("Possible gain: " + ticket.possibleGain);
         holder.imgIcon.setImageResource(StatusHelper.getStatusIconType(ticket.status.status, context));
-
         return row;
     }
 

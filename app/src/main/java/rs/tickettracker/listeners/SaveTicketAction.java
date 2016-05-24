@@ -53,6 +53,10 @@ public class SaveTicketAction implements View.OnClickListener {
             Toast.makeText(activity.getApplicationContext(), "Ticket name is required.", Toast.LENGTH_SHORT).show();
             return;
         }
+        if(ticketName.getText().toString().length()>30){
+            Toast.makeText(activity.getApplicationContext(), "Max length is 30 characters.", Toast.LENGTH_SHORT).show();
+            return;
+        }
         EditText ticketGain = (EditText) activity.findViewById(R.id.add_ticket_gain);
         Status s = new Select().from(Status.class).where("status = ?", "Active").executeSingle();
 

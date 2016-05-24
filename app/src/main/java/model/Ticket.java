@@ -5,16 +5,17 @@ import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Select;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by gisko on 29-Apr-16.
  */
 
-@Table(name = "Ticket", id="_id")
+@Table(name = "Ticket", id = "_id")
 public class Ticket extends Model {
 
-    @Column(name = "ticketName", notNull = true)
+    @Column(name = "ticketName", notNull = true, length = 32)
     public String ticketName;
 
     @Column(name = "possibleGain")
@@ -57,6 +58,9 @@ public class Ticket extends Model {
                 .where("status = ?", "Active")
                 .executeSingle();
 
+        if (status == null)
+            return new ArrayList<>();
+
         return new Select()
                 .from(Ticket.class)
                 .where("status= ?", status.getId())
@@ -70,6 +74,9 @@ public class Ticket extends Model {
                 .where("status = ?", "Win")
                 .executeSingle();
 
+        if (status == null)
+            return new ArrayList<>();
+
         return new Select()
                 .from(Ticket.class)
                 .where("status= ?", status.getId())
@@ -82,6 +89,9 @@ public class Ticket extends Model {
                 .from(Status.class)
                 .where("status = ?", "Lose")
                 .executeSingle();
+
+        if (status == null)
+            return new ArrayList<>();
 
         return new Select()
                 .from(Ticket.class)

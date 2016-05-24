@@ -27,7 +27,6 @@ public class SyncService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (SyncHelper.getConnectivityStatus(getApplicationContext())) {
             DatabaseHelper.initializeDB(getApplicationContext());
-            Log.i("***", "Service trigger");
             new SyncTask(null, true, getApplicationContext()).execute();
         }
         stopSelf();

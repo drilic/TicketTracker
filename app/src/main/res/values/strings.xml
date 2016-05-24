@@ -26,6 +26,10 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
+    <!-- Errors -->
+    <string name="error_msg_required">This field is required.</string>
+    <string name="error_msg_max_length">Max length is 30 characters.</string>
+
     <!-- Personal details -->
     <string name="about_me_text">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
