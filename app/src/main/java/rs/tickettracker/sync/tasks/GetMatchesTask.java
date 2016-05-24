@@ -21,6 +21,7 @@ public class GetMatchesTask extends AsyncTask<Object, Void, List<Match>> {
     ProgressDialog dialog = null;
     View view = null;
     MaterialSpinner spinner = null;
+    int selectedMatch = -1;
 
     public GetMatchesTask(Activity activity, View view, MaterialSpinner spinner, Boolean useDialog) {
         this.activity = activity;
@@ -46,12 +47,19 @@ public class GetMatchesTask extends AsyncTask<Object, Void, List<Match>> {
         if (dialog != null && dialog.isShowing()) {
             dialog.dismiss();
         }
+        if (selectedMatch != -1)
+            spinner.setSelection(selectedMatch);
     }
 
     @Override
     protected List<Match> doInBackground(Object... params) {
         long leagueId = (long) params[0];
         int day = (int) params[1];
+        try {
+            selectedMatch = (int) params[2];
+        } catch (Exception e) {
+            selectedMatch = -1;
+        }
         return LiveScoreAPIHelper.findAllMatchesForLeague(day, leagueId);
     }
 

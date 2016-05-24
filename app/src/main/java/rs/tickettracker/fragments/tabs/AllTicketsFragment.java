@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -95,7 +96,14 @@ public class AllTicketsFragment extends ListFragment implements OnItemClickListe
 
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-        ListViewActionHelper.longClickAction(getActivity(), view, id, tabMenager);
+//        ListViewActionHelper.longClickAction(getActivity(), view, id, tabMenager);
+        Button deleteButton = (Button) view.findViewById(R.id.deleteTicketButton);
+        if (deleteButton.getVisibility() == View.VISIBLE) {
+            deleteButton.setVisibility(View.GONE);
+        } else {
+            deleteButton.setVisibility(View.VISIBLE);
+        }
+        arrayAdapter.notifyDataSetChanged();
         return true;
     }
 

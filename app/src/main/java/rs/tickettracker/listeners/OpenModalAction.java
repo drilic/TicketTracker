@@ -24,8 +24,9 @@ public class OpenModalAction implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if (SyncHelper.getConnectivityStatus(activity.getApplicationContext())) {
-            AddMatchDialog amd = new AddMatchDialog(fragment);
-            amd.show(activity.getFragmentManager(), "Dialog Fragment");
+            AddMatchDialog amd = new AddMatchDialog();
+            amd.setTargetFragment(fragment, 1000);
+            amd.show(activity.getSupportFragmentManager(), "Dialog Fragment");
         } else {
             Toast.makeText(activity, "Check settings or net connection.", Toast.LENGTH_SHORT).show();
         }

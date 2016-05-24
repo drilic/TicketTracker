@@ -1,10 +1,10 @@
 package rs.tickettracker.dialogs;
 
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
@@ -34,7 +34,6 @@ public class AddMatchDialog extends DialogFragment {
 
     Match currentMatch = null;
     Bet currentBet = null;
-    Fragment fragment;
     MaterialSpinner dateSpinner;
     MaterialSpinner matchSpinner;
     MaterialSpinner leagueSpinner;
@@ -44,14 +43,10 @@ public class AddMatchDialog extends DialogFragment {
     int selectedMatch = 0;
     int selectedBet = 0;
     static boolean STATE_CHANGED = false;
-
+    final int[] dateFlag = {0};
 
     public AddMatchDialog() {
         // Required empty public constructor
-    }
-
-    public AddMatchDialog(Fragment fragment) {
-        this.fragment = fragment;
     }
 
     @Override
@@ -74,7 +69,7 @@ public class AddMatchDialog extends DialogFragment {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         if (currentMatch != null) {
                             currentMatch.bet = currentBet;
-                            GetMatchFromDialogListener getMatchFromDialogListener = (GetMatchFromDialogListener) fragment;
+                            GetMatchFromDialogListener getMatchFromDialogListener = (GetMatchFromDialogListener) getTargetFragment();
                             getMatchFromDialogListener.getMatchFromDialog(currentMatch);
                         } else {
                             Toast.makeText(getActivity(), "Invalid match parameters.", Toast.LENGTH_SHORT).show();
@@ -84,6 +79,7 @@ public class AddMatchDialog extends DialogFragment {
                 .setNegativeButton("Close",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
+                                STATE_CHANGED = false;
                                 dialog.dismiss();
                             }
                         }
@@ -110,23 +106,23 @@ public class AddMatchDialog extends DialogFragment {
         String[] date = getResources().getStringArray(R.array.date_list);
         if (STATE_CHANGED) {
             dateSpinner = ComponentsHelper.createSpinner(date, view, R.id.date, selectedDate, true);
-            int dayPosition = dateSpinner.getSelectedItemPosition() - 1;
-            if (dayPosition == -1) dayPosition = 5;
-            int day = Integer.parseInt(getResources().getStringArray(R.array.date_values_list)[dayPosition]);
+            int day = 5;
+            if (selectedDate != 0)
+                day = Integer.parseInt(getResources().getStringArray(R.array.date_values_list)[selectedDate - 1]);
+            else
+                selectedMatch = -1;
 
             leagueSpinner = ComponentsHelper.createSpinner(leaguesList, view, R.id.league, selectedLeague, true);
-            int leaguePosition = leagueSpinner.getSelectedItemPosition() - 1;
             long leagueServisId = -1;
-            if (leaguePosition != -1) {
-                leagueServisId = leaguesList.get(selectedLeague).leagueServisId;
-            }
+            if (selectedLeague != 0)
+                leagueServisId = leaguesList.get(selectedLeague - 1).leagueServisId;
 
             betSpinner = ComponentsHelper.createSpinner(betList, view, R.id.bet, selectedBet, true);
 
             matchSpinner = ComponentsHelper.createSpinner(new ArrayList<Match>(), view, R.id.match, 0, true);
             if (leagueServisId != -1) {
-                new GetMatchesTask(getActivity(), view, matchSpinner, false).execute(leagueServisId, day);
-                matchSpinner.setSelection(selectedMatch, false);
+                dateFlag[0] = 1;
+                new GetMatchesTask(getActivity(), view, matchSpinner, true).execute(leagueServisId, day, selectedMatch);
             }
         } else {
             matchSpinner = ComponentsHelper.createSpinner(new ArrayList<Match>(), view, R.id.match, 0, true);
@@ -183,7 +179,6 @@ public class AddMatchDialog extends DialogFragment {
             }
         });
 
-        final int[] dateFlag = {0};
         dateSpinner.post(new Runnable() {
             public void run() {
                 dateSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

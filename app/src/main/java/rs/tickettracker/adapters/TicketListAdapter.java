@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -46,7 +47,7 @@ public class TicketListAdapter extends ArrayAdapter<Ticket> {
             holder.imgIcon = (ImageView) row.findViewById(R.id.item_icon);
             holder.txtTitle = (TextView) row.findViewById(R.id.name);
             holder.txtGain = (TextView) row.findViewById(R.id.description);
-
+            holder.btnDelete = (Button) row.findViewById(R.id.deleteTicketButton);
             row.setTag(holder);
         } else {
             holder = (TicketHolder) row.getTag();
@@ -64,6 +65,7 @@ public class TicketListAdapter extends ArrayAdapter<Ticket> {
         ImageView imgIcon;
         TextView txtTitle;
         TextView txtGain;
+        Button btnDelete;
     }
 
     public void removeById(long id) {
