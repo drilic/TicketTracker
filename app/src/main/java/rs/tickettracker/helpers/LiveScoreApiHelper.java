@@ -60,23 +60,29 @@ public class LiveScoreAPIHelper {
                 int homeScore = match.getJSONObject("result").optInt("goalsHomeTeam", -1);
                 int awayScore = match.getJSONObject("result").optInt("goalsAwayTeam", -1);
                 if (m.homeScore != homeScore) {
-                    m.homeScore = homeScore;
-                    m.awayScore = awayScore;
-                    if (showGoalsNotification) {
-                        Intent ints = new Intent(MainActivity.SYNC_DATA);
-                        ints.putExtra("ticketId", ticketId);
-                        ints.putExtra("MESSAGE_TEXT", m.homeTeam + " scored. Current result is: [" + m.homeScore + "]:" + m.awayScore);
-                        context.sendBroadcast(ints);
+                    if (homeScore != 0) {
+                        m.homeScore = homeScore;
+                        if (showGoalsNotification) {
+                            Intent ints = new Intent(MainActivity.SYNC_DATA);
+                            ints.putExtra("ticketId", ticketId);
+                            ints.putExtra("MESSAGE_TEXT", m.homeTeam + " scored. Current result is: [" + m.homeScore + "]:" + m.awayScore);
+                            context.sendBroadcast(ints);
+                        }
+                    } else {
+                        m.homeScore = 0;
                     }
                 }
                 if (m.awayScore != awayScore) {
-                    m.homeScore = homeScore;
-                    m.awayScore = awayScore;
-                    if (showGoalsNotification) {
-                        Intent ints = new Intent(MainActivity.SYNC_DATA);
-                        ints.putExtra("ticketId", ticketId);
-                        ints.putExtra("MESSAGE_TEXT", m.awayScore + " scored. Current result is: " + m.homeScore + ":[" + m.awayScore + "]");
-                        context.sendBroadcast(ints);
+                    if (awayScore != 0) {
+                        m.awayScore = awayScore;
+                        if (showGoalsNotification) {
+                            Intent ints = new Intent(MainActivity.SYNC_DATA);
+                            ints.putExtra("ticketId", ticketId);
+                            ints.putExtra("MESSAGE_TEXT", m.awayTeam + " scored. Current result is: " + m.homeScore + ":[" + m.awayScore + "]");
+                            context.sendBroadcast(ints);
+                        }
+                    } else {
+                        m.awayScore = 0;
                     }
                 }
                 m.save();
@@ -102,7 +108,7 @@ public class LiveScoreAPIHelper {
         List<Match> foundMatches = new ArrayList<Match>();
 
         try {
-            if(serviceResult==null)
+            if (serviceResult == null)
                 return foundMatches;
             if (serviceResult.has("fixtures")) {
                 JSONArray matches = serviceResult.getJSONArray("fixtures");

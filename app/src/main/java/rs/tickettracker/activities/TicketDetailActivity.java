@@ -13,6 +13,8 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.activeandroid.ActiveAndroid;
+
 import model.Ticket;
 import rs.tickettracker.R;
 import rs.tickettracker.fragments.AddTicketFragment;
@@ -42,7 +44,12 @@ public class TicketDetailActivity extends AppCompatActivity {
         try {
             t = Ticket.load(Ticket.class, id);
         } catch (Exception e) {
-            t = null;
+            ActiveAndroid.initialize(this);
+            try {
+                t = Ticket.load(Ticket.class, id);
+            } catch (Exception ex) {
+                t = null;
+            }
         }
         if (t == null) {
             getSupportActionBar().setTitle("Error");
