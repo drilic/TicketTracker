@@ -73,5 +73,22 @@ public class DatabaseHelper {
 
         league = new League("EURO 2016", 424);
         league.save();
+
+
+        ActiveAndroid.beginTransaction();
+        Status s = new Select().from(Status.class).where("status = ?", "Active").executeSingle();
+        try {
+            for (int i = 0; i < 15; i++) {
+                Ticket t = new Ticket();
+                t.ticketName = "Dummy " + i;
+                t.status = s;
+                t.possibleGain = 1000d;
+                t.save();
+            }
+            ActiveAndroid.setTransactionSuccessful();
+        } finally {
+            ActiveAndroid.endTransaction();
+        }
+
     }
 }
