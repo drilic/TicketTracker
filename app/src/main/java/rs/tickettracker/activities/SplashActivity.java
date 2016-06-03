@@ -1,12 +1,14 @@
 package rs.tickettracker.activities;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.activeandroid.ActiveAndroid;
 
 import rs.tickettracker.R;
+import rs.tickettracker.helpers.GlobalConfig;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -14,20 +16,22 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        Thread myThread = new Thread() {
+
+        new Handler().postDelayed(new Runnable(){
             @Override
             public void run() {
-                try {
-                    sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
                 ActiveAndroid.initialize(getApplicationContext());
                 Intent startMainScreen = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(startMainScreen);
                 finish();
             }
-        };
-        myThread.start();
+        }, GlobalConfig.SPLASH_SCREEN_LENGTH);
+    }
+
+    @Override
+    protected void onPause() {
+        // TODO Auto-generated method stub
+        super.onPause();
+        finish();
     }
 }
