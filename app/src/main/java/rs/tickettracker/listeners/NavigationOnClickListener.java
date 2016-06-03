@@ -10,18 +10,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.activeandroid.query.Select;
-
-import model.Status;
 import rs.tickettracker.R;
-import rs.tickettracker.activities.MainActivity;
 import rs.tickettracker.activities.TTPreferenceActivity;
 import rs.tickettracker.fragments.AboutFragment;
 import rs.tickettracker.fragments.AddTicketFragment;
 import rs.tickettracker.fragments.LiveScoreFragment;
 import rs.tickettracker.fragments.tabs.MainTabFragment;
 import rs.tickettracker.helpers.BackstackHelper;
+import rs.tickettracker.helpers.GlobalConfig;
 import rs.tickettracker.helpers.SyncHelper;
+import rs.tickettracker.helpers.ContentProviderTestHelper;
 import rs.tickettracker.sync.tasks.SyncTask;
 
 /**
@@ -67,11 +65,21 @@ public class NavigationOnClickListener implements NavigationView.OnNavigationIte
                 }
                 break;
             case R.id.drawer_sync:
-                if (SyncHelper.getConnectivityStatus(activity.getApplicationContext())) {
-                    new SyncTask(activity, false, activity.getApplicationContext()).execute();
+                if (GlobalConfig.TEST_CONTENT_PROVIDER) {
+                    if (GlobalConfig.TEST_CONTENT_PROVIDER_GET) {
+                        ContentProviderTestHelper.getAllTickets(activity);
+                    }
+                    if (GlobalConfig.TEST_CONTENT_PROVIDER_INSERT) {
+                        ContentProviderTestHelper.insertNewTicket(activity);
+                    }
                 } else {
-                    Toast.makeText(activity, "Check settings or net connection.", Toast.LENGTH_SHORT).show();
+                    if (SyncHelper.getConnectivityStatus(activity.getApplicationContext())) {
+                        new SyncTask(activity, false, activity.getApplicationContext()).execute();
+                    } else {
+                        Toast.makeText(activity, "Check settings or net connection.", Toast.LENGTH_SHORT).show();
+                    }
                 }
+
                 break;
             case R.id.drawer_settings:
                 Intent preference = new Intent(activity.getApplicationContext(), TTPreferenceActivity.class);

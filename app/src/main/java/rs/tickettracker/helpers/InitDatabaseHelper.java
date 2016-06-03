@@ -22,22 +22,9 @@ import rs.tickettracker.R;
 /**
  * Created by gisko on 02-May-16.
  */
-public class DatabaseHelper {
+public class InitDatabaseHelper {
 
-    public static void initializeDB(Context context) {
-        String db_name = context.getResources().getString(R.string.db_name);
-        File dbFile = context.getDatabasePath(db_name);
-        if (dbFile.exists()) {
-            ActiveAndroid.initialize(context);
-        } else {
-            PreferenceManager.setDefaultValues(context, R.xml.preferences, false);
-            Configuration dbConfiguration = new Configuration.Builder(context).setDatabaseName(db_name).create();
-            ActiveAndroid.initialize(dbConfiguration);
-            populateDB();
-        }
-    }
-
-    public static void populateDB() {
+    public static void initDB() {
         Bet bet = new Bet("1");
         bet.save();
         bet = new Bet("X");
@@ -74,11 +61,13 @@ public class DatabaseHelper {
         league = new League("EURO 2016", 424);
         league.save();
 
+    }
 
+    public static void fillDummyTickets(int numOfTickets){
         ActiveAndroid.beginTransaction();
         Status s = new Select().from(Status.class).where("status = ?", "Active").executeSingle();
         try {
-            for (int i = 0; i < 15; i++) {
+            for (int i = 0; i < numOfTickets; i++) {
                 Ticket t = new Ticket();
                 t.ticketName = "Dummy " + i;
                 t.status = s;
@@ -89,6 +78,5 @@ public class DatabaseHelper {
         } finally {
             ActiveAndroid.endTransaction();
         }
-
     }
 }

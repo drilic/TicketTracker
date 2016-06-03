@@ -101,7 +101,7 @@ public class ActiveTicketsFragment extends ListFragment implements AdapterView.O
 
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-        ListViewActionHelper.longClickAction(getActivity(), view, id, tabMenager);
+//        ListViewActionHelper.longClickAction(getActivity(), view, id, tabMenager);
         return true;
     }
 

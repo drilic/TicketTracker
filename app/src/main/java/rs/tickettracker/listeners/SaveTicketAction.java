@@ -26,6 +26,7 @@ import rs.tickettracker.adapters.MatchAddTicketListAdapter;
 import rs.tickettracker.dialogs.AddMatchDialog;
 import rs.tickettracker.fragments.interfaces.FragmentUpdateInterface;
 import rs.tickettracker.helpers.BackstackHelper;
+import rs.tickettracker.helpers.GlobalConfig;
 import rs.tickettracker.helpers.StatusHelper;
 import rs.tickettracker.sync.tasks.SyncTask;
 
@@ -53,7 +54,7 @@ public class SaveTicketAction implements View.OnClickListener {
             Toast.makeText(activity.getApplicationContext(), "Ticket name is required.", Toast.LENGTH_SHORT).show();
             return;
         }
-        if(ticketName.getText().toString().length()>30){
+        if (ticketName.getText().toString().length() > 30) {
             Toast.makeText(activity.getApplicationContext(), "Max length is 30 characters.", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -116,6 +117,7 @@ public class SaveTicketAction implements View.OnClickListener {
                 myMenu.getItem(i).setVisible(true);
         }
 
-        //new SyncTask(activity, false, activity.getApplicationContext()).execute();
+        if (GlobalConfig.SYNC_TICKET_AFTER_SAVE)
+            new SyncTask(activity, false, activity.getApplicationContext()).execute();
     }
 }

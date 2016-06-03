@@ -1,20 +1,12 @@
 package rs.tickettracker.sync;
 
-import android.app.Activity;
 import android.app.Service;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.IBinder;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
-import android.util.Log;
-import android.widget.Toast;
 
-import com.activeandroid.query.Select;
+import com.activeandroid.ActiveAndroid;
 
-import model.Status;
-import rs.tickettracker.activities.MainActivity;
-import rs.tickettracker.helpers.DatabaseHelper;
 import rs.tickettracker.helpers.SyncHelper;
 import rs.tickettracker.sync.tasks.SyncTask;
 
@@ -26,7 +18,7 @@ public class SyncService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (SyncHelper.getConnectivityStatus(getApplicationContext())) {
-            DatabaseHelper.initializeDB(getApplicationContext());
+            ActiveAndroid.initialize(getApplicationContext());
             new SyncTask(null, true, getApplicationContext()).execute();
         }
         stopSelf();

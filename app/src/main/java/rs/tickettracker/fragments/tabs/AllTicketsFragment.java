@@ -97,13 +97,13 @@ public class AllTicketsFragment extends ListFragment implements OnItemClickListe
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 //        ListViewActionHelper.longClickAction(getActivity(), view, id, tabMenager);
-        Button deleteButton = (Button) view.findViewById(R.id.deleteTicketButton);
-        if (deleteButton.getVisibility() == View.VISIBLE) {
-            deleteButton.setVisibility(View.GONE);
-        } else {
-            deleteButton.setVisibility(View.VISIBLE);
-        }
-        arrayAdapter.notifyDataSetChanged();
+//        Button deleteButton = (Button) view.findViewById(R.id.deleteTicketButton);
+//        if (deleteButton.getVisibility() == View.VISIBLE) {
+//            deleteButton.setVisibility(View.GONE);
+//        } else {
+//            deleteButton.setVisibility(View.VISIBLE);
+//        }
+//        arrayAdapter.notifyDataSetChanged();
         return true;
     }
 

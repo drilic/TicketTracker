@@ -22,11 +22,7 @@
             android:name="AA_DB_VERSION"
             android:value="1" />
 
-        <!--<provider
-            android:name="com.activeandroid.content.ContentProvider"
-            android:authorities="rs.tickettracker"
-            android:exported="false" />-->
-
+        <provider android:name=".providers.TicketTrackerCP" android:authorities="rs.tickettracker" android:exported="true"/>
 
         <receiver android:name="rs.tickettracker.sync.SyncReceiver">
             <intent-filter>

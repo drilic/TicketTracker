@@ -3,15 +3,10 @@ package rs.tickettracker.activities;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 
-import com.activeandroid.query.Select;
+import com.activeandroid.ActiveAndroid;
 
-import java.util.List;
-
-import model.Match;
 import rs.tickettracker.R;
-import rs.tickettracker.helpers.DatabaseHelper;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -23,15 +18,14 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    DatabaseHelper.initializeDB(SplashActivity.this);
                     sleep(1000);
-
-                    Intent startMainScreen = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(startMainScreen);
-                    finish();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                ActiveAndroid.initialize(getApplicationContext());
+                Intent startMainScreen = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(startMainScreen);
+                finish();
             }
         };
         myThread.start();
