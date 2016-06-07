@@ -4,4 +4,4 @@
 Provides you real time information about changes and final results on your betting tickets...
 
 #### Download
-Download APK file: [TicketTracker.apk](https://drive.google.com/open?id=0B6sHBvQbHW4hNHdiQUxyNk5OcTQ)
+Download APK file: [TicketTracker.apk](https://drive.google.com/open?id=0B6sHBvQbHW4hZnpndjhYOUp6aGs)
