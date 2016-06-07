@@ -1,18 +1,14 @@
 package rs.tickettracker.fragments.tabs;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Button;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -24,7 +20,6 @@ import rs.tickettracker.activities.TicketDetailActivity;
 import rs.tickettracker.adapters.TabFragmentAdapter;
 import rs.tickettracker.adapters.TicketListAdapter;
 import rs.tickettracker.fragments.interfaces.FragmentUpdateInterface;
-import rs.tickettracker.helpers.ListViewActionHelper;
 import rs.tickettracker.sync.tasks.GetTicketFromDBTask;
 
 
@@ -80,7 +75,7 @@ public class AllTicketsFragment extends ListFragment implements OnItemClickListe
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
-        arrayAdapter = new TicketListAdapter(getActivity(), R.layout.list_ticket_view, tickets);
+        arrayAdapter = new TicketListAdapter(getActivity(), R.layout.list_ticket_view, tickets, tabMenager);
         setListAdapter(arrayAdapter);
         getListView().addFooterView(getLayoutInflater(savedInstanceState).inflate(R.layout.list_footer_view, null), null, false);
         getListView().setOnItemClickListener(this);
@@ -96,14 +91,14 @@ public class AllTicketsFragment extends ListFragment implements OnItemClickListe
 
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-//        ListViewActionHelper.longClickAction(getActivity(), view, id, tabMenager);
-//        Button deleteButton = (Button) view.findViewById(R.id.deleteTicketButton);
-//        if (deleteButton.getVisibility() == View.VISIBLE) {
-//            deleteButton.setVisibility(View.GONE);
-//        } else {
-//            deleteButton.setVisibility(View.VISIBLE);
-//        }
-//        arrayAdapter.notifyDataSetChanged();
+        List<Long> selectedIds = TicketListAdapter.selectedIds;
+        if (selectedIds.contains(id)) {
+            selectedIds.remove(id);
+        } else {
+            selectedIds.add(id);
+        }
+        arrayAdapter.notifyDataSetChanged();
+        ((MainTabFragment)getParentFragment()).reloadTicketAdapter();
         return true;
     }
 

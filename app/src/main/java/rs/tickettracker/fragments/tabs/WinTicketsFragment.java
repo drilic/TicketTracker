@@ -1,13 +1,9 @@
 package rs.tickettracker.fragments.tabs;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +19,6 @@ import rs.tickettracker.activities.TicketDetailActivity;
 import rs.tickettracker.adapters.TabFragmentAdapter;
 import rs.tickettracker.adapters.TicketListAdapter;
 import rs.tickettracker.fragments.interfaces.FragmentUpdateInterface;
-import rs.tickettracker.helpers.ListViewActionHelper;
 import rs.tickettracker.sync.tasks.GetTicketFromDBTask;
 
 
@@ -79,7 +74,7 @@ public class WinTicketsFragment extends ListFragment implements AdapterView.OnIt
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
-        arrayAdapter = new TicketListAdapter(getActivity(), R.layout.list_ticket_view, tickets);
+        arrayAdapter = new TicketListAdapter(getActivity(), R.layout.list_ticket_view, tickets, tabMenager);
         setListAdapter(arrayAdapter);
         getListView().addFooterView(getLayoutInflater(savedInstanceState).inflate(R.layout.list_footer_view, null), null, false);
         getListView().setOnItemClickListener(this);
@@ -95,7 +90,14 @@ public class WinTicketsFragment extends ListFragment implements AdapterView.OnIt
 
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-//        ListViewActionHelper.longClickAction(getActivity(), view, id, tabMenager);
+        List<Long> selectedIds = TicketListAdapter.selectedIds;
+        if (selectedIds.contains(id)) {
+            selectedIds.remove(id);
+        } else {
+            selectedIds.add(id);
+        }
+        arrayAdapter.notifyDataSetChanged();
+        ((MainTabFragment)getParentFragment()).reloadTicketAdapter();
         return true;
     }
 

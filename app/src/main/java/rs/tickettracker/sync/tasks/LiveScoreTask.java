@@ -137,8 +137,8 @@ public class LiveScoreTask extends AsyncTask<Object, Void, HashMap<String, List<
                 textView = (TextView) activity.findViewById(R.id.championsText);
                 break;
             case "euro_2016":
-                listView = (ListView) activity.findViewById(R.id.bundesList);
-                textView = (TextView) activity.findViewById(R.id.bundesText);
+                listView = (ListView) activity.findViewById(R.id.euroList);
+                textView = (TextView) activity.findViewById(R.id.euroText);
                 break;
         }
         if (matches.size() > 0) {
