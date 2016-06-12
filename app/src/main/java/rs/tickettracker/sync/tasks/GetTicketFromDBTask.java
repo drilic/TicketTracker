@@ -14,7 +14,6 @@ import rs.tickettracker.adapters.TicketListAdapter;
 public class GetTicketFromDBTask extends AsyncTask<Object, Void, List<Ticket>> {
 
     Activity activity = null;
-    TicketListAdapter arrayAdapter;
 
     public GetTicketFromDBTask(Activity activity) {
         this.activity = activity;

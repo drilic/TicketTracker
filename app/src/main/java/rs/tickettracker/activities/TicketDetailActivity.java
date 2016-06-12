@@ -21,6 +21,7 @@ import rs.tickettracker.fragments.AddTicketFragment;
 import rs.tickettracker.fragments.ErrorFragment;
 import rs.tickettracker.fragments.TicketDetailFragment;
 import rs.tickettracker.helpers.BackstackHelper;
+import rs.tickettracker.helpers.GlobalStaticValuesHelper;
 import rs.tickettracker.helpers.StatusHelper;
 
 /**
@@ -32,6 +33,7 @@ public class TicketDetailActivity extends AppCompatActivity {
     public Ticket currentTicket;
     Menu myMenu;
     public static boolean showMenu = true;
+    public long notification_click;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,7 @@ public class TicketDetailActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         Bundle extras = getIntent().getExtras();
         long id = extras.getLong("id");
+        notification_click = extras.getLong("notification_click", GlobalStaticValuesHelper.DETAIL_ACTIVITY_REGULAR);
         Ticket t = null;
         try {
             t = Ticket.load(Ticket.class, id);
@@ -53,7 +56,8 @@ public class TicketDetailActivity extends AppCompatActivity {
             }
         }
         if (t == null) {
-            getSupportActionBar().setTitle("Error");
+            if (getSupportActionBar() != null)
+                getSupportActionBar().setTitle(this.getResources().getString(R.string.error));
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.containerView, new ErrorFragment()).commit();
         } else {
@@ -96,16 +100,18 @@ public class TicketDetailActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (currentTicket != null) {
-            getMenuInflater().inflate(R.menu.detail_menu_items, menu);
-            myMenu = menu;
-            if (showMenu) {
-                myMenu.findItem(R.id.delete_item).setVisible(true);
-                if (!currentTicket.status.status.equals("Active"))
-                    myMenu.findItem(R.id.edit_item).setVisible(false);
-            } else {
-                for (int i = 0; i < myMenu.size(); i++)
-                    myMenu.getItem(i).setVisible(false);
+        if (notification_click == GlobalStaticValuesHelper.DETAIL_ACTIVITY_REGULAR) {
+            if (currentTicket != null) {
+                getMenuInflater().inflate(R.menu.detail_menu_items, menu);
+                myMenu = menu;
+                if (showMenu) {
+                    myMenu.findItem(R.id.delete_item).setVisible(true);
+                    if (!currentTicket.status.status.equals("Active"))
+                        myMenu.findItem(R.id.edit_item).setVisible(false);
+                } else {
+                    for (int i = 0; i < myMenu.size(); i++)
+                        myMenu.getItem(i).setVisible(false);
+                }
             }
         }
         return super.onCreateOptionsMenu(menu);
@@ -116,20 +122,20 @@ public class TicketDetailActivity extends AppCompatActivity {
         if (currentTicket != null) {
             if (item.getItemId() == R.id.delete_item) {
                 android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
-                builder.setTitle("Confirm");
+                builder.setTitle(this.getResources().getString(R.string.confirm));
                 final Ticket t = currentTicket;
-                builder.setMessage("Are you sure that u want to delete " + t.ticketName + "?");
-                builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                builder.setMessage(this.getResources().getString(R.string.are_you_sure_to_delete) + " " + t.ticketName + "?");
+                builder.setPositiveButton(this.getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                         Intent returnIntent = new Intent();
                         returnIntent.putExtra("retId", t.getId());
-                        setResult(1000, returnIntent);
+                        setResult(GlobalStaticValuesHelper.DETAIL_ACTIVITY_DELETE_TICKET, returnIntent);
                         finish();
                     }
 
                 });
-                builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(this.getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
@@ -161,19 +167,22 @@ public class TicketDetailActivity extends AppCompatActivity {
             if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
                 fillData(currentTicket);
             }
-            if (!currentTicket.status.status.equals("Active"))
-                myMenu.findItem(R.id.edit_item).setVisible(false);
-            else
-                myMenu.findItem(R.id.edit_item).setVisible(true);
+            if (notification_click == GlobalStaticValuesHelper.DETAIL_ACTIVITY_REGULAR) {
+                if (!currentTicket.status.status.equals("Active"))
+                    myMenu.findItem(R.id.edit_item).setVisible(false);
+                else
+                    myMenu.findItem(R.id.edit_item).setVisible(true);
 
-            myMenu.findItem(R.id.delete_item).setVisible(true);
+                myMenu.findItem(R.id.delete_item).setVisible(true);
+            }
+            showMenu = true;
         }
-        showMenu = true;
         super.onBackPressed();
     }
 
     /**
      * Read data from ticket and populate all fields on page.
+     *
      * @param t - Ticket for reading.
      */
     private void fillData(Ticket t) {

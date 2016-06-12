@@ -13,7 +13,6 @@ public class MailHelper {
      * Sending mail to author of application.
      */
     public static Intent sendEmail() {
-        Log.i("Send email", "");
         String[] TO = {"ticket.tracker.sit@gmail.com"};
         String[] CC = {""};
         Intent emailIntent = new Intent(Intent.ACTION_SEND);

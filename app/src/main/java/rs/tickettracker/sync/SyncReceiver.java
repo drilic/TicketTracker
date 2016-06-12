@@ -12,6 +12,7 @@ import android.net.Uri;
 import rs.tickettracker.R;
 import rs.tickettracker.activities.MainActivity;
 import rs.tickettracker.activities.TicketDetailActivity;
+import rs.tickettracker.helpers.GlobalStaticValuesHelper;
 
 /**
  * Sync receiver is used as broadcast receiver to listen if somethings change and if it does, to
@@ -27,6 +28,7 @@ public class SyncReceiver extends BroadcastReceiver {
             long ticketId = intent.getExtras().getLong("ticketId");
             Intent newIntent = new Intent(context, TicketDetailActivity.class);
             newIntent.putExtra("id", ticketId);
+            newIntent.putExtra("notification_click", GlobalStaticValuesHelper.DETAIL_ACTIVITY_FROM_NOTIFICATION);
             PendingIntent pIntent = PendingIntent.getActivity(context, (int) System.currentTimeMillis(), newIntent, 0);
             Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 

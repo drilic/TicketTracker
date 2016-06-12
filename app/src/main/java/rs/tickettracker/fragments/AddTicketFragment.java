@@ -94,7 +94,7 @@ public class AddTicketFragment extends ListFragment implements GetMatchFromDialo
         addMatchFab.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                Snackbar.make(view, "Add new match on ticket", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, getActivity().getResources().getString(R.string.add_new_match_on_ticket), Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
                 return true;
             }
@@ -105,7 +105,7 @@ public class AddTicketFragment extends ListFragment implements GetMatchFromDialo
         saveTicketFab.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                Snackbar.make(view, "Save current ticket", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, getActivity().getResources().getString(R.string.save_current_ticket), Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
                 return true;
             }
@@ -129,7 +129,7 @@ public class AddTicketFragment extends ListFragment implements GetMatchFromDialo
     public void getMatchFromDialog(Match match) {
         for (Match m : arrayAdapter.getAllMatches()) {
             if (m.matchServisId == match.matchServisId) {
-                Toast.makeText(getActivity(), "Can't add one match more than once.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.cant_add_more_than_once), Toast.LENGTH_SHORT).show();
                 return;
             }
         }

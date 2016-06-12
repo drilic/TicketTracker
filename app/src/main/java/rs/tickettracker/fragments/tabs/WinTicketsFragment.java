@@ -19,6 +19,7 @@ import rs.tickettracker.activities.TicketDetailActivity;
 import rs.tickettracker.adapters.TabFragmentAdapter;
 import rs.tickettracker.adapters.TicketListAdapter;
 import rs.tickettracker.fragments.interfaces.FragmentUpdateInterface;
+import rs.tickettracker.helpers.GlobalStaticValuesHelper;
 import rs.tickettracker.sync.tasks.GetTicketFromDBTask;
 
 /**
@@ -88,7 +89,7 @@ public class WinTicketsFragment extends ListFragment implements AdapterView.OnIt
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(getActivity(), TicketDetailActivity.class);
         intent.putExtra("id", id);
-        startActivityForResult(intent, 1000);
+        startActivityForResult(intent, GlobalStaticValuesHelper.DETAIL_ACTIVITY_DELETE_TICKET);
     }
 
     @Override
@@ -117,7 +118,7 @@ public class WinTicketsFragment extends ListFragment implements AdapterView.OnIt
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (arrayAdapter != null) {
-            if (resultCode == 1000) {
+            if (resultCode == GlobalStaticValuesHelper.DETAIL_ACTIVITY_DELETE_TICKET) {
                 long id = data.getExtras().getLong("retId");
                 arrayAdapter.removeById(id);
                 arrayAdapter.notifyDataSetChanged();

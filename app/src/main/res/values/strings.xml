@@ -97,4 +97,36 @@
     <string name="pref_leagues_list_type">pref_leagues_list_type</string>
     <string name="pref_leagues_type">Leagues</string>
 
+    <!-- Tasks -->
+    <string name="loading_matches">Loading matches...</string>
+    <string name="no_any_matches_for_league">There is not any match for leagues.</string>
+    <string name="check_settings_or_net_conn">Check settings or net connection.</string>
+    <string name="sync_in_progress">Sync in progress...</string>
+    <string name="no_active_tickets">There is no active tickets.</string>
+
+    <!-- Save action -->
+    <string name="name_required">Ticket name is required.</string>
+    <string name="max_length_30">Max length is 30 characters.</string>
+    <string name="possible_gain_double">Possible gain must be double value.</string>
+    <string name="cant_save_without_matches">Cant save ticket without matches.</string>
+    <string name="max_matches_per_ticket">Max matches per ticket is 20.</string>
+
+    <string name="are_you_sure_to_exit">Are you sure that u want to exit?</string>
+    <string name="yes">YES</string>
+    <string name="no">NO</string>
+    <string name="error">Error</string>
+
+    <string name="confirm">Confirm</string>
+    <string name="are_you_sure_to_delete">Are you sure that u want to delete</string>
+
+    <string name="add">ADD</string>
+    <string name="close">CLOSE</string>
+    <string name="invalid_match_parameters">Invalid match parameters.</string>
+    <string name="no_email_clients">There is no email client installed.</string>
+    <string name="send_mail">Send mail...</string>
+
+    <string name="add_new_match_on_ticket">Add new match on ticket</string>
+    <string name="save_current_ticket">Save current ticket</string>
+    <string name="cant_add_more_than_once">Cant add one match more than once.</string>
+
 </resources>

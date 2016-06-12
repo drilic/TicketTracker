@@ -45,12 +45,12 @@ public class AboutFragment extends Fragment {
             public void onClick(View v) {
                 try {
                     if (SyncHelper.getConnectivityStatus(getContext())) {
-                        startActivity(Intent.createChooser(MailHelper.sendEmail(), "Send mail..."));
+                        startActivity(Intent.createChooser(MailHelper.sendEmail(), getActivity().getResources().getString(R.string.send_mail)));
                     } else {
-                        Toast.makeText(getActivity(), "Check settings or net connection.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.check_settings_or_net_conn), Toast.LENGTH_SHORT).show();
                     }
                 } catch (android.content.ActivityNotFoundException ex) {
-                    Toast.makeText(getActivity(), "There is no email client installed.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.no_email_clients), Toast.LENGTH_SHORT).show();
                 }
 
 

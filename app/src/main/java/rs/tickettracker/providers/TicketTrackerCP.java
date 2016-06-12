@@ -18,7 +18,7 @@ import com.activeandroid.query.Select;
 import model.Status;
 import model.Ticket;
 import rs.tickettracker.R;
-import rs.tickettracker.helpers.GlobalConfig;
+import rs.tickettracker.helpers.GlobalStaticValuesHelper;
 import rs.tickettracker.helpers.InitDatabaseHelper;
 
 /**
@@ -49,8 +49,8 @@ public class TicketTrackerCP extends ContentProvider {
         if (s == null) {
             InitDatabaseHelper.initDB();
             PreferenceManager.setDefaultValues(getContext(), R.xml.preferences, false);
-            if (GlobalConfig.POPULATE_WITH_DUMMY_TICKETS) {
-                InitDatabaseHelper.fillDummyTickets(GlobalConfig.NUMBER_OF_DUMMY_TICKETS);
+            if (GlobalStaticValuesHelper.POPULATE_WITH_DUMMY_TICKETS) {
+                InitDatabaseHelper.fillDummyTickets(GlobalStaticValuesHelper.NUMBER_OF_DUMMY_TICKETS);
             }
         }
         return true;

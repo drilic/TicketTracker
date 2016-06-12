@@ -17,7 +17,7 @@ import rs.tickettracker.fragments.AddTicketFragment;
 import rs.tickettracker.fragments.LiveScoreFragment;
 import rs.tickettracker.fragments.tabs.MainTabFragment;
 import rs.tickettracker.helpers.BackstackHelper;
-import rs.tickettracker.helpers.GlobalConfig;
+import rs.tickettracker.helpers.GlobalStaticValuesHelper;
 import rs.tickettracker.helpers.SyncHelper;
 import rs.tickettracker.helpers.ContentProviderTestHelper;
 import rs.tickettracker.sync.tasks.SyncTask;
@@ -65,18 +65,18 @@ public class NavigationOnClickListener implements NavigationView.OnNavigationIte
                 }
                 break;
             case R.id.drawer_sync:
-                if (GlobalConfig.TEST_CONTENT_PROVIDER) {
-                    if (GlobalConfig.TEST_CONTENT_PROVIDER_GET) {
+                if (GlobalStaticValuesHelper.TEST_CONTENT_PROVIDER) {
+                    if (GlobalStaticValuesHelper.TEST_CONTENT_PROVIDER_GET) {
                         ContentProviderTestHelper.getAllTickets(activity);
                     }
-                    if (GlobalConfig.TEST_CONTENT_PROVIDER_INSERT) {
+                    if (GlobalStaticValuesHelper.TEST_CONTENT_PROVIDER_INSERT) {
                         ContentProviderTestHelper.insertNewTicket(activity);
                     }
                 } else {
                     if (SyncHelper.getConnectivityStatus(activity.getApplicationContext())) {
                         new SyncTask(activity, false, activity.getApplicationContext()).execute();
                     } else {
-                        Toast.makeText(activity, "Check settings or net connection.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(activity, activity.getResources().getString(R.string.check_settings_or_net_conn), Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -94,16 +94,16 @@ public class NavigationOnClickListener implements NavigationView.OnNavigationIte
                 break;
             case R.id.drawer_exit:
                 android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(activity);
-                builder.setTitle("Exit");
-                builder.setMessage("Are you sure that u want to exit?");
-                builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                builder.setTitle(activity.getResources().getString(R.string.exit));
+                builder.setMessage(activity.getResources().getString(R.string.are_you_sure_to_exit));
+                builder.setPositiveButton(activity.getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                         android.os.Process.killProcess(android.os.Process.myPid());
                         System.exit(1);
                     }
                 });
-                builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(activity.getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();

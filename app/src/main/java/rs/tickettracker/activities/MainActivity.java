@@ -207,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
             if (SyncHelper.getConnectivityStatus(getApplicationContext())) {
                 new SyncTask(this, false, getApplicationContext()).execute();
             } else {
-                Toast.makeText(MainActivity.this, "Check settings or net connection.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, this.getResources().getString(R.string.check_settings_or_net_conn), Toast.LENGTH_SHORT).show();
             }
             return true;
         }
@@ -225,16 +225,16 @@ public class MainActivity extends AppCompatActivity {
         if (!BackstackHelper.isFragmentBackPressed(this)) {
             if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
                 android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
-                builder.setTitle("Exit");
-                builder.setMessage("Are you sure that u want to exit?");
-                builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                builder.setTitle(this.getResources().getString(R.string.exit));
+                builder.setMessage(this.getResources().getString(R.string.are_you_sure_to_exit));
+                builder.setPositiveButton(this.getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                         android.os.Process.killProcess(android.os.Process.myPid());
                         System.exit(1);
                     }
                 });
-                builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(this.getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();

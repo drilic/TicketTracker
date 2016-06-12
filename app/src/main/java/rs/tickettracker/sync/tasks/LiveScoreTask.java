@@ -36,7 +36,7 @@ public class LiveScoreTask extends AsyncTask<Object, Void, HashMap<String, List<
 
     @Override
     protected void onPreExecute() {
-        dialog.setMessage("Loading matches...");
+        dialog.setMessage(activity.getResources().getString(R.string.loading_matches));
         dialog.show();
         if (SyncHelper.getConnectivityStatus(activity.getApplicationContext())) {
             String[] leagues = activity.getResources().getStringArray(R.array.pref_leagues_values);
@@ -59,10 +59,10 @@ public class LiveScoreTask extends AsyncTask<Object, Void, HashMap<String, List<
         }
         if (SyncHelper.getConnectivityStatus(activity.getApplicationContext())) {
             if (showMessage) {
-                Toast.makeText(activity, "There is not any match for leagues.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity, activity.getResources().getString(R.string.no_any_matches_for_league), Toast.LENGTH_SHORT).show();
             }
         } else {
-            Toast.makeText(activity, "Check settings or net connection.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(activity, activity.getResources().getString(R.string.check_settings_or_net_conn), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -81,8 +81,9 @@ public class LiveScoreTask extends AsyncTask<Object, Void, HashMap<String, List<
 
     /**
      * Get matches from Live score helper.
+     *
      * @param leagueName - league name from settings
-     * @param day - day of the match
+     * @param day        - day of the match
      * @return List of matches from current league and for chosen day.
      */
     private List<Match> getMatches(String leagueName, int day) {
@@ -116,8 +117,9 @@ public class LiveScoreTask extends AsyncTask<Object, Void, HashMap<String, List<
 
     /**
      * Settup layout for live score page. Fill listViews and display text for each leagues.
+     *
      * @param leagueName - league name from settings
-     * @param matches - list of found matches for league
+     * @param matches    - list of found matches for league
      * @return True if some matches exists.
      */
     private boolean setLayoutParameters(String leagueName, List<Match> matches) {
@@ -167,7 +169,8 @@ public class LiveScoreTask extends AsyncTask<Object, Void, HashMap<String, List<
 
     /**
      * Show/Hide all list views depends from found matches.
-     * @param show - Show/Hide listView and textView
+     *
+     * @param show     - Show/Hide listView and textView
      * @param listView - to Show/Hide
      * @param textView - to Show/Hide
      */

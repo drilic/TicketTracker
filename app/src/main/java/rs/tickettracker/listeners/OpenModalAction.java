@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
+import rs.tickettracker.R;
 import rs.tickettracker.dialogs.AddMatchDialog;
 import rs.tickettracker.helpers.SyncHelper;
 
@@ -28,7 +29,7 @@ public class OpenModalAction implements View.OnClickListener {
             amd.setTargetFragment(fragment, 1000);
             amd.show(activity.getSupportFragmentManager(), "Dialog Fragment");
         } else {
-            Toast.makeText(activity, "Check settings or net connection.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(activity, activity.getResources().getString(R.string.check_settings_or_net_conn), Toast.LENGTH_SHORT).show();
         }
     }
 }

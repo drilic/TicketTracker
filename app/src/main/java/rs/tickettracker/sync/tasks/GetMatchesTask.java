@@ -10,6 +10,7 @@ import java.util.List;
 
 import fr.ganfra.materialspinner.MaterialSpinner;
 import model.Match;
+import rs.tickettracker.R;
 import rs.tickettracker.helpers.LiveScoreApiHelper;
 
 /**
@@ -34,7 +35,7 @@ public class GetMatchesTask extends AsyncTask<Object, Void, List<Match>> {
     @Override
     protected void onPreExecute() {
         if (dialog != null) {
-            dialog.setMessage("Loading matches...");
+            dialog.setMessage(activity.getResources().getString(R.string.loading_matches));
             dialog.show();
         }
     }

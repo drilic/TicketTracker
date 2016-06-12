@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import model.Ticket;
+import rs.tickettracker.R;
 import rs.tickettracker.adapters.TabFragmentAdapter;
 import rs.tickettracker.fragments.tabs.ActiveTicketsFragment;
 import rs.tickettracker.fragments.tabs.AllTicketsFragment;
@@ -40,10 +41,10 @@ public class DeleteTicketDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getActivity());
-        builder.setTitle("Delete");
+        builder.setTitle(getActivity().getResources().getString(R.string.confirm));
         final Ticket t = Ticket.load(Ticket.class, ticketId);
-        builder.setMessage("Are you sure that u want to delete " + t.ticketName + "?");
-        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+        builder.setMessage(getActivity().getResources().getString(R.string.are_you_sure_to_delete)+" " + t.ticketName + "?");
+        builder.setPositiveButton(getActivity().getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 editButton.setVisibility(View.GONE);
                 deleteButton.setVisibility(View.GONE);
@@ -53,7 +54,7 @@ public class DeleteTicketDialog extends DialogFragment {
             }
 
         });
-        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(getActivity().getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();

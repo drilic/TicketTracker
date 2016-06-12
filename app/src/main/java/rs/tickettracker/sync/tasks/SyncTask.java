@@ -15,6 +15,7 @@ import com.activeandroid.query.Select;
 import java.util.List;
 
 import model.Ticket;
+import rs.tickettracker.R;
 import rs.tickettracker.activities.MainActivity;
 import rs.tickettracker.fragments.interfaces.FragmentUpdateInterface;
 import rs.tickettracker.helpers.SyncHelper;
@@ -43,7 +44,7 @@ public class SyncTask extends AsyncTask<Object, Void, Void> {
     @Override
     protected void onPreExecute() {
         if (dialog != null) {
-            dialog.setMessage("Sync in progress...");
+            dialog.setMessage(activity.getResources().getString(R.string.sync_in_progress));
             dialog.show();
         }
     }
@@ -69,7 +70,7 @@ public class SyncTask extends AsyncTask<Object, Void, Void> {
             if (activity != null) {
                 activity.runOnUiThread(new Runnable() {
                     public void run() {
-                        Toast.makeText(activity, "There is no active tickets.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(activity, activity.getResources().getString(R.string.no_active_tickets), Toast.LENGTH_SHORT).show();
                     }
                 });
             }

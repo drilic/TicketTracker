@@ -21,7 +21,7 @@ import rs.tickettracker.activities.MainActivity;
 import rs.tickettracker.activities.TicketDetailActivity;
 import rs.tickettracker.adapters.MatchAddTicketListAdapter;
 import rs.tickettracker.helpers.BackstackHelper;
-import rs.tickettracker.helpers.GlobalConfig;
+import rs.tickettracker.helpers.GlobalStaticValuesHelper;
 import rs.tickettracker.helpers.StatusHelper;
 import rs.tickettracker.sync.tasks.SyncTask;
 
@@ -47,11 +47,11 @@ public class SaveTicketAction implements View.OnClickListener {
     public void onClick(View v) {
         EditText ticketName = (EditText) activity.findViewById(R.id.add_ticket_name);
         if (ticketName.getText().toString().trim().equals("")) {
-            Toast.makeText(activity.getApplicationContext(), "Ticket name is required.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(activity.getApplicationContext(), activity.getResources().getString(R.string.name_required), Toast.LENGTH_SHORT).show();
             return;
         }
         if (ticketName.getText().toString().length() > 30) {
-            Toast.makeText(activity.getApplicationContext(), "Max length is 30 characters.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(activity.getApplicationContext(), activity.getResources().getString(R.string.max_length_30), Toast.LENGTH_SHORT).show();
             return;
         }
         EditText ticketGain = (EditText) activity.findViewById(R.id.add_ticket_gain);
@@ -61,14 +61,14 @@ public class SaveTicketAction implements View.OnClickListener {
         try {
             gain = Double.parseDouble(ticketGain.getText().toString());
         } catch (Exception e) {
-            Toast.makeText(activity.getApplicationContext(), "Possible gain must be double value.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(activity.getApplicationContext(), activity.getResources().getString(R.string.possible_gain_double), Toast.LENGTH_SHORT).show();
             return;
         }
         if (array.getAllMatches().size() == 0) {
-            Toast.makeText(activity.getApplicationContext(), "Can't save ticket without matches.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(activity.getApplicationContext(), activity.getResources().getString(R.string.cant_save_without_matches), Toast.LENGTH_SHORT).show();
             return;
         } else if (array.getAllMatches().size() > 20) {
-            Toast.makeText(activity.getApplicationContext(), "Max matches per ticket is 20.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(activity.getApplicationContext(), activity.getResources().getString(R.string.max_matches_per_ticket), Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -114,7 +114,7 @@ public class SaveTicketAction implements View.OnClickListener {
                 myMenu.getItem(i).setVisible(true);
         }
 
-        if (GlobalConfig.SYNC_TICKET_AFTER_SAVE)
+        if (GlobalStaticValuesHelper.SYNC_TICKET_AFTER_SAVE)
             new SyncTask(activity, false, activity.getApplicationContext()).execute();
     }
 }

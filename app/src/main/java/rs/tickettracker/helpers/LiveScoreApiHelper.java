@@ -183,8 +183,8 @@ public class LiveScoreApiHelper {
                     urlToRequest.openConnection();
             urlConnection.setRequestProperty("X-Auth-Token", "4b856c946312488783ea2593e32f3a97");
             urlConnection.setRequestProperty("X-Response-Control", "minified");
-            urlConnection.setConnectTimeout(5000);
-            urlConnection.setReadTimeout(10000);
+            urlConnection.setConnectTimeout(GlobalStaticValuesHelper.CONNECTION_TIMEOUT);
+            urlConnection.setReadTimeout(GlobalStaticValuesHelper.READ_TIMEOUT);
 
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);

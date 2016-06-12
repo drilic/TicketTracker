@@ -71,7 +71,7 @@ public class TicketListAdapter extends ArrayAdapter<Ticket> {
             holder.btnDelete.setOnClickListener(new DeleteTicketAction(activity, ticket.getId(), tabManager, holder.btnEdit, holder.btnDelete));
         }
         holder.txtTitle.setText(ticket.ticketName);
-        holder.txtGain.setText("Possible gain: " + ticket.possibleGain);
+        holder.txtGain.setText(activity.getResources().getString(R.string.possible_gain)+": " + ticket.possibleGain);
         holder.imgIcon.setImageResource(StatusHelper.getStatusIconType(ticket.status.status, activity.getApplicationContext()));
         return row;
     }

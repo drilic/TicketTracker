@@ -8,7 +8,7 @@ import android.os.Bundle;
 import com.activeandroid.ActiveAndroid;
 
 import rs.tickettracker.R;
-import rs.tickettracker.helpers.GlobalConfig;
+import rs.tickettracker.helpers.GlobalStaticValuesHelper;
 
 /**
  * Splash screen activity. Shows application logo when application is started.
@@ -28,12 +28,11 @@ public class SplashActivity extends AppCompatActivity {
                 startActivity(startMainScreen);
                 finish();
             }
-        }, GlobalConfig.SPLASH_SCREEN_LENGTH);
+        }, GlobalStaticValuesHelper.SPLASH_SCREEN_LENGTH);
     }
 
     @Override
     protected void onPause() {
-        // TODO Auto-generated method stub
         super.onPause();
         finish();
     }

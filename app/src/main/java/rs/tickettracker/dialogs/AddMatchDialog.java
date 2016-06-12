@@ -64,18 +64,18 @@ public class AddMatchDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity())
-                .setPositiveButton("ADD", new DialogInterface.OnClickListener() {
+                .setPositiveButton(getActivity().getResources().getString(R.string.add), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         if (currentMatch != null) {
                             currentMatch.bet = currentBet;
                             GetMatchFromDialogListener getMatchFromDialogListener = (GetMatchFromDialogListener) getTargetFragment();
                             getMatchFromDialogListener.getMatchFromDialog(currentMatch);
                         } else {
-                            Toast.makeText(getActivity(), "Invalid match parameters.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.invalid_match_parameters), Toast.LENGTH_SHORT).show();
                         }
                     }
                 })
-                .setNegativeButton("Close",
+                .setNegativeButton(getActivity().getResources().getString(R.string.close),
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 STATE_CHANGED = false;
