@@ -22,7 +22,8 @@ import rs.tickettracker.helpers.GlobalConfig;
 import rs.tickettracker.helpers.InitDatabaseHelper;
 
 /**
- * Created by gisko on 31-May-16.
+ * Ticket Tracker Content provider is used to send data from this application to other aplication
+ * that want to use this data. It is implemented only for tickets for now.
  */
 public class TicketTrackerCP extends ContentProvider {
 

@@ -1,24 +1,15 @@
 package rs.tickettracker.sync.tasks;
 
 import android.app.Activity;
-import android.app.ListFragment;
-import android.app.ProgressDialog;
 import android.os.AsyncTask;
-import android.util.Log;
-import android.view.View;
-import android.widget.ArrayAdapter;
 
 import java.util.List;
 
-import fr.ganfra.materialspinner.MaterialSpinner;
-import model.Match;
 import model.Ticket;
-import rs.tickettracker.R;
 import rs.tickettracker.adapters.TicketListAdapter;
-import rs.tickettracker.helpers.LiveScoreAPIHelper;
 
 /**
- * Created by gisko on 04-May-16.
+ * Get all tickets from database asynchronously.
  */
 public class GetTicketFromDBTask extends AsyncTask<Object, Void, List<Ticket>> {
 

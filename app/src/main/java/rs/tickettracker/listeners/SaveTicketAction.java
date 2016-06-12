@@ -1,9 +1,6 @@
 package rs.tickettracker.listeners;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
@@ -23,15 +20,14 @@ import rs.tickettracker.R;
 import rs.tickettracker.activities.MainActivity;
 import rs.tickettracker.activities.TicketDetailActivity;
 import rs.tickettracker.adapters.MatchAddTicketListAdapter;
-import rs.tickettracker.dialogs.AddMatchDialog;
-import rs.tickettracker.fragments.interfaces.FragmentUpdateInterface;
 import rs.tickettracker.helpers.BackstackHelper;
 import rs.tickettracker.helpers.GlobalConfig;
 import rs.tickettracker.helpers.StatusHelper;
 import rs.tickettracker.sync.tasks.SyncTask;
 
 /**
- * Created by gisko on 29-Apr-16.
+ * Action that is triggered when user click on save ticket on 'Add ticket' page after editing or
+ * creating new ticket.
  */
 public class SaveTicketAction implements View.OnClickListener {
 
@@ -107,7 +103,8 @@ public class SaveTicketAction implements View.OnClickListener {
             BackstackHelper.isFragmentBackPressed(activity);
         } else if (activity instanceof TicketDetailActivity) {
             activity.getSupportFragmentManager().popBackStack();
-            activity.getSupportActionBar().setTitle(currentTicket.ticketName);
+            if (activity.getSupportActionBar() != null)
+                activity.getSupportActionBar().setTitle(currentTicket.ticketName);
             FrameLayout statusFrame = (FrameLayout) activity.findViewById(R.id.statusPanel);
             TextView statusValue = (TextView) activity.findViewById(R.id.detailStatus);
             statusValue.setText(currentTicket.status.status);

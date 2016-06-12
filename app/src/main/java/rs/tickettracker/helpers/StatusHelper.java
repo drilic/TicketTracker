@@ -6,10 +6,16 @@ import android.content.res.TypedArray;
 import rs.tickettracker.R;
 
 /**
- * Created by gisko on 03-May-16.
+ * This helper class is used for status helper that manipulate with ticket and match status.
  */
 public class StatusHelper {
 
+    /**
+     * Get icon for current status.
+     * @param status - current status
+     * @param context - current context.
+     * @return resource value of icon.
+     */
     public static int getStatusIconType(String status, Context context) {
         TypedArray statusImages = context.getResources().obtainTypedArray(R.array.status_img);
         int imageId = -1;
@@ -27,6 +33,12 @@ public class StatusHelper {
         return imageId;
     }
 
+    /**
+     * Get color of current status.
+     * @param status - current status.
+     * @param context - current context.
+     * @return resource value of status color.
+     */
     public static int getStatusColor(String status, Context context) {
         int statusColor = -1;
         TypedArray statusColors = context.getResources().obtainTypedArray(R.array.status_color);

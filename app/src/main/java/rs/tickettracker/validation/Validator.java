@@ -9,7 +9,7 @@ import android.widget.EditText;
 import rs.tickettracker.R;
 
 /**
- * Created by gisko on 24-May-16.
+ * Validate text fields that need to be entered. Checking isRequired, MaxLength, isDecimal, etc...
  */
 public class Validator implements TextWatcher {
     private EditText inputField;
@@ -29,6 +29,10 @@ public class Validator implements TextWatcher {
     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
     }
 
+    /**
+     * On each text entered validate max length.
+     * @param editable - field that need to be checked.
+     */
     public void afterTextChanged(Editable editable) {
         if (validateRequired(inputField.getText().toString())) {
             switch (inputField.getId()) {
@@ -39,6 +43,11 @@ public class Validator implements TextWatcher {
         }
     }
 
+    /**
+     * Validate if current value is empty.
+     * @param value - value to be checked
+     * @return True if value is NOT empty.
+     */
     private boolean validateRequired(String value) {
         if (value.trim().isEmpty()) {
             switch (inputField.getId()) {
@@ -65,6 +74,11 @@ public class Validator implements TextWatcher {
         return true;
     }
 
+    /**
+     * Validate max length of value.
+     * @param value - value to be checked
+     * @return True if length of value is lower than 30.
+     */
     private boolean validateMaxLength(String value) {
         if (value.length() > 30) {
             ticketName.setError(view.getResources().getString(R.string.error_msg_max_length));

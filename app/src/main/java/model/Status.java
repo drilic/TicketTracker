@@ -7,9 +7,8 @@ import com.activeandroid.annotation.Table;
 import java.util.List;
 
 /**
- * Created by gisko on 29-Apr-16.
+ * Status class for all types of status (ENUM)
  */
-
 @Table(name = "Status", id="_id")
 public class Status extends Model{
 

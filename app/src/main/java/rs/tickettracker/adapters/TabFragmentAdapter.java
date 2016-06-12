@@ -13,7 +13,7 @@ import rs.tickettracker.fragments.tabs.LoseTicketsFragment;
 import rs.tickettracker.fragments.tabs.WinTicketsFragment;
 
 /**
- * Created by gisko on 25-Apr-16.
+ * Tab fragment adapter for 4 fragments on home page (ALL, ACTIVE, WIN and LOSE).
  */
 public class TabFragmentAdapter extends FragmentPagerAdapter {
 
@@ -53,14 +53,17 @@ public class TabFragmentAdapter extends FragmentPagerAdapter {
         return int_items;
     }
 
+    /**
+     * Get fragment by position from list of all fragments.
+     * @param position - Position of desired fragment.
+     * @return Fragment object placed at wanted position.
+     */
     public Fragment getFragmentByPosition(int position) {
         if (tabFragments.size() > position)
             return tabFragments.get(position);
         else
             return null;
     }
-
-
 
     @Override
     public CharSequence getPageTitle(int position) {

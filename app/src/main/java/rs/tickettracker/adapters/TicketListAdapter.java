@@ -1,8 +1,6 @@
 package rs.tickettracker.adapters;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.res.TypedArray;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import model.Ticket;
@@ -23,7 +20,7 @@ import rs.tickettracker.listeners.DeleteTicketAction;
 import rs.tickettracker.listeners.EditTicketAction;
 
 /**
- * Created by gisko on 03-May-16.
+ * Ticket list adapter placed on each fragment from 'Home' page. Used as placeholder for all matches.
  */
 public class TicketListAdapter extends ArrayAdapter<Ticket> {
     int layoutResourceId;
@@ -87,6 +84,10 @@ public class TicketListAdapter extends ArrayAdapter<Ticket> {
         Button btnEdit;
     }
 
+    /**
+     * Remove ticket from Ticket list by ticket id.
+     * @param id - Id of ticket that we want to remove from list.
+     */
     public void removeById(long id) {
         for (Ticket t : new ArrayList<Ticket>(data)) {
             if (t.getId() == id) {
@@ -96,6 +97,11 @@ public class TicketListAdapter extends ArrayAdapter<Ticket> {
         }
     }
 
+    /**
+     * Check if ticket is already placed in list of tickets.
+     * @param id - Id of ticket that we want to check
+     * @return True if ticket is already at list.
+     */
     public boolean contains(long id) {
         for (Ticket t : data) {
             if (t.getId() == id) {

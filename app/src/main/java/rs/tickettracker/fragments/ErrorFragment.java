@@ -2,20 +2,17 @@ package rs.tickettracker.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 
-import com.activeandroid.query.Select;
-
-import model.Match;
-import model.Ticket;
 import rs.tickettracker.R;
-import rs.tickettracker.adapters.MatchDetailTicketListAdapter;
 
-
+/**
+ * This is error fragment and it is used to handle errors caught from notifications. When user click
+ * on notification, need to be opened details of that ticket, but if someone delete that ticket
+ * and than click on notification, this fragment will be shown.
+ */
 public class ErrorFragment extends Fragment {
 
     public ErrorFragment() {

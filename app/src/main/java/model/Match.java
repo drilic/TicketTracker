@@ -11,9 +11,8 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by gisko on 29-Apr-16.
+ * Match class for all matches added on tickets.
  */
-
 @Table(name = "Match", id = "_id")
 public class Match extends Model {
 
@@ -81,6 +80,11 @@ public class Match extends Model {
         return homeTeam + "-" + awayTeam;
     }
 
+    /**
+     * Fix team name if it is longer than 11.
+     * @param teamName - Team name that need to be fixed.
+     * @return fixed team name
+     */
     public static String fixTeamName(String teamName) {
         if (teamName.length() > 11) {
             String trimmedTeamName = teamName.substring(0, 11);

@@ -2,7 +2,6 @@ package rs.tickettracker.helpers;
 
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -10,14 +9,15 @@ import android.widget.ListView;
 import java.util.List;
 
 import fr.ganfra.materialspinner.MaterialSpinner;
-import model.Match;
-import rs.tickettracker.R;
 
 /**
- * Created by gisko on 29-Apr-16.
+ * This helper class is used as factory for components.
  */
 public class ComponentsHelper {
 
+    /**
+     * Create new material spinner from static list.
+     */
     public static MaterialSpinner createSpinner(String[] valueList, View view, int componentId, int selected, boolean animate) {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_spinner_item, valueList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -31,6 +31,9 @@ public class ComponentsHelper {
         return spiner;
     }
 
+    /**
+     * Create new material spinner from List of dinamic objects.
+     */
     public static MaterialSpinner createSpinner(List<?> valueList, View view, int componentId, int selected, boolean animate) {
         ArrayAdapter<?> adapter = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_spinner_item, valueList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -44,6 +47,10 @@ public class ComponentsHelper {
         return spiner;
     }
 
+    /**
+     * Set dynamic height for list views depends of size of elements in list.
+     * @param mListView - list that need to be resized.
+     */
     public static void setDynamicHeight(ListView mListView) {
         ListAdapter mListAdapter = mListView.getAdapter();
         if (mListAdapter == null) {

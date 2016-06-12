@@ -6,8 +6,6 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.preference.PreferenceManager;
-import android.util.Log;
-import android.widget.TextView;
 
 import com.activeandroid.query.Select;
 
@@ -18,10 +16,16 @@ import rs.tickettracker.R;
 import rs.tickettracker.activities.MainActivity;
 
 /**
- * Created by gisko on 08-May-16.
+ * This helper class is used for sync methods.
  */
 public class SyncHelper {
 
+    /**
+     * Update ticket with new downloaded results.
+     * @param t - current ticket that need to be updated.
+     * @param showNotification - boolean variable that chose does notification need to be shown.
+     * @param context - current context.
+     */
     public static void updateTicket(Ticket t, boolean showNotification, Context context) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         Status lose = new Select().from(Status.class).where("status = ?", "Lose").executeSingle();
@@ -39,7 +43,7 @@ public class SyncHelper {
         }
         if (t.status.status.equals("Active")) {
             for (Match m : t.matches()) {
-                LiveScoreAPIHelper.getMatchUpdate(t.getId(), m.matchServisId, m.getId(), showGoalsNotification, context);
+                LiveScoreApiHelper.getMatchUpdate(t.getId(), m.matchServisId, m.getId(), showGoalsNotification, context);
             }
             for (Match m : t.matches()) {
                 if (m.isFinished) {
@@ -84,6 +88,11 @@ public class SyncHelper {
         }
     }
 
+    /**
+     * Checking result for current match.
+     * @param m - current match.
+     * @return True if match result is agree with played bet.
+     */
     public static boolean checkResults(Match m) {
         switch (m.bet.betName) {
             case "1":
@@ -91,29 +100,49 @@ public class SyncHelper {
             case "X":
                 return isDraw(m);
             case "2":
-                return isAwayWIn(m);
+                return isAwayWin(m);
         }
         return false;
     }
 
+    /**
+     * Check if match is drawn.
+     * @param m - current match
+     * @return True if match is drawn.
+     */
     public static boolean isDraw(Match m) {
         if (m.homeScore == m.awayScore)
             return true;
         return false;
     }
 
+    /**
+     * Check if match is won by home team.
+     * @param m - current match
+     * @return True if match is won by home team.
+     */
     public static boolean isHomeWin(Match m) {
         if (m.homeScore > m.awayScore)
             return true;
         return false;
     }
 
-    public static boolean isAwayWIn(Match m) {
+    /**
+     * Check if match is won by away team.
+     * @param m - current match
+     * @return True if match is won by away team.
+     */
+    public static boolean isAwayWin(Match m) {
         if (m.homeScore < m.awayScore)
             return true;
         return false;
     }
 
+    /**
+     * Check status of ticket. If all matches is won, ticket is won.
+     * @param t - current ticket.
+     * @return status of all matches.
+     */
     public static StatusHelper checkTickets(Ticket t) {
         StatusHelper helper = new StatusHelper();
         for (Match m : t.matches()) {
@@ -131,12 +160,20 @@ public class SyncHelper {
         return helper;
     }
 
+    /**
+     * Helper class for status of each ticket.
+     */
     static class StatusHelper {
         boolean notFinished = false;
         boolean lose = false;
         boolean win = false;
     }
 
+    /**
+     * Get conectivity status from mobile phone and check it with settings which user is allowed.
+     * @param context - current context
+     * @return True if connection is established well.
+     */
     public static boolean getConnectivityStatus(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -164,7 +201,11 @@ public class SyncHelper {
         return false;
     }
 
-
+    /**
+     * Calculate time untill next sync.
+     * @param minutes - Minutes on each will be triggered Sync service.
+     * @return Value of minutes in miliseconds.
+     */
     public static int calculateTimeTillNextSync(int minutes) {
         return 1000 * 60 * minutes;
     }

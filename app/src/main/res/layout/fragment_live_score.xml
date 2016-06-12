@@ -41,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/premierText"
-            android:visibility="gone"></ListView>
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/primeraText"
@@ -60,7 +60,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/primeraText"
-            android:visibility="gone"></ListView>
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/seriaAText"
@@ -79,7 +79,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/seriaAText"
-            android:visibility="gone"></ListView>
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/bundesText"
@@ -98,7 +98,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/bundesText"
-            android:visibility="gone"></ListView>
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/ligue1Text"
@@ -117,7 +117,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/ligue1Text"
-            android:visibility="gone"></ListView>
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/championsText"
@@ -136,7 +136,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/championsText"
-            android:visibility="gone"></ListView>
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/euroText"
@@ -155,6 +155,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/euroText"
-            android:visibility="gone"></ListView>
+            android:visibility="gone"/>
     </LinearLayout>
 </ScrollView>

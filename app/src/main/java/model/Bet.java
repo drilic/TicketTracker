@@ -1,15 +1,14 @@
 package model;
 
-/**
- * Created by gisko on 29-Apr-16.
- */
-
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 
 import java.util.List;
 
+/**
+ * Bet class, for betting types.
+ */
 @Table(name = "Bet", id = "_id")
 public class Bet extends Model {
 

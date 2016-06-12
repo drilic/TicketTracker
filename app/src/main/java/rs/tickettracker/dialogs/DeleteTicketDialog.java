@@ -15,7 +15,7 @@ import rs.tickettracker.fragments.tabs.LoseTicketsFragment;
 import rs.tickettracker.fragments.tabs.WinTicketsFragment;
 
 /**
- * Created by gisko on 26-Apr-16.
+ * Confirmation dialog for deleting tickets.
  */
 public class DeleteTicketDialog extends DialogFragment {
 
@@ -69,22 +69,26 @@ public class DeleteTicketDialog extends DialogFragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
+    /**
+     * Delete ticker from Ticket list on each tab, based on status of ticket.
+     * @param t - that need to be deleted.
+     */
     private void removeTicketFromTab(Ticket t) {
         switch (t.status.status) {
             case "Active":
-                if (((ActiveTicketsFragment) tabMenager.getFragmentByPosition(1)) != null)
+                if (tabMenager.getFragmentByPosition(1) != null)
                     ((ActiveTicketsFragment) tabMenager.getFragmentByPosition(1)).updateAdapter(t);
                 break;
             case "Win":
-                if (((WinTicketsFragment) tabMenager.getFragmentByPosition(2)) != null)
+                if (tabMenager.getFragmentByPosition(2) != null)
                     ((WinTicketsFragment) tabMenager.getFragmentByPosition(2)).updateAdapter(t);
                 break;
             case "Lose":
-                if (((LoseTicketsFragment) tabMenager.getFragmentByPosition(3)) != null)
+                if (tabMenager.getFragmentByPosition(3) != null)
                     ((LoseTicketsFragment) tabMenager.getFragmentByPosition(3)).updateAdapter(t);
                 break;
         }
-        if (((AllTicketsFragment) tabMenager.getFragmentByPosition(0)) != null)
+        if (tabMenager.getFragmentByPosition(0) != null)
             ((AllTicketsFragment) tabMenager.getFragmentByPosition(0)).updateAdapter(t);
     }
 }

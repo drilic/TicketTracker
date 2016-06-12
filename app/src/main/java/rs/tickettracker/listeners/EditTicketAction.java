@@ -1,6 +1,5 @@
 package rs.tickettracker.listeners;
 
-import android.app.Activity;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -11,7 +10,7 @@ import rs.tickettracker.fragments.AddTicketFragment;
 import rs.tickettracker.helpers.BackstackHelper;
 
 /**
- * Created by gisko on 09-May-16.
+ * Action that is triggered when user click on edit ticket button.
  */
 public class EditTicketAction implements View.OnClickListener {
 

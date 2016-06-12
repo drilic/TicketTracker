@@ -1,12 +1,10 @@
 package rs.tickettracker.fragments;
 
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ListFragment;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -14,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.activeandroid.query.Select;
@@ -29,14 +26,14 @@ import rs.tickettracker.R;
 import rs.tickettracker.adapters.MatchAddTicketListAdapter;
 import rs.tickettracker.helpers.ComponentsHelper;
 import rs.tickettracker.helpers.MapperHelper;
-import rs.tickettracker.listeners.EditTicketAction;
 import rs.tickettracker.listeners.OpenModalAction;
 import rs.tickettracker.listeners.SaveTicketAction;
 import rs.tickettracker.listeners.interfaces.GetMatchFromDialogListener;
 import rs.tickettracker.validation.Validator;
 
 /**
- * Created by gisko on 27-Apr-16.
+ * This fragment is used as container for adding new ticket. It contains two fields for name and
+ * gain, and modal dialog for adding new matches on ticket. If user press save, ticket will be saved.
  */
 public class AddTicketFragment extends ListFragment implements GetMatchFromDialogListener,
         AdapterView.OnItemLongClickListener {

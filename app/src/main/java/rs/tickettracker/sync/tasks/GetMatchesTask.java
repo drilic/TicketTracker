@@ -10,10 +10,10 @@ import java.util.List;
 
 import fr.ganfra.materialspinner.MaterialSpinner;
 import model.Match;
-import rs.tickettracker.helpers.LiveScoreAPIHelper;
+import rs.tickettracker.helpers.LiveScoreApiHelper;
 
 /**
- * Created by gisko on 04-May-16.
+ * Used as async task to get all matches for desired league on chosen day.
  */
 public class GetMatchesTask extends AsyncTask<Object, Void, List<Match>> {
 
@@ -60,7 +60,7 @@ public class GetMatchesTask extends AsyncTask<Object, Void, List<Match>> {
         } catch (Exception e) {
             selectedMatch = -1;
         }
-        return LiveScoreAPIHelper.findAllMatchesForLeague(day, leagueId);
+        return LiveScoreApiHelper.findAllMatchesForLeague(day, leagueId);
     }
 
 }

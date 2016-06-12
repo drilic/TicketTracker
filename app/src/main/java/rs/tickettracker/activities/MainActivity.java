@@ -9,7 +9,6 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.provider.SyncStateContract;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -20,14 +19,10 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.activeandroid.query.Select;
-
-import model.Status;
 import rs.tickettracker.R;
 import rs.tickettracker.helpers.SyncHelper;
 import rs.tickettracker.sync.SyncReceiver;
@@ -37,6 +32,9 @@ import rs.tickettracker.helpers.BackstackHelper;
 import rs.tickettracker.listeners.NavigationOnClickListener;
 import rs.tickettracker.sync.tasks.SyncTask;
 
+/**
+ * Main Activity of application. Contains all fragments used in application.
+ */
 public class MainActivity extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
@@ -106,6 +104,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Set up receiver for notification.
+     */
     private void setUpReceiver() {
         sync = new SyncReceiver();
         alarmIntent = new Intent(this, SyncService.class);
@@ -155,6 +156,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Register broadcast receiver.
+     * @return True if receiver was register successful.
+     */
     private boolean registerBroadcastReceiver() {
         try {
             registerReceiver(sync, filter);
@@ -165,6 +170,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Unregister broadcast receiver.
+     * @return True if receiver was unregistered successful.
+     */
     private boolean unregisterBroadcastReceiver() {
         try {
             unregisterReceiver(sync);

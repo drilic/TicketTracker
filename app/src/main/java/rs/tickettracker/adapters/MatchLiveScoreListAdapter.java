@@ -4,26 +4,21 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Locale;
 import java.util.TimeZone;
 
 import model.Match;
 import rs.tickettracker.R;
-import rs.tickettracker.helpers.StatusHelper;
 
 /**
- * Created by gisko on 03-May-16.
+ * Match adapter list for Matches placed on 'Live score' page. Used as placeholder for matches.
  */
 public class MatchLiveScoreListAdapter extends ArrayAdapter<Match> {
     Context context;

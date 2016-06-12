@@ -10,7 +10,7 @@ import rs.tickettracker.fragments.AddTicketFragment;
 import rs.tickettracker.helpers.BackstackHelper;
 
 /**
- * Created by gisko on 29-Apr-16.
+ * Action that is triggered when user click on Add Ticket button/drawer.
  */
 public class AddTicketAction implements View.OnClickListener {
 

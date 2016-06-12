@@ -18,29 +18,37 @@ import model.Ticket;
 import rs.tickettracker.providers.TicketTrackerCP;
 
 /**
- * Created by gisko on 03-Jun-16.
+ * This helper class is used for Content Provider test data.
  */
 public class ContentProviderTestHelper {
 
+    /**
+     * Get all tickets from database.
+     * @param activity - current activity
+     */
     public static void getAllTickets(Activity activity) {
         String[] allColumns = {TicketTrackerCP.COLUMN_ID,
                 "ticketName"};
 
-        Uri contentUri = Uri.parse(TicketTrackerCP.CONTENT_URI+ TicketTrackerCP.AUTHORITIES + "/" + TicketTrackerCP.TABLE_TICKET);
+        Uri contentUri = Uri.parse(TicketTrackerCP.CONTENT_URI + TicketTrackerCP.AUTHORITIES + "/" + TicketTrackerCP.TABLE_TICKET);
         Cursor c = activity.getContentResolver().query(
                 contentUri,
                 new String[]{"ticketName"},
                 null,
                 null,
                 "ticketName");
-
-        if (c.moveToFirst()) {
-            do {
-                Log.i("***", c.getString(c.getColumnIndex("ticketName")));
-            } while (c.moveToNext());
-        }
+        if (c != null)
+            if (c.moveToFirst()) {
+                do {
+                    Log.i("***", c.getString(c.getColumnIndex("ticketName")));
+                } while (c.moveToNext());
+            }
     }
 
+    /**
+     * Insert new ticket in database.
+     * @param activity - current activity.
+     */
     public static void insertNewTicket(Activity activity) {
         Configuration dbConfiguration = new Configuration.Builder(activity).create();
         DatabaseHelper database = new DatabaseHelper(dbConfiguration);
@@ -52,7 +60,7 @@ public class ContentProviderTestHelper {
             entry.put("possibleGain", 1000d);
             entry.put("status", s.getId());
             List<Ticket> tickets = Ticket.getAll();
-            entry.put("_id", tickets.size()+1);
+            entry.put("_id", tickets.size() + 1);
             Uri contentUri = Uri.parse("content://" + TicketTrackerCP.AUTHORITIES + "/" + TicketTrackerCP.TABLE_TICKET);
             activity.getContentResolver().insert(contentUri, entry);
         }

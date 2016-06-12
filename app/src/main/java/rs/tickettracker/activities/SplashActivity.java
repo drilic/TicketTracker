@@ -10,6 +10,9 @@ import com.activeandroid.ActiveAndroid;
 import rs.tickettracker.R;
 import rs.tickettracker.helpers.GlobalConfig;
 
+/**
+ * Splash screen activity. Shows application logo when application is started.
+ */
 public class SplashActivity extends AppCompatActivity {
 
     @Override

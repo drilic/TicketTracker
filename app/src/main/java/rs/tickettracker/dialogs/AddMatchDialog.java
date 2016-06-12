@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,7 +27,7 @@ import rs.tickettracker.helpers.ComponentsHelper;
 import rs.tickettracker.listeners.interfaces.GetMatchFromDialogListener;
 
 /**
- * Created by gisko on 26-Apr-16.
+ * Dialog for adding new matches on Ticket.
  */
 public class AddMatchDialog extends DialogFragment {
 
@@ -94,6 +93,9 @@ public class AddMatchDialog extends DialogFragment {
         return dialog;
     }
 
+    /**
+     * Returns view part of dialog.
+     */
     public View onCreateDialogView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.dialog_fragment_add_match, container);
     }

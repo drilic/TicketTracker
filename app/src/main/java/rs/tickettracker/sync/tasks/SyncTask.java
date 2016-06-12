@@ -8,7 +8,6 @@ import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.activeandroid.query.Select;
@@ -21,7 +20,7 @@ import rs.tickettracker.fragments.interfaces.FragmentUpdateInterface;
 import rs.tickettracker.helpers.SyncHelper;
 
 /**
- * Created by gisko on 04-May-16.
+ * Background process that update all Active tickets from database. Getting new data on internet API.
  */
 public class SyncTask extends AsyncTask<Object, Void, Void> {
 

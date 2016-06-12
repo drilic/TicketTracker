@@ -5,10 +5,13 @@ import android.net.Uri;
 import android.util.Log;
 
 /**
- * Created by gisko on 26-Apr-16.
+ * This helper class is used for sending mail to author using client apps from user telephone.
  */
 public class MailHelper {
 
+    /**
+     * Sending mail to author of application.
+     */
     public static Intent sendEmail() {
         Log.i("Send email", "");
         String[] TO = {"ticket.tracker.sit@gmail.com"};

@@ -3,10 +3,7 @@ package rs.tickettracker.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
-import android.graphics.Point;
 import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,12 +14,11 @@ import android.widget.TextView;
 import java.util.List;
 
 import model.Match;
-import model.Ticket;
 import rs.tickettracker.R;
 import rs.tickettracker.helpers.StatusHelper;
 
 /**
- * Created by gisko on 03-May-16.
+ * Match adapter list for Matches placed on 'Ticket detail' page. Used as placeholder for matches.
  */
 public class MatchDetailTicketListAdapter extends ArrayAdapter<Match> {
     Context context;

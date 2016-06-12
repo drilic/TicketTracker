@@ -11,7 +11,8 @@ import rs.tickettracker.helpers.SyncHelper;
 import rs.tickettracker.sync.tasks.SyncTask;
 
 /**
- * Created by gisko on 15-May-16.
+ * Is used to sync data periodically (depends of settings from user performance) and if something
+ * change to send to SyncReceiver new data.
  */
 public class SyncService extends Service {
 

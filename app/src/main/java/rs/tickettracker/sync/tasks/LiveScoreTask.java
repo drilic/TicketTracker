@@ -17,11 +17,12 @@ import model.Match;
 import rs.tickettracker.R;
 import rs.tickettracker.adapters.MatchLiveScoreListAdapter;
 import rs.tickettracker.helpers.ComponentsHelper;
-import rs.tickettracker.helpers.LiveScoreAPIHelper;
+import rs.tickettracker.helpers.LiveScoreApiHelper;
 import rs.tickettracker.helpers.SyncHelper;
 
 /**
- * Created by gisko on 04-May-16.
+ * Get all ticket from football API for chosen leagues (from settings) and for chosen day. Using
+ * mobile data or WiFi network - depends from settings.
  */
 public class LiveScoreTask extends AsyncTask<Object, Void, HashMap<String, List<Match>>> {
 
@@ -78,36 +79,47 @@ public class LiveScoreTask extends AsyncTask<Object, Void, HashMap<String, List<
         return retVal;
     }
 
-
+    /**
+     * Get matches from Live score helper.
+     * @param leagueName - league name from settings
+     * @param day - day of the match
+     * @return List of matches from current league and for chosen day.
+     */
     private List<Match> getMatches(String leagueName, int day) {
         List<Match> matches = null;
         switch (leagueName) {
             case "premier_league":
-                matches = LiveScoreAPIHelper.findAllMatchesForLeague(day, 398);
+                matches = LiveScoreApiHelper.findAllMatchesForLeague(day, 398);
                 break;
             case "ligue_1":
-                matches = LiveScoreAPIHelper.findAllMatchesForLeague(day, 396);
+                matches = LiveScoreApiHelper.findAllMatchesForLeague(day, 396);
                 break;
             case "primera_division":
-                matches = LiveScoreAPIHelper.findAllMatchesForLeague(day, 399);
+                matches = LiveScoreApiHelper.findAllMatchesForLeague(day, 399);
                 break;
             case "seria_a":
-                matches = LiveScoreAPIHelper.findAllMatchesForLeague(day, 401);
+                matches = LiveScoreApiHelper.findAllMatchesForLeague(day, 401);
                 break;
             case "bundesliga":
-                matches = LiveScoreAPIHelper.findAllMatchesForLeague(day, 394);
+                matches = LiveScoreApiHelper.findAllMatchesForLeague(day, 394);
                 break;
             case "champions":
-                matches = LiveScoreAPIHelper.findAllMatchesForLeague(day, 405);
+                matches = LiveScoreApiHelper.findAllMatchesForLeague(day, 405);
                 break;
             case "euro_2016":
-                matches = LiveScoreAPIHelper.findAllMatchesForLeague(day, 424);
+                matches = LiveScoreApiHelper.findAllMatchesForLeague(day, 424);
                 break;
 
         }
         return matches;
     }
 
+    /**
+     * Settup layout for live score page. Fill listViews and display text for each leagues.
+     * @param leagueName - league name from settings
+     * @param matches - list of found matches for league
+     * @return True if some matches exists.
+     */
     private boolean setLayoutParameters(String leagueName, List<Match> matches) {
         ListView listView = null;
         TextView textView = null;
@@ -153,6 +165,12 @@ public class LiveScoreTask extends AsyncTask<Object, Void, HashMap<String, List<
         return true;
     }
 
+    /**
+     * Show/Hide all list views depends from found matches.
+     * @param show - Show/Hide listView and textView
+     * @param listView - to Show/Hide
+     * @param textView - to Show/Hide
+     */
     private void displayResults(Boolean show, ListView listView, TextView textView) {
         if (show) {
             listView.setVisibility(View.VISIBLE);

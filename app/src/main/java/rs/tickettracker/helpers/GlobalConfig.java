@@ -1,7 +1,7 @@
 package rs.tickettracker.helpers;
 
 /**
- * Created by gisko on 03-Jun-16.
+ * This helper class is used for global config variables. It's created only for testing purposes.
  */
 public class GlobalConfig {
 

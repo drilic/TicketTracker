@@ -1,21 +1,14 @@
 package rs.tickettracker.listeners;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.view.View;
 import android.widget.Button;
 
-import model.Ticket;
 import rs.tickettracker.adapters.TabFragmentAdapter;
-import rs.tickettracker.adapters.TicketListAdapter;
 import rs.tickettracker.dialogs.DeleteTicketDialog;
-import rs.tickettracker.fragments.tabs.ActiveTicketsFragment;
-import rs.tickettracker.fragments.tabs.LoseTicketsFragment;
-import rs.tickettracker.fragments.tabs.WinTicketsFragment;
 
 /**
- * Created by gisko on 09-May-16.
+ * Action that is triggered when user click on delete ticket button.
  */
 public class DeleteTicketAction implements View.OnClickListener {
 

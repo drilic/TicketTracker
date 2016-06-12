@@ -8,15 +8,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
-import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 
 import rs.tickettracker.R;
 import rs.tickettracker.activities.MainActivity;
 import rs.tickettracker.activities.TicketDetailActivity;
 
 /**
- * Created by gisko on 15-May-16.
+ * Sync receiver is used as broadcast receiver to listen if somethings change and if it does, to
+ * send notification about that change.
  */
 public class SyncReceiver extends BroadcastReceiver {
 

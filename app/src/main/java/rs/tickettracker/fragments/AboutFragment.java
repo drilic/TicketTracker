@@ -3,8 +3,6 @@ package rs.tickettracker.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +13,10 @@ import rs.tickettracker.R;
 import rs.tickettracker.helpers.MailHelper;
 import rs.tickettracker.helpers.SyncHelper;
 
+/**
+ * This fragment contains data about creator of Application. Beside that, it contains mechanism
+ * for contacting and send reports about application.
+ */
 public class AboutFragment extends Fragment {
 
     public AboutFragment() {

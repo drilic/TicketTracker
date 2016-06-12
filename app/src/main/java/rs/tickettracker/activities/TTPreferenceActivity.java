@@ -8,6 +8,9 @@ import android.view.MenuItem;
 
 import rs.tickettracker.R;
 
+/**
+ * Preference Activity for Ticket Tracker. Can be used to setup personal settings of each user.
+ */
 public class TTPreferenceActivity extends PreferenceActivity{
 
     @SuppressWarnings("deprecation")
@@ -35,6 +38,9 @@ public class TTPreferenceActivity extends PreferenceActivity{
         super.onResume();
     }
 
+    /**
+     * Load the preferences from an XML resource
+     */
     public static class PrefsFragment extends PreferenceFragment {
 
         @Override

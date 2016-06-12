@@ -18,7 +18,8 @@ import model.Match;
 import rs.tickettracker.R;
 
 /**
- * Created by gisko on 03-May-16.
+ * Adapter list for matches on 'Add ticket' page. Used as placeholder for data on each match before
+ * ticket is saved.
  */
 public class MatchAddTicketListAdapter extends ArrayAdapter<Match> {
     Context context;
@@ -90,11 +91,19 @@ public class MatchAddTicketListAdapter extends ArrayAdapter<Match> {
         TextView txtBet;
     }
 
+    /**
+     * Remove match from list of all matches by position.
+     * @param position - Position of match that we want to delete.
+     */
     public void removeByPosition(int position) {
         Match m = data.get(position);
         remove(m);
     }
 
+    /**
+     * Get all matches currently added on ticket list.
+     * @return Added matches
+     */
     public List<Match> getAllMatches() {
         return data;
     }

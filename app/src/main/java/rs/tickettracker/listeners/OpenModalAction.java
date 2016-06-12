@@ -9,7 +9,7 @@ import rs.tickettracker.dialogs.AddMatchDialog;
 import rs.tickettracker.helpers.SyncHelper;
 
 /**
- * Created by gisko on 29-Apr-16.
+ * Action that is triggered when user click on add match button on 'Add ticket' page.
  */
 public class OpenModalAction implements View.OnClickListener {
 

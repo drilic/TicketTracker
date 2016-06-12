@@ -23,7 +23,7 @@ import rs.tickettracker.helpers.ContentProviderTestHelper;
 import rs.tickettracker.sync.tasks.SyncTask;
 
 /**
- * Created by gisko on 29-Apr-16.
+ * Action that is triggered when user open drawer menu, and click on some of their action.
  */
 public class NavigationOnClickListener implements NavigationView.OnNavigationItemSelectedListener {
 

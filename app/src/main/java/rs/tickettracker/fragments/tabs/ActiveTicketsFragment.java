@@ -21,19 +21,22 @@ import rs.tickettracker.adapters.TicketListAdapter;
 import rs.tickettracker.fragments.interfaces.FragmentUpdateInterface;
 import rs.tickettracker.sync.tasks.GetTicketFromDBTask;
 
-
+/**
+ * Active tickets fragment used one of four tab fragments where are placed all active tickets from
+ * database.
+ */
 public class ActiveTicketsFragment extends ListFragment implements AdapterView.OnItemClickListener,
         AdapterView.OnItemLongClickListener, FragmentUpdateInterface {
 
     TicketListAdapter arrayAdapter;
-    TabFragmentAdapter tabMenager;
+    TabFragmentAdapter tabManager;
 
     public ActiveTicketsFragment() {
         // Required empty public constructor
     }
 
     public ActiveTicketsFragment(TabFragmentAdapter tabManager) {
-        this.tabMenager = tabManager;
+        this.tabManager = tabManager;
     }
 
     @Override
@@ -74,7 +77,7 @@ public class ActiveTicketsFragment extends ListFragment implements AdapterView.O
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
-        arrayAdapter = new TicketListAdapter(getActivity(), R.layout.list_ticket_view, tickets, tabMenager);
+        arrayAdapter = new TicketListAdapter(getActivity(), R.layout.list_ticket_view, tickets, tabManager);
         setListAdapter(arrayAdapter);
         getListView().addFooterView(getLayoutInflater(savedInstanceState).inflate(R.layout.list_footer_view, null), null, false);
         getListView().setOnItemClickListener(this);
@@ -88,6 +91,10 @@ public class ActiveTicketsFragment extends ListFragment implements AdapterView.O
         startActivityForResult(intent, 1000);
     }
 
+    /**
+     * Remove ticket from adapter.
+     * @param t - ticket that need to be removed.
+     */
     public void updateAdapter(Ticket t) {
         if (arrayAdapter.contains(t.getId())) {
             arrayAdapter.remove(t);

@@ -9,9 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by gisko on 29-Apr-16.
+ * Ticket class for all created tickets in application.
  */
-
 @Table(name = "Ticket", id = "_id")
 public class Ticket extends Model {
 
@@ -45,6 +44,9 @@ public class Ticket extends Model {
         this.status = status;
     }
 
+    /**
+     * Get all tickets from database.
+     */
     public static List<Ticket> getAll() {
         return new Select()
                 .from(Ticket.class)
@@ -52,6 +54,9 @@ public class Ticket extends Model {
                 .execute();
     }
 
+    /**
+     * Get all tickets with 'Active' status from database.
+     */
     public static List<Ticket> getAllActive() {
         Status status = new Select()
                 .from(Status.class)
@@ -68,6 +73,9 @@ public class Ticket extends Model {
                 .execute();
     }
 
+    /**
+     * Get all tickets with 'Win' status from database.
+     */
     public static List<Ticket> getAllWin() {
         Status status = new Select()
                 .from(Status.class)
@@ -84,6 +92,9 @@ public class Ticket extends Model {
                 .execute();
     }
 
+    /**
+     * Get all tickets with 'Lose' status from database.
+     */
     public static List<Ticket> getAllLose() {
         Status status = new Select()
                 .from(Status.class)

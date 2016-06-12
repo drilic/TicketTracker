@@ -24,7 +24,8 @@ import rs.tickettracker.helpers.BackstackHelper;
 import rs.tickettracker.helpers.StatusHelper;
 
 /**
- * Created by gisko on 29-Apr-16.
+ * Ticket detatil activity shows details of ticket. When user click on ticket from list of ticket,
+ * he can see details about it (all matches on ticket, bets...).
  */
 public class TicketDetailActivity extends AppCompatActivity {
 
@@ -171,6 +172,10 @@ public class TicketDetailActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 
+    /**
+     * Read data from ticket and populate all fields on page.
+     * @param t - Ticket for reading.
+     */
     private void fillData(Ticket t) {
         FrameLayout statusFrame = (FrameLayout) findViewById(R.id.statusPanel);
         statusFrame.setVisibility(View.VISIBLE);

@@ -1,29 +1,22 @@
 package rs.tickettracker.helpers;
 
-import android.app.Activity;
-import android.content.Context;
-import android.preference.PreferenceManager;
-
 import com.activeandroid.ActiveAndroid;
-import com.activeandroid.Configuration;
 import com.activeandroid.query.Select;
-
-import java.io.File;
-import java.util.Date;
-import java.util.List;
 
 import model.Bet;
 import model.League;
-import model.Match;
 import model.Status;
 import model.Ticket;
-import rs.tickettracker.R;
 
 /**
- * Created by gisko on 02-May-16.
+ * This helper class is used for initialising database in code first.
  */
 public class InitDatabaseHelper {
 
+    /**
+     * This helper class is used for initialising database with entities necessary for application
+     * to work (ENUM's).
+     */
     public static void initDB() {
         Bet bet = new Bet("1");
         bet.save();
@@ -63,6 +56,10 @@ public class InitDatabaseHelper {
 
     }
 
+    /**
+     * Create dummy tickets for testing app performance and testing tickets list view.
+     * @param numOfTickets - number of tickets that would be created.
+     */
     public static void fillDummyTickets(int numOfTickets){
         ActiveAndroid.beginTransaction();
         Status s = new Select().from(Status.class).where("status = ?", "Active").executeSingle();

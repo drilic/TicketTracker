@@ -22,7 +22,10 @@ import rs.tickettracker.adapters.TicketListAdapter;
 import rs.tickettracker.fragments.interfaces.FragmentUpdateInterface;
 import rs.tickettracker.sync.tasks.GetTicketFromDBTask;
 
-
+/**
+ * All tickets fragment used one of four tab fragments where are placed all tickets from
+ * database.
+ */
 public class AllTicketsFragment extends ListFragment implements OnItemClickListener,
         AdapterView.OnItemLongClickListener, FragmentUpdateInterface {
 
@@ -102,6 +105,10 @@ public class AllTicketsFragment extends ListFragment implements OnItemClickListe
         return true;
     }
 
+    /**
+     * Remove ticket from adapter.
+     * @param t - ticket that need to be removed.
+     */
     public void updateAdapter(Ticket t) {
         if (arrayAdapter.contains(t.getId())) {
             arrayAdapter.remove(t);

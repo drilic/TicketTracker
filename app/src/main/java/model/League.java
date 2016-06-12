@@ -7,9 +7,8 @@ import com.activeandroid.annotation.Table;
 import java.util.List;
 
 /**
- * Created by gisko on 29-Apr-16.
+ * League class for all supported leagues.
  */
-
 @Table(name = "League", id = "_id")
 public class League extends Model {
 

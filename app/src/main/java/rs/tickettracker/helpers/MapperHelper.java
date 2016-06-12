@@ -1,7 +1,5 @@
 package rs.tickettracker.helpers;
 
-import android.widget.ArrayAdapter;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,10 +11,15 @@ import model.Ticket;
 import model.parcelable.MatchParcelable;
 
 /**
- * Created by gisko on 17-May-16.
+ * This helper class is used for mapping objects.
  */
 public class MapperHelper {
 
+    /**
+     * This method match model.Match to parcelable match object.
+     * @param m - Match object than need to converted.
+     * @return Parcelable match object.
+     */
     public static MatchParcelable matchMapper(Match m) {
         MatchParcelable parMatch = new MatchParcelable();
         parMatch.awayScore = m.awayScore;
@@ -41,6 +44,12 @@ public class MapperHelper {
         return parMatch;
     }
 
+    /**
+     * This method match parcelable match to model.Match object.
+     * @param parMatch - Parcelable match object that need to be converted.
+     * @param t - Ticket that contains all that matches
+     * @return converted model.Match object
+     */
     public static Match matchMapperReverse(MatchParcelable parMatch, Ticket t) {
         Match m = new Match();
         m.awayScore = parMatch.awayScore;
@@ -61,7 +70,11 @@ public class MapperHelper {
         return m;
     }
 
-
+    /**
+     * Get list of all parcelable matches from one ticket that need to be converted.
+     * @param matches List of matches from ticket
+     * @return list of converted parcelable matches.
+     */
     public static ArrayList<MatchParcelable> getListOfMappedMatches(List<Match> matches) {
         ArrayList<MatchParcelable> newMatches = new ArrayList<MatchParcelable>();
         for (Match m : matches) {
@@ -70,6 +83,11 @@ public class MapperHelper {
         return newMatches;
     }
 
+    /**
+     * Get list of all model.Matches converted from parcelable matches.
+     * @param parMatches - list of parcelable matches that need to be converted.
+     * @return List of converted model.Matches
+     */
     public static List<Match> getListOfMappedMatchesReversed(ArrayList<MatchParcelable> parMatches) {
         ArrayList<Match> matches = new ArrayList<Match>();
         Ticket t = null;

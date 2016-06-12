@@ -14,14 +14,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
-import java.net.URI;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -29,7 +26,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.Scanner;
 
 import model.League;
@@ -38,14 +34,27 @@ import model.Status;
 import rs.tickettracker.activities.MainActivity;
 
 /**
- * Created by gisko on 29-Apr-16.
+ * This helper class is used for communication with live score api and getting results back about
+ * matches.
  */
-public class LiveScoreAPIHelper {
+public class LiveScoreApiHelper {
 
+    /**
+     * Get update for match comparing current results from database with results from API.
+     * @param ticketId - Id of current ticket where match is added.
+     * @param matchServiceId - Id of match from API.
+     * @param matchId - Id of match from local database.
+     * @param showGoalsNotification - To show notifications if user is in application.
+     * @param context - Current notifications
+     * @return
+     */
     public static Match getMatchUpdate(long ticketId, long matchServiceId, long matchId, boolean showGoalsNotification, Context context) {
         String baseUrl = "http://api.football-data.org/v1/fixtures/" + matchServiceId;
         JSONObject serviceResult = requestWebService(baseUrl, "n1");
         Match m = Match.load(Match.class, matchId);
+        if(serviceResult==null){
+            return m;
+        }
         try {
             if (serviceResult.has("fixture")) {
                 JSONObject match = serviceResult.getJSONObject("fixture");
@@ -93,6 +102,12 @@ public class LiveScoreAPIHelper {
         return m;
     }
 
+    /**
+     * Get all matches for current league for chosen day.
+     * @param day - Day of the matches.
+     * @param league - League that need to be searched.
+     * @return List of all matches for current league on chosen day.
+     */
     public static List<Match> findAllMatchesForLeague(int day, long league) {
         String baseUrl = "http://api.football-data.org/v1/soccerseasons/" + league + "/fixtures";
         String timeFrame = "";
@@ -146,6 +161,12 @@ public class LiveScoreAPIHelper {
     }
 
 
+    /**
+     * Web service request to receive all matches as JSON object.
+     * @param serviceUrl - Url of api
+     * @param timeFrame - days of the match
+     * @return JSON object received from API
+     */
     public static JSONObject requestWebService(String serviceUrl, String timeFrame) {
         disableConnectionReuseIfNecessary();
 
@@ -199,7 +220,7 @@ public class LiveScoreAPIHelper {
     }
 
     /**
-     * required in order to prevent issues in earlier Android version.
+     * Required in order to prevent issues in earlier Android version.
      */
     private static void disableConnectionReuseIfNecessary() {
         // see HttpURLConnection API doc
@@ -209,9 +230,10 @@ public class LiveScoreAPIHelper {
         }
     }
 
+    /**
+     * Very nice trick from http://weblogs.java.net/blog/pat/archive/2004/10/stupid_scanner_1.html
+     */
     private static String getResponseText(InputStream inStream) {
-        // very nice trick from
-        // http://weblogs.java.net/blog/pat/archive/2004/10/stupid_scanner_1.html
         return new Scanner(inStream).useDelimiter("\\A").next();
     }
 

@@ -1,11 +1,7 @@
 package rs.tickettracker.fragments;
 
-import android.content.Intent;
-import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,15 +9,15 @@ import android.widget.AdapterView;
 
 import com.activeandroid.query.Select;
 
-import java.util.List;
-
 import model.Match;
 import model.Ticket;
 import rs.tickettracker.R;
-import rs.tickettracker.activities.TicketDetailActivity;
 import rs.tickettracker.adapters.MatchDetailTicketListAdapter;
 
-
+/**
+ * Fragment for ticket details. It shows ticket name, ticket status and all matches played on
+ * current ticket. Also, for each match on tickets, shown their details.
+ */
 public class TicketDetailFragment extends ListFragment implements AdapterView.OnItemClickListener {
 
     private long ticket_id;

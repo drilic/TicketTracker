@@ -6,7 +6,7 @@ import android.os.Parcelable;
 import java.util.Date;
 
 /**
- * Created by gisko on 17-May-16.
+ * Parcelable class for saving matches on rotate screen.
  */
 public class MatchParcelable implements Parcelable {
 
