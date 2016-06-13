@@ -77,19 +77,19 @@ public class DeleteTicketDialog extends DialogFragment {
     private void removeTicketFromTab(Ticket t) {
         switch (t.status.status) {
             case "Active":
-                if (tabMenager.getFragmentByPosition(1) != null)
+                if ((ActiveTicketsFragment)tabMenager.getFragmentByPosition(1) != null)
                     ((ActiveTicketsFragment) tabMenager.getFragmentByPosition(1)).updateAdapter(t);
                 break;
             case "Win":
-                if (tabMenager.getFragmentByPosition(2) != null)
+                if ((WinTicketsFragment)tabMenager.getFragmentByPosition(2) != null)
                     ((WinTicketsFragment) tabMenager.getFragmentByPosition(2)).updateAdapter(t);
                 break;
             case "Lose":
-                if (tabMenager.getFragmentByPosition(3) != null)
+                if ((LoseTicketsFragment)tabMenager.getFragmentByPosition(3) != null)
                     ((LoseTicketsFragment) tabMenager.getFragmentByPosition(3)).updateAdapter(t);
                 break;
         }
-        if (tabMenager.getFragmentByPosition(0) != null)
+        if ((AllTicketsFragment)tabMenager.getFragmentByPosition(0) != null)
             ((AllTicketsFragment) tabMenager.getFragmentByPosition(0)).updateAdapter(t);
     }
 }
