@@ -4,4 +4,12 @@
 Provides you real time information about changes and final results on your betting tickets...
 
 #### Download
-Download APK file: [TicketTracker.apk](https://drive.google.com/open?id=0B6sHBvQbHW4hZnpndjhYOUp6aGs)
+Download APK file: [TicketTracker.apk](https://github.com/drilic/TicketTracker/blob/master/documentation/TicketTracker.apk)
+
+Download Java Doc: [TicketTrackerDoc](https://github.com/drilic/TicketTracker/blob/master/documentation/TicketTrackerDoc.zip)
+
+Download video: [Ticket Tracker Video](https://github.com/drilic/TicketTracker/blob/master/documentation/Ticket%20Tracker%20Video.wmv)
+
+Download user manual (serbian language only): [User Manual](https://github.com/drilic/TicketTracker/blob/master/documentation/User%20manual.pdf)
+
+
