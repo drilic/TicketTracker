@@ -66,6 +66,8 @@ public class TicketListAdapter extends ArrayAdapter<Ticket> {
             if (ticket.status.status.equals("Active")) {
                 holder.btnEdit.setVisibility(View.VISIBLE);
                 holder.btnEdit.setOnClickListener(new EditTicketAction((AppCompatActivity) activity, ticket.getId()));
+            }else{
+                holder.btnEdit.setVisibility(View.GONE);
             }
             holder.btnDelete.setVisibility(View.VISIBLE);
             holder.btnDelete.setOnClickListener(new DeleteTicketAction(activity, ticket.getId(), tabManager, holder.btnEdit, holder.btnDelete));
