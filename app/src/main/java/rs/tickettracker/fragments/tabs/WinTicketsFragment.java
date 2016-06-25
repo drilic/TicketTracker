@@ -109,6 +109,7 @@ public class WinTicketsFragment extends ListFragment implements AdapterView.OnIt
      * Remove ticket from adapter.
      * @param t - ticket that need to be removed.
      */
+    @Override
     public void updateAdapter(Ticket t) {
         if (arrayAdapter.contains(t.getId())) {
             arrayAdapter.remove(t);

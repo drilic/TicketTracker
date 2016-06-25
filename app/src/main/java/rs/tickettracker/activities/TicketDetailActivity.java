@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.activeandroid.ActiveAndroid;
 
@@ -146,6 +147,26 @@ public class TicketDetailActivity extends AppCompatActivity {
                 alert.show();
                 return true;
             } else if (item.getItemId() == R.id.edit_item) {
+                if (currentTicket != null) {
+                    if (currentTicket.status.status.equals("Win") ||
+                            currentTicket.status.status.equals("Lose")) {
+                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.check_status_state), Toast.LENGTH_SHORT).show();
+                        item.setVisible(false);
+                        FrameLayout statusFrame = (FrameLayout) findViewById(R.id.statusPanel);
+                        statusFrame.setVisibility(View.VISIBLE);
+                        statusFrame.setBackgroundColor(getResources().getColor(StatusHelper.getStatusColor(currentTicket.status.status, getApplicationContext())));
+                        TextView statusValue = (TextView) findViewById(R.id.detailStatus);
+                        statusValue.setText(currentTicket.status.status);
+
+                        TicketDetailFragment ticketDetailFragment = (TicketDetailFragment) getSupportFragmentManager().findFragmentByTag("ticketDetail");
+                        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                        fragmentTransaction.detach(ticketDetailFragment)
+                                .attach(ticketDetailFragment)
+                                .commit();
+
+                        return true;
+                    }
+                }
                 showMenu = false;
                 BackstackHelper.FragmentTransaction(getSupportFragmentManager().beginTransaction(),
                         this.getResources().getString(R.string.add_new_ticket), new AddTicketFragment(currentTicket.getId(), myMenu));

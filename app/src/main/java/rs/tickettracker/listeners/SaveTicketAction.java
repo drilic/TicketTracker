@@ -45,6 +45,13 @@ public class SaveTicketAction implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        if (currentTicket != null) {
+            if (currentTicket.status.status.equals("Win") ||
+                    currentTicket.status.status.equals("Lose")) {
+                Toast.makeText(activity.getApplicationContext(), activity.getResources().getString(R.string.check_status_state), Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
         EditText ticketName = (EditText) activity.findViewById(R.id.add_ticket_name);
         if (ticketName.getText().toString().trim().equals("")) {
             Toast.makeText(activity.getApplicationContext(), activity.getResources().getString(R.string.name_required), Toast.LENGTH_SHORT).show();

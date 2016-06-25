@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import model.Ticket;
 import rs.tickettracker.R;
 import rs.tickettracker.activities.MainActivity;
 import rs.tickettracker.adapters.TabFragmentAdapter;
@@ -112,6 +113,14 @@ public class MainTabFragment extends Fragment implements FragmentUpdateInterface
         for (Fragment f : getChildFragmentManager().getFragments()) {
             if (f != null && f instanceof FragmentUpdateInterface)
                 ((FragmentUpdateInterface) f).reloadTicketAdapter();
+        }
+    }
+
+    @Override
+    public void updateAdapter(Ticket t) {
+        for (Fragment f : getChildFragmentManager().getFragments()) {
+            if (f != null && f instanceof FragmentUpdateInterface)
+                ((FragmentUpdateInterface) f).updateAdapter(t);
         }
     }
 

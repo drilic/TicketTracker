@@ -4,12 +4,14 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.Button;
 
 import model.Ticket;
 import rs.tickettracker.R;
 import rs.tickettracker.adapters.TabFragmentAdapter;
+import rs.tickettracker.fragments.interfaces.FragmentUpdateInterface;
 import rs.tickettracker.fragments.tabs.ActiveTicketsFragment;
 import rs.tickettracker.fragments.tabs.AllTicketsFragment;
 import rs.tickettracker.fragments.tabs.LoseTicketsFragment;
@@ -43,7 +45,7 @@ public class DeleteTicketDialog extends DialogFragment {
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getActivity());
         builder.setTitle(getActivity().getResources().getString(R.string.confirm));
         final Ticket t = Ticket.load(Ticket.class, ticketId);
-        builder.setMessage(getActivity().getResources().getString(R.string.are_you_sure_to_delete)+" " + t.ticketName + "?");
+        builder.setMessage(getActivity().getResources().getString(R.string.are_you_sure_to_delete) + " " + t.ticketName + "?");
         builder.setPositiveButton(getActivity().getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 editButton.setVisibility(View.GONE);
@@ -72,24 +74,13 @@ public class DeleteTicketDialog extends DialogFragment {
 
     /**
      * Delete ticker from Ticket list on each tab, based on status of ticket.
+     *
      * @param t - that need to be deleted.
      */
     private void removeTicketFromTab(Ticket t) {
-        switch (t.status.status) {
-            case "Active":
-                if ((ActiveTicketsFragment)tabMenager.getFragmentByPosition(1) != null)
-                    ((ActiveTicketsFragment) tabMenager.getFragmentByPosition(1)).updateAdapter(t);
-                break;
-            case "Win":
-                if ((WinTicketsFragment)tabMenager.getFragmentByPosition(2) != null)
-                    ((WinTicketsFragment) tabMenager.getFragmentByPosition(2)).updateAdapter(t);
-                break;
-            case "Lose":
-                if ((LoseTicketsFragment)tabMenager.getFragmentByPosition(3) != null)
-                    ((LoseTicketsFragment) tabMenager.getFragmentByPosition(3)).updateAdapter(t);
-                break;
+        for (Fragment f : tabMenager.tabFragments) {
+            if (f instanceof FragmentUpdateInterface)
+                ((FragmentUpdateInterface) f).updateAdapter(t);
         }
-        if ((AllTicketsFragment)tabMenager.getFragmentByPosition(0) != null)
-            ((AllTicketsFragment) tabMenager.getFragmentByPosition(0)).updateAdapter(t);
     }
 }

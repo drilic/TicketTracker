@@ -110,6 +110,7 @@ public class AllTicketsFragment extends ListFragment implements OnItemClickListe
      * Remove ticket from adapter.
      * @param t - ticket that need to be removed.
      */
+    @Override
     public void updateAdapter(Ticket t) {
         if (arrayAdapter.contains(t.getId())) {
             arrayAdapter.remove(t);

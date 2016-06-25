@@ -110,6 +110,7 @@
     <string name="possible_gain_double">Possible gain must be double value.</string>
     <string name="cant_save_without_matches">Cant save ticket without matches.</string>
     <string name="max_matches_per_ticket">Max matches per ticket is 20.</string>
+    <string name="check_status_state">Ticket is already finished.</string>
 
     <string name="are_you_sure_to_exit">Are you sure that u want to exit?</string>
     <string name="yes">YES</string>
